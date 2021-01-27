@@ -119,7 +119,7 @@ export default {
   props:['theProduct'],
   setup(props,{emit}){
         const theService = ref(Service(false))
-        const counts = ref([{text:"1",value:1},{text:"2",value:2},{text:"3",value:3},{text:"2",value:4}])
+        const counts = ref([{text:"1",value:1},{text:"2",value:2},{text:"3",value:3},{text:"4",value:4}])
         const count = ref({value:{text:"1",value:1},valid:true})
         const extraImages = ref([])
         const addToBasket = () =>{
@@ -131,6 +131,7 @@ export default {
         watch(()=>props.theProduct,(n,o)=>{
             theImage.value = n.image
             extraImages.value = n.extraImages
+            count.value = {value:{text:"1",value:1},valid:true}
         })
 
         const magnify = (i)=>{

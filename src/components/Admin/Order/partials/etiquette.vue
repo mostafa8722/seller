@@ -9,16 +9,28 @@ export default {
     computed:{
         title:function(){
             switch (this.status) {
-                case "0":
+                case 0:
                     return 'پرداخت نشده'       
                     break;
-                case "1":
-                    return  'پرداخت شده'
+                case 1:
+                    return 'پرداخت شده'       
                     break;
-                case "2":
-                    return 'قبول شده'
+                case 2:
+                    return  'قبول شده'
                     break;
-                case "3":
+                case 3:
+                    return 'رد شده'
+                    break;
+                case 4:
+                    return 'در حال آماده سازی'
+                    break;
+                case 5:
+                    return 'در حال ارسال'
+                    break;
+                case 6:
+                    return 'تحویل داده شد'
+                    break;
+                case 7:
                     return 'لغو شده'
                     break;
                 default:
@@ -27,16 +39,28 @@ export default {
         },
         kind:function(){
             switch (this.status) {
-                case "0":
-                    return 'toBePaid'       
+                case 0:
+                    return 'pending'       
                     break;
-                case "1":
-                    return  'paid'
+                case 1:
+                    return 'sent'       
                     break;
-                case "2":
-                    return 'accepted'
+                case 2:
+                    return  'sent'
                     break;
-                case "3":
+                case 3:
+                    return 'cancelled'
+                    break;
+                case 4:
+                    return 'pending'
+                    break;
+                case 5:
+                    return 'pending'
+                    break;
+                case 6:
+                    return 'sent'
+                    break;
+                case 7:
                     return 'cancelled'
                     break;
                 default:
@@ -50,7 +74,7 @@ export default {
     .etiquette{
         border-radius: 12px;
         font-size: 0.75rem;
-        padding:8px;
+        padding:3px;
         max-width: 100px;
     }
 
@@ -58,19 +82,14 @@ export default {
         margin: 0px;
         padding:0px;
     }
-    .accepted{
+    .sent{
         background-color: rgba(52, 195 , 166, 0.16);
         color: #34C3A6;
     }
 
-    .paid{
+    .pending{
         background-color: rgba(255, 170, 0, 0.2);
         color: #D58E00;
-    }
-
-    .toBePaid{
-        background-color: #fbff94;
-        color: #000;
     }
 
     .cancelled{

@@ -1,32 +1,41 @@
 <template>
   <tr class="product">
     <!-- <td>{{theOrder.id}}</td> -->
-    <td>{{theOrder.seller_name}}</td>
+    <td class="small-cell">{{theOrder.seller_name}}</td>
     <td>{{theOrder.address}}</td>
-    <td>{{theOrder.user_phone}}</td>
+    <td class="small-cell">{{theOrder.user_phone}}</td>
     <!-- <td>{{theOrder.amount}}</td>
     <td>{{theOrder.discount}}</td> -->
-    <td>{{theOrder.delivery_cost}}</td>
-    <td>{{theOrder.payable}}</td>
-    <td><Etiquette :status="theOrder.status"></Etiquette></td>
-    <td><button @click="acceptOrder" class="purple-btn ml-2">تایید سفارش</button><button @click="denyOrder" class="red-btn">رد سفارش</button></td>
+    <td class="small-cell">{{theOrder.delivery_cost}}</td>
+    <td class="small-cell">{{theOrder.payable}}</td>
+    <td class="small-cell"><Etiquette :status="parseInt(theOrder.status)"></Etiquette></td>
+    <td><button @click="reviseOrder" class="purple-btn ml-2">ثبت وضعیت</button><custom-input placeholder="انتخاب وضعیت" inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="half-width" v-bind:theModel.sync="status" :selectItems="stati" classes="no-border light-facade"></custom-input></td>
     <td><router-link :to="{name:'Golpino Admin Order Page' , params:{id:theOrder.id}}"><button class="purple-btn ml-2">مشاهده سفارش</button></router-link></td>
   </tr>
 </template>
 <script>
-import { ref } from "@vue/composition-api";
+import { ref } from "@vue/composition-api"
 import Etiquette from './etiquette'
+import CustomInput from '../../../Common/CustomInput'
 export default {
   props: ["theOrder"],
   components:{
-    Etiquette
+    Etiquette,
+    CustomInput
   },
+  data:()=>({
+    status:{value:null,valid:true},
+    stati:[{value:1,text:'پرداخت شده'},
+      {value:2,text:'قبول شده'},
+      {value:3,text:'رد شده'},
+      {value:4,text:'در حال آماده سازی'},
+      {value:5,text:'در حال ارسال'},
+      {value:6,text:'تحویل داده شده'}
+    ]
+  }),
   methods:{
-    acceptOrder:function(){
-      this.$emit('acceptOrder',this.theOrder.id)
-    },
-    denyOrder:function(){
-      this.$emit('denyOrder',this.theOrder.id)
+    reviseOrder:function(){
+      this.$emit('reviseOrder',{id:this.theOrder.id,status:this.status.value.value})
     }
   }
 };
@@ -46,5 +55,10 @@ tr {
 .order-locker img{
     width: 50%;
 }
+
+.small-cell{
+  width: 5%;
+}
+
 
 </style>

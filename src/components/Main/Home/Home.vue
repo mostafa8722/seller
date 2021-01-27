@@ -587,10 +587,12 @@ export default {
         const getUserAddresses = () => {
             authService.value.receive('user/address',{},(s,d)=>{
                 if(s == 200 && d.data.length>0){
-                    let xx = d.data[0]
-                    xx.value = d.data[0].id
-                    xx.text = d.data[0].name + " : " + d.data[0].address
-                    searchAddress.value = xx 
+
+                        let xx = d.data[0]
+                        xx.value = d.data[0].id
+                        xx.text = d.data[0].name + " : " + d.data[0].address
+                        searchAddress.value = xx     
+
                     userAddresses.value = d.data
                     userAddresses.value.map((addr)=>{
                         addr.value = addr.id

@@ -14,7 +14,7 @@ export default {
   props: ["theOrder"],
 };
 </script>
-<style>
+<style scoped>
 td {
   border: 1px solid rgba(127, 127, 127, 0.2);
   white-space: nowrap;

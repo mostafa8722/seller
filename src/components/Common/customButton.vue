@@ -72,6 +72,10 @@ export default {
         cursor: pointer;
     }
 
+    .text-big{
+        font-size: 1.2rem;
+    }
+
     .custom-button button{
         border:none;
         display: none;

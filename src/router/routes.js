@@ -8,7 +8,24 @@ const routes = [
   {
     path:'/profile',
     name:'Golpino User Profile Page',
-    component:()=>import ('../components/Main/User/Profile.vue')
+    component:()=>import ('../components/Main/User/Profile.vue'),
+    children:[
+      {
+        path:'info',
+        name:'Golpino User Profile Info Page',
+        component:()=>import ('../components/Main/User/partials/UserInfo.vue')
+      },
+      {
+        path:'orders',
+        name:'Golpino User Profile Orders Page',
+        component:()=>import ('../components/Main/Orders/Summary.vue')
+      },
+      {
+        path:'orders/:id',
+        name:'Golpino User Profile Order Page',
+        component:()=>import ('../components/Main/Orders/AnOrder.vue')
+      }
+    ]
   },
   {
     path: '/complaint',

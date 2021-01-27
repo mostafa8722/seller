@@ -420,6 +420,7 @@ label{
     text-overflow: ellipsis;
     max-width: 99%;
     margin:0px;
+    min-height: 25px;
 }
 
 .select-value{

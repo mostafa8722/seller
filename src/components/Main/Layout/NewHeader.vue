@@ -147,8 +147,8 @@
             <div class="cart-tooltip" id="wholeTooltip">
                 <div class="tooltiptext" id="cartTooltip">
                     <div class="tooltop d-flex justify-content-between">
+                        <p class="mini-title cBlue">مشاهده سبد خرید</p>
                         <p class="mini-title">{{cartItems.length}} محصول</p>
-                        <a href="aaa">مشاهده سبد خرید</a>
                     </div>
                     <div class="tooltip-items">
                         <cart-item v-for="(theItem,i) in cartItems" :key="i" :theItem="theItem"></cart-item>
@@ -617,7 +617,9 @@ export default {
                 if(l){
                     context.emit('blackDrop',false)
                     if(isLoggedIn.value)
-                        context.root.$router.push('/user/payment')
+                        context.root.$router.push('/user/payment').catch((e)=>{
+                            context.root.$router.push('/user/payment')
+                        })
                     else{
                         global.alertToggle('لطفا ابتدا وارد حساب کاربری شوید')
                         setTimeout(()=>{
@@ -891,5 +893,8 @@ right:0px;
 }
 .dropdown-item{
     text-align: right;
+}
+.cBlue{
+    color: #479aff;
 }
 </style>

@@ -7,7 +7,7 @@
     <td>{{theOrder.delivery_cost}}</td>
     <td>{{theOrder.payable}}</td>
     <td><Etiquette :status="parseInt(theOrder.status)"></Etiquette></td>
-    <td><router-link :to="{name:'Golpino User Order Page',params:{id:theOrder.id}}"><button class="purple-btn">مشاهده سفارش</button></router-link></td>
+    <td><router-link :to="{name:'Golpino User Profile Order Page',params:{id:theOrder.id}}"><button class="purple-btn">مشاهده / پیگیری</button></router-link></td>
   </tr>
 </template>
 <script>
@@ -19,9 +19,9 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 td {
-  border: 1px solid rgba(127, 127, 127, 0.2);
+  border-top: 1px solid rgba(127, 127, 127, 0.2);
   white-space: nowrap;
   width:25%;
   padding: 0.5rem;
@@ -29,10 +29,6 @@ td {
 
 tr {
   width: 100%;
-}
-
-.order-locker img{
-    width: 50%;
 }
 
 </style>

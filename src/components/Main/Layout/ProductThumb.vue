@@ -59,6 +59,7 @@ export default {
     display: inline-block;
     border:1px solid rgba(127,127,127,.2);
     border-radius: 4px;
+    font-size: 0.9rem;
 }
 
 .product-product:hover{
@@ -90,7 +91,7 @@ export default {
 .discount-final{
   color: #7F187F;
   font-weight: normal;
-  font-size: 1.1rem;
+  font-size: .85rem;
 }
 
 .product-thumb-desc p{

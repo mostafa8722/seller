@@ -13,18 +13,18 @@
                     <th>وضعیت</th>
                     <th>گزینه ها</th>
                 </tr>
-                <an-order v-for="(order,i) in orders" :key="i" :theOrder="order"></an-order>
+                <an-order-summary v-for="(order,i) in orders" :key="i" :theOrder="order"></an-order-summary>
             </table>
         </div>
     </div>
 </template>
 <script>
 import { computed, onMounted, ref} from "@vue/composition-api"
-import AnOrder from './partials/OrderSummary'
+import AnOrderSummary from './partials/OrderSummary'
 import Service from '../../../utils/service'
 export default {
     components:{
-        AnOrder
+        AnOrderSummary
     },
     setup(){
         const orders = ref(null)
@@ -48,7 +48,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .summary{
     background-color: #fff;
     font-size: 0.9rem;
@@ -57,30 +57,15 @@ export default {
 }
 
 table{
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0px;
     width: 100%;
     table-layout: auto;
     text-align: center;
 }
 
-td{
-    border: 1px solid rgba(127,127,127,0.2);
-    white-space: nowrap;
-    padding-right: 1rem;
-}
-
 tr{
     width: 100%;
 }
 
-.big-cell{
-    width: 75%;
-    padding:0.5rem 1rem 0.5rem 1rem;
-}
-
-.small-cell{
-    width: 25%;
-    padding:0.5rem 1rem 0.5rem 1rem;
-}
 </style>

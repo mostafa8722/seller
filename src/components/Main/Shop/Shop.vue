@@ -74,6 +74,7 @@
                     <custom-button iconSize="mt-2" icon="/assets/site/images/seller-icons/left-arrow.svg" classes="shop-nav"></custom-button>
                 </div>
             </div> -->
+            <shop-comments></shop-comments>
         </div>
         <product-modal @addToBasket="addProductToCart" :theProduct="modalProduct"></product-modal>
     </div>    
@@ -90,6 +91,7 @@ import Service from "../../../utils/service"
 import MyCarousel from "../Layout/MyCarousel"
 import currencyFormatter from "../../use/fomatCurrency"
 import ProductModal from "../Layout/ProductModal"
+import ShopComments from "./partials/Comments"
 import $ from 'jquery'
 export default {
     components:{
@@ -100,7 +102,8 @@ export default {
         CustomTag,
         MyCarousel,
         ProductModal,
-        CustomInput
+        CustomInput,
+        ShopComments
     },
     setup(props,context){
         // MOCK
@@ -184,15 +187,27 @@ export default {
                     return 'no-auth'
                 }
         }
+        'search/seller/category/' + shopId.value
         const getCategories = () => {
             theService.value.receive('search/category',{},(s,d)=>{
                 if(s == 200){
                     categories.value = d.data
-                    categories.value.map((c)=>{
-                        c.text = c.name
-                        c.value = c.id
-                    })
-                    categories.value = [{value:null,text:'تمامی دسته بندی ها'}].concat(categories.value)
+                    theService.value.receive('search/seller/category/' + shopId.value,{},(s,d)=>{
+                        if(s == 200){
+                            let shopCategories = d.data
+                            categories.value.map((c)=>{
+                                shopCategories.map((sc)=>{
+                                    if(sc.category_id == c.id){
+                                        sc.text = c.name
+                                        sc.value = c.id
+                                        sc.id = c.id
+                                    }
+                                })
+                            })
+                            console.log("shopc",shopCategories)
+                            categories.value = [{value:null,text:'تمامی دسته بندی ها'}].concat(shopCategories)
+                        }
+                    },(s,e)=>{})
                 }
             },(s,e)=>{})
         }

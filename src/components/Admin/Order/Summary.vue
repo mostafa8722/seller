@@ -1,6 +1,6 @@
 <template>
-    <div class="container p-5">
-        <div class="container summary">
+    <div class="pt-5 pl-3 pr-3">
+        <div class="summary">
             <h3 class="tNormal">سفارشات</h3>
             <div class="search-section">
                 <custom-input kind="text" container="mini-title ml-5 mt-5" classes="mini-title mr-2" v-bind:theModel.sync="userMobile" label="جستجوی کاربر" placeholder="شماره موبایل"></custom-input>
@@ -13,18 +13,18 @@
             <table class="mt-2">
                 <tr>
                     <!-- <th>شماره سفارش</th> -->
-                    <th>نام فروشگاه</th>
+                    <th class="small-cell">نام فروشگاه</th>
                     <!-- <th>جمع کل</th>
                     <th>تخفیف</th> -->
                     <th>آدرس</th>
-                    <th>شماره تلفن</th>
-                    <th>هزینه ارسال</th>
-                    <th>قابل پرداخت</th>
-                    <th>وضعیت</th>
+                    <th class="small-cell">شماره تلفن</th>
+                    <th class="small-cell">هزینه ارسال</th>
+                    <th class="small-cell">قابل پرداخت</th>
+                    <th class="small-cell">وضعیت</th>
                     <th>گزینه ها</th>
                     <th>مشاهده</th>
                 </tr>
-                <an-order @denyOrder="denyOrder" @acceptOrder="acceptOrder" v-for="(order,i) in orders" :key="i" :theOrder="order"></an-order>
+                <an-order @reviseOrder="reviseOrder" v-for="(order,i) in orders" :key="i" :theOrder="order"></an-order>
             </table>
         </div>
     </div>
@@ -82,22 +82,11 @@ export default {
             })
         }
 
-        const acceptOrder = (id)=>{
+        const reviseOrder = (order)=>{
             let f = new FormData
-            f.append('status',1)
-            theService.value.transmit('admin/order/'+id ,f,(s,d)=>{
-                alert('با موفقیت ثبت شد')
-            },
-            (s,e)=>{
-
-            })
-        }
-
-        const denyOrder = (id)=>{
-            let f = new FormData
-            f.append('status',0)
-            theService.value.transmit('admin/order/'+id ,f,(s,d)=>{
-                alert('سفارش لغو شد!')
+            f.append('status',order.status)
+            theService.value.transmit('admin/order/'+order.id ,f,(s,d)=>{
+                alert('تغییر وضعیت انجام شد')
             },
             (s,e)=>{
 
@@ -105,7 +94,7 @@ export default {
         }
 
 
-        return {orders,userMobile,acceptOrder,denyOrder,searchUserOrders,theUser}
+        return {orders,userMobile,reviseOrder,searchUserOrders,theUser}
     }
 }
 </script>
@@ -146,7 +135,7 @@ tr{
 }
 
 .small-cell{
-    width: 25%;
+    width: 5%;
     padding:0.5rem 1rem 0.5rem 1rem;
 }
 </style>

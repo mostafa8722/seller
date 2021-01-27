@@ -34,7 +34,7 @@
                     </l-marker>
                 </l-map>
             <icon-image address="/assets/site/images/seller-icons/loc.svg" v-if="marker" classes="map-marker huge"></icon-image>
-            <button class="map-control purple-btn" ref="bt" @click="change">انتخاب موقعیت</button>
+            <button class="map-control purple-btn" ref="bt" @click="change">انتخاب موقعیت*</button>
           </div>
           <p class="invalid">{{message}}</p>
       </div>
@@ -48,8 +48,8 @@
               <p v-if="theDistrict != null">{{theDistrict.name}}</p>
             </custom-input>
           </div>
-          <div class="col-12 p-0 pl-3">
-            <custom-input kind="text" container="full-width" classes="full-width mr-2" v-bind:theModel.sync="theAddress.address" label="متن آدرس" placeholder="متن آدرس"></custom-input>
+          <div class="col-12 mt-2 p-0 pl-3">
+            <custom-input kind="text" container="full-width" classes="full-width mr-2" v-bind:theModel.sync="theAddress.address" label="متن آدرس*" placeholder="متن آدرس"></custom-input>
           </div>
           <div class="col-12 p-0 pr-3 pl-2">
             <button class="purple-btn mt-3 full-width" @click="send">ذخیره و ثبت</button>
@@ -137,6 +137,11 @@ export default {
           this.marker = !this.marker
       },
       send:function(){
+        this.message = null
+        this.theAddress.address.valid = true
+        this.theAddress.address.message = ""
+        this.theAddress.name.valid = true
+          this.theAddress.name.message = ""
         if(this.theAddress.lat == null){
           this.message = "لطفا ابتدا موقعیت مورد نظر را یافته و سپس بر روی دکمه ی انتخاب موقعیت کلیک کنید!"
         }
@@ -144,15 +149,21 @@ export default {
           this.theAddress.address.valid = false
           this.theAddress.address.message = "لطفا متن آدرس را وارد کنید"
         }
-        if(this.theAddress.name.value == null || this.theAddress.name.value == ''){
+        if(this.theDistrict == null || !this.theDistrict.id){
           this.theAddress.name.valid = false
-          this.theAddress.name.message = "لطفا نام آدرس را وارد کنید"
+          this.theAddress.name.message = "وارد کردن محله الزامی است"
         }
         else if(this.theAddress.lat != null && (this.theAddress.name.value != null || this.theAddress.name.value != '') && (this.theAddress.address.value != null || this.theAddress.address.value != '')){
-          this.theAddress.address.valid = true
-          this.theAddress.name.valid = true
           this.theAddress.district_id = this.theDistrict.id
           this.$emit('addressComplete',this.theAddress)
+          this.theAddress = {
+            name:{value:null,valid:true},
+            district_id:{id:null,value:null,valid:true},
+            lat:null,
+            long:null,
+            address:{value:null,valid:true}
+          }
+          this.theDistrict = null     
         }
       },
       selectDistrict: function(d){
@@ -193,8 +204,6 @@ export default {
     const centerUpdate = (center)=> {
         address.value.lat = center.lat
         address.value.lng = center.lng
-        console.log({center})
-        console.log({address:address.value})
         mapOptions.value.currentCenter = center;
     }
 
