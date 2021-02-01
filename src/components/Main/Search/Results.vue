@@ -3,7 +3,7 @@
         <div class="search-bar pt-2 pl-2 pr-2 pb-0">
             <div class="row">
                 <div class="search-bar-section" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'col-3' : 'col-4')">
-                    <custom-input inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="full-width" v-bind:theModel.sync="selectedCategory" :selectItems="categories" classes="no-border no-background" placeholder="دسته بندی"></custom-input>
+                    <new-input inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="full-width" v-bind:inputModel.sync="selectedCategory" :selectItems="categories" classes="no-border no-background" placeholder="دسته بندی"></new-input>
                 </div>
                 <div class="col-3 search-bar-section" v-if="searchAddress.value == null || searchAddress.value.value == null">
                     <custom-input :placeholder="(selectedDistrict.value == null ? 'منطقه' : '')" inputClass="tNormal" kind="searchInput" container="full-width mt-2" extraClasses="barely-visible" v-bind:theModel.sync="selectedDistrict" :suggestions="districts" @addTag="selectDistrict" classes="no-border">
@@ -98,6 +98,7 @@
 </template>
 <script>
 import CustomInput from "../../Common/CustomInput"
+import NewInput from "../../Common/NewCustomInput"
 import IconImage from "../../Common/icon"
 import ShopThumb from "../Layout/ShopThumb"
 import Service from "../../../utils/service"
@@ -115,7 +116,8 @@ export default {
         ShopThumb,
         CustomButton,
         AddressModal,
-        VueSlider
+        VueSlider,
+        NewInput
     },
     setup(props,context){
         // console.log("props",context.root.$route.query.category_id)
@@ -257,9 +259,7 @@ export default {
                 doSearch()
                 categories.value.map((aCat)=>{
                         if(aCat.name == context.root.$route.query.category){
-                            setTimeout(()=>{
                                 selectedCategory.value = {value:aCat,valid:true}
-                            },500)
                         }
                     })
             }

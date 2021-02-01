@@ -1099,6 +1099,20 @@ export default {
         // window.removeEventListener('scroll', this.scrollListener)
     },
     inject:['global'],
+    metaInfo() {
+        return { 
+            title: "Epiloge - Build your network in your field of interest",
+            meta: [
+                { property: 'og:title', content: "گلپینو"},
+                { property: 'og:site_name', content: 'گلپینو'},
+                {property: 'og:type', content: 'website'},    
+                {property: 'og:locale', content: 'fa-IR'}, 
+                {property: 'og:description', content: 'سامانه گلپینو'}, 
+                {property: 'og:image', content: 'https://golpino.com/assets/site/images/golpino-logo.png'}, 
+                {property: 'og:url', content: 'https://golpino.com/'}, 
+            ]
+        }
+    }
 }
 </script>
 <style scoped>

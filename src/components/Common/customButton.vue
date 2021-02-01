@@ -97,4 +97,11 @@ export default {
         border: none;
         font-weight: lighter;
     }
+
+    .field-button{
+        border:none !important;
+        background: none !important;
+        color:#772CE8;
+        padding:0px !important;
+    }
 </style>

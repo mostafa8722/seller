@@ -279,6 +279,10 @@ button:hover{
     font-weight: lighter !important;
 }
 
+.tBold{
+  font-weight: bold;
+}
+
 .no-border{
     border:none !important;
 }
