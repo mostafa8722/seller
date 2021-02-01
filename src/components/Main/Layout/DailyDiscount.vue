@@ -1,7 +1,7 @@
 <template>
     <div class="daily-discount w-100 pr-3 pl-3 pb-4" @click="toShop">
         <!-- <div class="discount-discount"><p class="mini-title">50%</p></div> -->
-        <div class="starburst example" id="example-2"><span>50%</span></div>
+        <div class="starburst example" id="example-2"><span>{{theShop.discount + "%"}}</span></div>
         <div class="daily-locker">
             <img :src="theShop.logo" class="daily-discount-image" alt="">
         </div>
@@ -127,8 +127,8 @@ export default {
 
 .example {
   position: absolute;
-  top: 6px;  
-  right: 6px;
+  top: 8px;  
+  right: 4px;
   margin-top: -1.25em;
   margin-left: -1.25em;
 }

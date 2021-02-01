@@ -401,6 +401,8 @@ export default {
                     f.append('discount',parseInt(product.discount.value))
                 if(productToEdit.value.desc != product.desc.value)
                     f.append('desc',product.desc.value)
+                if(!product.image.value)
+                    f.append('image',product.image)
                 authService.value.transmit('seller/product/'+context.root.$route.params.id,f,()=>{
                     alert("تغییرات ثبت شد")
                     location.reload();
@@ -487,7 +489,7 @@ export default {
             getChildAttrs(x.value)
         }
 
-        return{extraImages,submitExtraImage,extraImageToBeAdded,addExtraImage,edit,refreshChilds,editProduct,addNewAttr,finalAttrs,product,childAttrs,theChildAttr,theParentAttr,submitProduct,subCategories,items,tags,removeTag,addTag,suggestedTags,tick,openInput,images,mainImage,addImage,selectImage,categories,attrs}
+        return{productToEdit,extraImages,submitExtraImage,extraImageToBeAdded,addExtraImage,edit,refreshChilds,editProduct,addNewAttr,finalAttrs,product,childAttrs,theChildAttr,theParentAttr,submitProduct,subCategories,items,tags,removeTag,addTag,suggestedTags,tick,openInput,images,mainImage,addImage,selectImage,categories,attrs}
     }
 }
 </script>

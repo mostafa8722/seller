@@ -49,14 +49,14 @@
         </div>
         <address-modal :districts="districts" @addressComplete="sendAddress"></address-modal>
         <!-- CATEGORIES -->
-        <div class="banner-categories d-flex justify-content-around mt-4 pt-4 pb-2">
-            <my-carousel>
-                    <div class="category ml-4" @click="()=>searchSampleCategory(cat.name)" v-for="(cat,index) in categories" :key="index">
-                <div class="category-locker mb-1">
-                    <img :src="cat.image" class="category-image" alt="">
+        <div class="banner-categories d-flex justify-content-around pb-2">
+            <my-carousel classes="no-padding">
+                <div class="category" @click="()=>searchSampleCategory(cat.name)" v-for="(cat,index) in categories" :key="index">
+                    <div class="category-locker mb-1">
+                        <img :src="cat.image" class="category-image" alt="">
+                    </div>
+                    <p>{{cat.name}}</p>
                 </div>
-                <p>{{cat.name}}</p>
-            </div>
             </my-carousel>
         </div>
         <!-- SLOGEN -->
@@ -87,7 +87,7 @@
         <!-- TOP SHOPS -->
         <div class="shope pt-1 pb-0">
             <div class="pl-4 mb-4 pr-2">
-                <h2 class="mini-title">فروشگاه های برتر گلپینو</h2>
+                <h2 class="mini-title mr-4">فروشگاه های برتر گلپینو</h2>
                 <router-link to="/search"><p class="mini-title mr-3 ml-1">مشاهده ی همه</p></router-link>
                 <span class="icon-more"></span>
             </div>
@@ -186,6 +186,29 @@
                 </div>
             </div>
         </div> -->
+                <!-- PRESENT EXPRESS BANNER -->
+        <div class="row season-banner">
+            <!-- <div class="row"> -->
+                <div class="col-4 season-banner-pic-locker">
+                </div>
+                <div class="col-8 season-banner-text">
+                    <!-- <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center"> -->
+                        <h2>اشتراک گل</h2>
+                        <p>دیگر نیازی نیست برای خرید گل به بازار گل یا گلفروشی بروید .با اشتراک گل گلپینو هر هفته ٬ برای محل کارتان یا منزلتان گل تازه دریافت کنید . کافیست یک بار وقت بگذارید و گل های مورد نیازتان را برای هر هفته انتخاب کنید</p>
+                        <p class="mt-5">ارسال رایگان و قیمت بازار گل از مزیت های اشتراک گل گلپینو می باشد</p>
+                        <div class="mt-3 w-100">
+                            
+                                <a href="https://golpino.com/mag/coffee/">
+                                    <button class="season-primary mt-5">
+                                        اشتراک گل  
+                                    </button>
+                                </a>
+                            <!-- <button class="season-secondary mt-5">اشتراک گل</button> -->
+                        </div>                    
+                    <!-- </div> -->
+                </div>
+            <!-- </div> -->
+        </div>
         <!-- PRESENT EXPRESS BANNER -->
         <!-- <div class="present-banner mt-0 pt-0 pb-5">
             <div class="row p-0 present-express">
@@ -298,15 +321,23 @@
         </div> -->
                 <!-- SAMPLE PRODUCTS -->
         <div class="shope mt-5 pt-1 pb-0">
-            <div class="pl-4 mb-4 pr-2">
-                <h2 class="mini-title">محصولات پرطرفدار</h2>
+            <div class="pl-4 mb-4 mr-4 pr-2 flower-party">
+                <h2 class="mini-title">گل پارتی</h2>
+                <!-- <img src="/assets/site/images/flower.svg" alt=""> -->
             </div>
-            <div class="carousel-container">
-                <my-carousel>
-                    <div class="product-carousel-item" v-for="(sp,i) in sampleProducts" :key="i">
-                        <product-thumb @addToBasket="addProductToCart" :theProduct="sp"></product-thumb>
+            <div class="carousel-container golparty">
+                <div class="row">
+                    <div class="col-2 p-0">
+                        <img src="/assets/site/images/golparty.jpg" alt="golparty">
                     </div>
-                </my-carousel>
+                    <div class="col-10 p-0">
+                        <my-carousel>
+                            <div class="product-carousel-item" v-for="(sp,i) in sampleProducts" :key="i">
+                                <product-thumb @addToBasket="addProductToCart" :theProduct="sp"></product-thumb>
+                            </div>
+                        </my-carousel>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- DAILY DISCOUNT -->
@@ -327,7 +358,7 @@
                 <div class="row">
                     <div class="col-5 p-0">
                         <div class="row">
-                            <div class="col-4 p-1"  v-for="(dd,index) in sampleShops" :key="index">
+                            <div class="col-4 p-1"  v-for="(dd,index) in tempStaticShops" :key="index">
                                 <daily-discount v-if="index<6" :theShop="dd"></daily-discount>
                             </div>
                             <!-- <div class="col-4 p-0">
@@ -524,29 +555,22 @@ export default {
             // },(s,e)=>{
 
             // })
-            theService.value.receive('search/seller/31', {} , (s,d)=>{
-                sampleProducts.value = d.data.products
-                sampleProducts.value.map((p)=>{
-                        p.formattedPrice = currencyFormatter(p.price + "")
-                    })
-                sampleProducts.value = sampleProducts.value.slice(0,5)
-                theService.value.receive('search/seller/33', {} , (s,d)=>{
+           theService.value.receive('search/seller/112', {} , (s,d)=>{
                     let samples = []
                     samples = d.data.products
-                    samples = samples.slice(0,5)
+                    samples = samples.slice(0,20)
                     samples.map((p)=>{
                         p.formattedPrice = currencyFormatter(p.price + "")
                     })
                     sampleProducts.value = [...sampleProducts.value,...samples]
+                    sampleProducts.value = shuffle(sampleProducts.value)
                     // sampleProducts.value.map((p)=>{
                     //     p.formattedPrice = currencyFormatter(p.price + "")
                     // })
                 },(s,e)=>{
 
                 })
-            },(s,e)=>{
 
-            })
             getCategories()
             getDistricts()
             if(isLoggedIn.value){
@@ -788,7 +812,36 @@ export default {
             // theService.value.receive('search?' + query,{},redirectToSearch,errorHandler)
         }
 
-        return{articles,gotUserAddresses,addProductToCart,newAddressSelection,sampleProducts,sampleCategories,searchSampleCategory,sampleShops,loginToAddAddress,isLoggedIn,searchDistrict,districts,searchShop,selectShop,selectDistrict,categories,category,results,querry,sendAddress,searchCategory,userAddresses,searchAddress,doSearch,shopQuery,shopResults}
+        // THIS CODE IS TEMP
+        const tempStaticShops = [
+            {id:33,address:"خیابان پاسداران بوستان 2 فرخی یزدی پلاک 55",name:"گلستان شاهرخی",logo:"https://api.golpino.com/credential/seller-image/33_base-image_98cf4a631c8bf49d584234c8b7b09b0ba9ba0a0e.png",discount:20},
+            {id:36,address:"انتهای اتوبان ارتش شرق شهرک لاله",name:"گل سیتی",logo:"https://api.golpino.com/credential/seller-image/36_base-image_6e709db41b3904e96e85fc2f0998e1437cb602c6.jpg",discount:10},
+            {id:40,address:"شهرک گلستان(راه آهن) ، بلوار گلها پائین تر از میدان اتریش ، نبش بنفشه هشتم ، پلاک ۱٢٢",name:"گل گل فام",logo:"https://api.golpino.com/credential/seller-image/40_base-image_1fc54873a132d3698f2f8777bdee32d490904e0e.jpg",discount:15},
+            {id:73,address:"میدان منیریه ، خیابان معیری ، خیابان معتمدی ، نبش کوچه پروانه",name:"مرادی",logo:"https://api.golpino.com/credential/seller-image/73_base-image_8f1f9a9bbe0bee8e88400b55763531886253b6d9.png",discount:18},
+            {id:51,address:"مجیدیه شمالی ، میدان ملت ، خیابان قلیچ خانی ، خیابان برادران شهید محمدی",name:"نگین",logo:"https://api.golpino.com/credential/seller-image/51_base-image_27fb62b51b318dcfa8bba835bbc764c69541d096.png",discount:9},
+            {id:57,address:"بزرگراه زین الدین ، بلوار پناهی نیا ، بعد از میدان هروی ، جنب خیابان بیتا",name:"گل الهام",logo:"https://api.golpino.com/credential/seller-image/57_base-image_911a04792d2158c92b55e8fb846bc289ffa50190.png",discount:15},
+        ]
+        const shuffle = (array) => {
+            let currentIndex = array.length, temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
+        // THIS CODE IS TEMP END
+
+        return{tempStaticShops,articles,gotUserAddresses,addProductToCart,newAddressSelection,sampleProducts,sampleCategories,searchSampleCategory,sampleShops,loginToAddAddress,isLoggedIn,searchDistrict,districts,searchShop,selectShop,selectDistrict,categories,category,results,querry,sendAddress,searchCategory,userAddresses,searchAddress,doSearch,shopQuery,shopResults}
     },
     components:{
         Carousel,
@@ -1046,17 +1099,6 @@ export default {
         // window.removeEventListener('scroll', this.scrollListener)
     },
     inject:['global'],
-    head:{
-        meta:[
-            {name:'title',content:'سامانه ی گلپینو'},
-            {name:'description',content:'گلپینو | سامانه آنلاین خرید گل از نزدیک ترین محل به شما'},
-            {property:'og:type',content:'website'},
-            {property:'og:title',content:'سامانه ی گلپینو'},
-            {property:'og:locale',content:'fa-IR'},
-            {property:'og:description',content:'گلپینو | سامانه آنلاین خرید گل از نزدیک ترین محل به شما'},
-            {property:'og:image',content:'https://golpino.com/assets/site/images/golpino-logo.png'}
-        ]
-    }
 }
 </script>
 <style scoped>
@@ -1215,7 +1257,6 @@ html {
 }
 
 .category{
-    height:22vh;
     text-align: center;
 }
 
@@ -1225,11 +1266,11 @@ html {
 }
 
 .category-locker{
-    height: 70%;
+    height: 12vh;
 }
 
 .category-image{
-    height: 80%;
+    height: 100%;
 }
 /* SLOGEN */
 .slogen span{
@@ -1423,7 +1464,12 @@ html {
     text-align: justify;
 }
 
-
+.golparty img{
+    width:100%;
+    display: inline-block;
+    position: relative;
+    top:14px;
+}
 
 .present-locker{
     overflow: hidden;
@@ -1577,6 +1623,81 @@ html {
     -webkit-animation-iteration-count: infinite; 
     opacity: 0.0
 }
+
+/* season banner */
+.season-banner{
+    height: 60vh;
+    padding-left: 5rem;
+    padding-right: 7rem;
+    margin-top: 3rem;
+}
+
+.season-banner-pic-locker{
+    background-image: url('/assets/site/images/sub.jpg');
+    height:100%;
+    background-size: 100% 100%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.season-banner-text{
+    background-color: #fff;
+    height: 100%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding:4rem 3.5rem 15px 4rem ;
+}
+
+.season-banner-text h2{
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.season-primary{
+    background-color: #772CE8;
+    color: #fff;
+    border:none;
+    border-radius: 20px;
+    box-shadow: 1px 1px 5px 0px rgba(119, 44 , 232, 0.6);
+    width: 30%;
+    font-size: 0.8rem;
+    font-weight: lighter;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin-left: 15px;
+}
+
+.season-secondary{
+    background:none;
+    color: #fff;
+    border:1px solid #772CE8;
+    color: #772CE8;
+    border-radius: 20px;
+    box-shadow: 1px 1px 5px 0px rgba(119, 44 , 232, 0.6);
+    width: 30%;
+    font-size: 0.8rem;
+    font-weight: lighter;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+
+/* temp flower party */
+.flower-party{
+    position: relative;
+}
+.flower-party h2{
+    border-bottom: 3px solid #fc4444;
+    padding-bottom: 7px;
+}
+
+.flower-party img{
+    width:50px;
+    position: absolute;
+    bottom: 35px;
+    right:5.5rem;
+}
+
 @-webkit-keyframes pulsate {
     0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
     50% {opacity: 1.0;}

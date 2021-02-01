@@ -74,7 +74,7 @@
                     <custom-button iconSize="mt-2" icon="/assets/site/images/seller-icons/left-arrow.svg" classes="shop-nav"></custom-button>
                 </div>
             </div> -->
-            <shop-comments></shop-comments>
+            <!-- <shop-comments></shop-comments> -->
         </div>
         <product-modal @addToBasket="addProductToCart" :theProduct="modalProduct"></product-modal>
     </div>    
@@ -217,6 +217,9 @@ export default {
                 shopProducts.value = d.data.products
                 shopProducts.value.map((p)=>{
                     p.formattedPrice = currencyFormatter(p.price + "")
+                    if(p.discount != 0){
+                        p.formattedFinalPrice = currencyFormatter((p.price-(p.price*p.discount/100))+"")
+                    }
                 })
             },(s,e)=>{
 

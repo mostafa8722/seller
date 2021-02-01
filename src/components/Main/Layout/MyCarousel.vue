@@ -55,10 +55,19 @@ export default {
     padding:10px 0px 10px 0px;
 }
 
+.no-padding{
+    padding:0px !important;
+}
+
 .my-carousel-item{
     width: 100%;
     flex-shrink: 0;
     scroll-snap-align: start;
+}
+
+.category{
+    width: 20vw;
+    margin-left: 9vw;
 }
 
 .right-scroll{

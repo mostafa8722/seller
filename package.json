@@ -10,7 +10,7 @@
   "dependencies": {
     "@vue/composition-api": "^1.0.0-beta.19",
     "animate.css": "^4.1.1",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
@@ -25,6 +25,7 @@
     "vue-cookies": "^1.7.4",
     "vue-css-percentage-circle": "^2.0.0",
     "vue-head": "^2.2.0",
+    "vue-meta": "^2.4.0",
     "vue-persian-datetime-picker": "^2.4.1",
     "vue-router": "^3.2.0",
     "vue-slider-component": "^3.2.11",

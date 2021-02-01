@@ -1,8 +1,8 @@
 <template>
     <div class="shop-thumb" v-if="grid">
-        <div class="shop-score pr-2 pl-2 pt-1 pb-1">
+        <!-- <div class="shop-score pr-2 pl-2 pt-1 pb-1">
             <span class="icon-star ml-1"></span>4.4
-        </div>
+        </div> -->
         <div class="shop-pin">
             <span class="icon-bookmark mr-1"></span>
         </div>

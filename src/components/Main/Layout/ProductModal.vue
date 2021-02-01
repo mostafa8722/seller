@@ -29,7 +29,13 @@
                 <div class="product-profile">
                     <h3>{{theProduct.name}}</h3>
                     <!-- <p class="mini-title tLighter mt-3">مشاهده ی محصولات بیشتر در <a href="sss">فروشگاه محمدی</a></p> -->
-                    <h3 class="mt-4">{{theProduct.formattedPrice}} تومان</h3>
+                    
+                    <div class="discount-price mt-4" v-if="theProduct.formattedFinalPrice">
+                        <span class="discount-initial">{{theProduct.formattedPrice + " تومان"}}</span>
+                        <span>{{theProduct.formattedFinalPrice + " تومان"}}</span>
+                       <!-- <span class="discount-percentage">{{theProduct.discount+ "%"}}</span> -->
+                    </div>
+                    <h3 class="mt-4" v-else>{{theProduct.formattedPrice}} تومان</h3>
                     <div class="delivery mt-4">
                         <div class="delivery-cube mini-title"></div>
                         <p class="tLighter mini-title">ارسال رایگان در 24 ساعت</p>
@@ -101,6 +107,7 @@
         
       </div>
     </div>
+    <div class="starburst example" v-if="theProduct.formattedFinalPrice" id="example-2"><span>{{theProduct.discount+ "%"}}</span></div>
   </div>
 </div>
 </template>
@@ -156,6 +163,17 @@ export default {
     font-size: 1rem;
 }
 
+.discount-price{
+    font-weight: bold;
+}
+
+.discount-initial{
+    text-decoration: line-through;
+    color: #969696;
+    margin-left: 5px;
+}
+
+
 .product-profile h5{
     font-size: 1rem;
 }
@@ -164,6 +182,10 @@ export default {
     }
     .product-page-image img{
         width: 100%;
+    }
+
+    .product-page-image img:hover{
+        cursor: pointer;
     }
 
     .delivery-cube{
@@ -231,4 +253,70 @@ export default {
         padding-left: 3px;
         padding-right: 3px;
     }
+
+    
+.starburst {
+  background: #F24949;  
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  color: #fff;
+}
+
+.starburst,
+.starburst span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.starburst span {
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  transform: rotate(45deg);
+}
+
+.starburst:before,
+.starburst:after ,
+.starburst span:before,
+.starburst span:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  z-index: -1;
+  transform: rotate(30deg);
+}
+
+.starburst:after {
+  transform: rotate(-30deg);
+}
+
+.starburst span:after {
+  transform: rotate(30deg);
+}
+.starburst span:before {
+  transform: rotate(-30deg);
+}
+
+.example {
+  position: absolute;
+  top: 6px;  
+  right: 0px;
+  margin-top: -1.25em;
+  margin-left: -1.25em;
+}
+
+#example-1 {
+  left: 25%;
+}
+
+#example-2 {
+  left: 75%;
+  transform: rotate(-45deg);
+}
 </style>

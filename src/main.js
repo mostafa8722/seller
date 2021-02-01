@@ -9,9 +9,12 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import VueCookies from 'vue-cookies'
 import AnimateCSS from 'animate.css'
 import VueHead from 'vue-head'
+import VueMeta from 'vue-meta'
+
+Vue.use(VueMeta)
 
 Vue.use(AnimateCSS)
-Vue.use(VueHead)
+// Vue.use(VueHead)
 
 Vue.use(VueCookies)
 

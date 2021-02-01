@@ -64,7 +64,7 @@
                                         <input v-model="discountName" class="pl-2" type="text">
                                         <button @click="()=>submitDiscount(false)">اعمال کد</button>
                                     </div>
-                                    <p class="discount-error" v-if="discountError">کد تخفیف اشتباه است</p>
+                                    <p class="discount-error" v-if="discountError.show">{{discountError.text}}</p>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +226,7 @@ export default {
     setup(props,context){
         const methods = ref([{text:"آنلاین",value:1}])
         const paymentMethod=ref(1)
-        const discountError = ref(false)
+        const discountError = ref({show:false,text:''})
         const address = ref({value:null,valid:true})
         const useCredit = ref(false)
         const credit = ref(765)
@@ -366,7 +366,7 @@ export default {
             f.append('name',discountName.value)
             if(discountName.value != null && discountName.value != ''){
                 authService.value.transmit('buy/discount/check/'+((id == false) ? currentCart.value : id),f,(s,d)=>{
-                    discountError.value = false
+                    discountError.value.show = false
                     cartErrors.value = null
                     payable.value = currencyFormatter(d.data.payable + "")
                     total.value = currencyFormatter(d.data.amount + "")
@@ -378,10 +378,10 @@ export default {
                 },(s,e)=>{
                         if(e.response.data.error.invalid_params){
                             if(e.response.data.error.invalid_params[0].field == 'name'){
-                                discountError.value = true
+                                discountError.value.show = true
+                                discountError.value.text = e.response.data.error.invalid_params[0].message
                             }
                         }
-                        console.log(e.response.data.error.invalid_params[0].field)
                 })
             }
         }
@@ -477,14 +477,26 @@ export default {
             activeCart.value = false
         }
         const deleteCart = ()=> {
-            authService.value.remove('/buy/order/'+currentCart.value , {} , (s,d)=>{
-                if(s == 200){
-                    stateValues.setCart([])
-                    context.root.$router.push('/')
-                }
-            },(s,e)=>{
+            authService.value.receive('/buy/order/active',{},(s,d)=>{
+                    if(s == 200){
+                        if(d.data.order.id){
+                            let deleteId = d.data.order.id
+                            authService.value.remove('/buy/order/'+currentCart.value , {} , (s,d)=>{
+                                if(s == 200){
+                                    stateValues.setCart([])
+                                    context.root.$router.push('/')
+                                }
+                            },(s,e)=>{
 
-            })
+                            })
+                        }
+                        else{
+                            stateValues.setCart([])
+                            context.root.$router.push('/')
+                        }
+                    }
+                },(s,e)=>{
+                })
         }
         //TIMES        
         const timeIntervalHandler = (id)=>{

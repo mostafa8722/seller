@@ -2,12 +2,12 @@
   <tr class="product">
     <td>{{theOrder.id}}</td>
     <td>{{theOrder.seller_name}}</td>
-    <td>{{theOrder.amount}}</td>
+    <!-- <td>{{theOrder.amount}}</td> -->
     <td>{{theOrder.discount}}</td>
     <td>{{theOrder.delivery_cost}}</td>
     <td>{{theOrder.payable}}</td>
     <td><Etiquette :status="parseInt(theOrder.status)"></Etiquette></td>
-    <td><router-link :to="{name:'Golpino User Profile Order Page',params:{id:theOrder.id}}"><button class="purple-btn">مشاهده / پیگیری</button></router-link></td>
+    <td><router-link :to="{name:'Golpino User Profile Order Page',params:{id:theOrder.id}}"><button class="white-btn">مشاهده / پیگیری</button></router-link><button @click="reOrderMe" class="purple-btn mr-1">سفارش مجدد</button></td>
   </tr>
 </template>
 <script>
@@ -16,6 +16,11 @@ export default {
   props: ["theOrder"],
   components:{
     Etiquette
+  },
+  methods:{
+    reOrderMe : function () {
+      this.$emit('reOrderMe',this.theOrder.id)
+    }
   }
 };
 </script>

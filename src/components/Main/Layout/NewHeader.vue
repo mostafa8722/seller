@@ -92,12 +92,12 @@
                 <p>راهنما</p>
               </router-link>
       </li>
-      <li class="nav-item ml-4 active">
+      <!-- <li class="nav-item ml-4 active">
         <a class="nav-link" href="https://golpino.com/mag/%d8%a7%d8%b4%d8%aa%d8%b1%d8%a7%da%a9-%d8%ae%d8%a7%d9%86%da%af%db%8c-%da%af%d9%84-%d9%88-%da%af%db%8c%d8%a7%d9%87/" target="_blank">
             <img src="/assets/site/images/seller-icons/gift-box.svg" class="nav-image mt-1 mb-1" alt="">
             <p>اشتراک ویژه خانگی</p>
         </a>
-      </li>
+      </li> -->
       <li class="nav-item dropdown pt-1 active">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div><img src="/assets/site/images/icon/bouquet.svg" class="nav-image cat-nav mb-1" alt=""></div>
@@ -113,6 +113,12 @@
           <a class="dropdown-item tLighter" @click="()=>redirectToSearch({id:6,name:'سبد گل'})" href="#">سبد گل</a>
           <a class="dropdown-item tLighter" @click="()=>redirectToSearch({id:14,name:'جام گل'})" href="#">جام گل</a>
         </div>
+      </li>
+      <li class="nav-item ml-4 active">
+              <a class="nav-link pt-1" href="https://golpino.com/mag/coffee/">
+                <img src="/assets/site/images/seller-icons/gift-box.svg" class="nav-image mb-1" alt="">
+                <p>اشتراک گل</p>
+              </a>
       </li>
     </ul>
     <router-link to="/">
@@ -133,12 +139,12 @@
                             <p>{{(global.user.value.name == "" ? 'ورود / عضویت' : global.user.value.name)}}</p>
                         </router-link>
       </li>
-      <li class="nav-item ml-4 active">
+      <!-- <li class="nav-item ml-4 active">
         <a class="nav-link" href="https://golpino.com/mag/%d9%81%d8%b1%d9%88%d8%b4-%da%af%d9%84-%d9%88%db%8c%da%98%d9%87-%da%a9%d8%a7%d9%81%d9%87-%d9%87%d8%a7/" target="_blank">
             <img src="/assets/site/images/seller-icons/gift.svg" class="nav-image mt-1 mb-1" alt="">
             <p class="p-0 m-0">اشتراک گل</p>
         </a>
-      </li>
+      </li> -->
       <li class="nav-item ml-4 active animate__animated" id="theCart">
         <a class="nav-link pt-1" id="theCart" href="#" @click="()=>toggleCart(false)">
             <div class="cart-count" v-if="cartItems.length>=1">{{cartItems.length}}</div>
