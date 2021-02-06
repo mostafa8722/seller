@@ -35,8 +35,17 @@ const user = ref({
   name:"",
   addresses:[],
   phone:'',
-  isLoggedIn:false
+  isLoggedIn:false,
+  seller:{
+    name:'',
+    desc:''
+  }
 })
+
+const setUserSeller = (n,d) => {
+  user.value.seller.name = n
+  user.value.seller.desc = d
+}
 
 const setUserAuth = (token) => {
   user.value.token = token
@@ -63,4 +72,4 @@ const setUserType = (x) => {
 }
 
 
-export default { setUserPhone,state,alertToggle,user,setUserAuth,setUserName,setUserAddresses,toggleLogin,setUserType}
+export default {setUserSeller, setUserPhone,state,alertToggle,user,setUserAuth,setUserName,setUserAddresses,toggleLogin,setUserType}

@@ -30,7 +30,7 @@ const service = () => {
           // "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
           // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization, access-control-allow-origin",
           // "Access-Control-Request-Headers": "X-PINGOTHER, Content-Type",
-          // 'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded'
           // 'X-PINGOTHER':'pingpong',
           
 
@@ -47,7 +47,7 @@ const service = () => {
         headers: headers,
         // withCredentials: false,
       })
-      myService.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+      
       myService.interceptors.request.use(request => {
         if(request.data && request.data.get){
           if(request.data.get('mobile')){

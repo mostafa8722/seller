@@ -30,7 +30,7 @@ const service = (requireAuth) => {
           // "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
           // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization, access-control-allow-origin",
           // "Access-Control-Request-Headers": "X-PINGOTHER, Content-Type",
-          // 'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded'
           // 'X-PINGOTHER':'pingpong',
           
 
@@ -70,27 +70,20 @@ const service = (requireAuth) => {
         }
         return request
       })
+
+
       // myService.defaults.timeout = 5000
     
-      // myService.interceptors.response.use(handleSuccess);
 
-      // const handleSuccess = (response) => {
-      //   console.log("THIS IS THE RESPONSE" , response)
-      //   return response;
-      // }      
-      
-      let config={
-        headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
-    }
       myService.receive = (path, data , mySuccess ,myError) => {
 
-        return myService.get(path , data ,config).then(
+        return myService.get(path , data).then(
           (response) => mySuccess(response.status, response.data)
         ).catch((e)=> useErrorHandler(e,myError))
       }
 
       myService.transmit = (path, payload, mySuccess ,myError) => {
-        return myService.post(path , payload,config).then((response) => mySuccess(response.status, response.data))
+        return myService.post(path , payload).then((response) => mySuccess(response.status, response.data))
         .catch((e) => useErrorHandler(e,myError))
       }
       

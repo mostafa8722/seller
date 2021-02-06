@@ -38,9 +38,6 @@ export default {
     created(){
         this.authService.receive('seller/base',{},(s,d)=>{
             this.global.setUserName(d.data.name)
-            if(d.data.status != 4){
-                this.verified = false
-            }
         },(s,e)=>{
             
         })

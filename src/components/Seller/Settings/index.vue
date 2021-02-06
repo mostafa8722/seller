@@ -214,7 +214,7 @@ export default {
         const sendCost = reactive({deactive:true,edit:false,fields:[{value:{value:null,valid:true},name:'مسافت'},{value:{value:null,valid:true},name:'هزینه'}]})
         const serviceRange = ref({deactive:true,edit:false,fields:[{value:{value:null,valid:true}}]})
         const shopAddress = ref({deactive:true,edit:false,fields:[{value:{value:null,valid:true}}]})
-        const descs = ref({deactive:true,edit:false,fields:[{name:'نام فروشنده',value:{value:null,valid:true}},{name:'توضیحات فروشگاه',value:{value:null,valid:true}}]})
+        const descs = ref({deactive:true,edit:false,fields:[{name:'نام فروشنده',value:{value:null,valid:true}},{name:'توضیحات فروشگاه',value:{value:(global.user.value.seller.desc == '' ? null : global.user.value.seller.desc),valid:true}}]})
         const logoImage = ref({deactive:true,logo:null,banner:null,licence:null})
         const theImage = ref({logo:null,banner:null,licence:null})
         const fData = ref(new FormData())
@@ -260,7 +260,17 @@ export default {
 
         const getSellerInfos = () => {
             // GET LOGO PICS
-            
+            authService.value.receive('seller/base',{},(s,d)=>{
+                if(s == 200){
+                    if(d.data.specification != null && d.data.desc != null){
+                        descs.value.fields[0].value.value = d.data.specification
+                        descs.value.fields[1].value.value = d.data.desc
+                    }
+                    if(d.data.status != 4){
+                        this.verified = false
+                    }
+                }
+            },(s,e)=>{})
             authService.value.receive('seller/base/image',{},(s,d)=>{
                 if(s == 200){
                     if(d.data != [] && d.data != null){

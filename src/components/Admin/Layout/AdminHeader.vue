@@ -46,12 +46,22 @@
                     <router-link :to="{name:'Golpino Display Discounts Page'}">
                         <a class="nav-link" href="#">تخفیف ها <span class="sr-only">(current)</span></a>
                     </router-link>
+                </li>
+                <li class="nav-item active">
+                    <router-link :to="{name:'Golpino Complaint Subjects Page'}">
+                        <a class="nav-link" href="#">موضوعات تماس با ما<span class="sr-only">(current)</span></a>
+                    </router-link>
                 </li>                    
                 <li class="nav-item active">
                     <router-link :to="{name:'Golpino Verify Shops Page'}">
-                        <a class="nav-link" href="#">فروشگاه ها <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">تأیید فروشگاه<span class="sr-only">(current)</span></a>
                     </router-link>
-                </li>                    
+                </li>
+                <li class="nav-item active">
+                    <router-link :to="{name:'Golpino Admin Shops Info Page'}">
+                        <a class="nav-link" href="#">لیست فروشگاه ها<span class="sr-only">(current)</span></a>
+                    </router-link>
+                </li>
                 <li class="nav-item active" @click="logout">
                     <a class="nav-link" href="#">خروج <span class="sr-only">(current)</span></a>
                 </li>                    

@@ -47,7 +47,7 @@ const service = (requireAuth) => {
         headers: headers,
         // withCredentials: false,
       })
-      myService.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+      
       myService.interceptors.request.use(request => {
         if(request.data && request.data.get){
           if(request.data.get('mobile')){
@@ -70,7 +70,7 @@ const service = (requireAuth) => {
         }
         return request
       })
-      // myService.defaults.timeout = 5000
+      myService.defaults.timeout = 5000
     
       // myService.interceptors.response.use(handleSuccess);
 

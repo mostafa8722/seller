@@ -2,15 +2,15 @@
   <tr class="product">
     <!-- <td>{{theOrder.id}}</td> -->
     <td class="small-cell">{{theOrder.seller_name}}</td>
-    <td>{{theOrder.address}}</td>
+    <td class="mid-cell"><p>{{theOrder.address}}</p></td>
     <td class="small-cell">{{theOrder.user_phone}}</td>
     <!-- <td>{{theOrder.amount}}</td>
     <td>{{theOrder.discount}}</td> -->
     <td class="small-cell">{{theOrder.delivery_cost}}</td>
     <td class="small-cell">{{theOrder.payable}}</td>
     <td class="small-cell"><Etiquette :status="parseInt(theOrder.status)"></Etiquette></td>
-    <td><button @click="reviseOrder" class="purple-btn ml-2">ثبت وضعیت</button><custom-input placeholder="انتخاب وضعیت" inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="half-width" v-bind:theModel.sync="status" :selectItems="stati" classes="no-border light-facade"></custom-input></td>
-    <td><router-link :to="{name:'Golpino Admin Order Page' , params:{id:theOrder.id}}"><button class="purple-btn ml-2">مشاهده سفارش</button></router-link></td>
+    <td class="large-cell"><button @click="reviseOrder" class="purple-btn ml-2">ثبت وضعیت</button><custom-input placeholder="انتخاب وضعیت" inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="half-width" v-bind:theModel.sync="status" :selectItems="stati" classes="no-border light-facade"></custom-input></td>
+    <td class="small-cell"><router-link :to="{name:'Golpino Admin Order Page' , params:{id:theOrder.id}}"><button class="purple-btn ml-2">مشاهده سفارش</button></router-link></td>
   </tr>
 </template>
 <script>
@@ -44,7 +44,6 @@ export default {
 td {
   border: 1px solid rgba(127, 127, 127, 0.2);
   white-space: nowrap;
-  width:25%;
   padding: 0.5rem;
 }
 
@@ -60,5 +59,19 @@ tr {
   width: 5%;
 }
 
+.mid-cell{
+  width:12vw;
+}
+
+.mid-cell p{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width:25vw;
+}
+
+.large-cell{
+  width: 15vw;
+}
 
 </style>

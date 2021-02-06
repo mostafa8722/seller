@@ -300,6 +300,34 @@ const routes = [
       meta:{
         requiresAdmin:true
       }
+    },{
+      path: '/qwertyzxcvb/admin/shops',
+      name: 'Golpino Admin Shops Info Page',
+      component: () => import('../components/Admin/Shops/ShopList.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },{
+      path: '/qwertyzxcvb/admin/view/subjects',
+      name: 'Golpino Complaint Subjects Page',
+      component: () => import('../components/Admin/Display/Subjects.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },{
+      path: '/qwertyzxcvb/admin/add/subject',
+      name: 'Golpino Add Subject Page',
+      component: () => import('../components/Admin/Forms/Subject.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },{
+      path: '/qwertyzxcvb/admin/edit/subject/:id',
+      name: 'Golpino Edit Subject Page',
+      component: () => import('../components/Admin/Forms/Subject.vue'),
+      meta:{
+        requiresAdmin:true
+      }
     },
   // SELLER
   {

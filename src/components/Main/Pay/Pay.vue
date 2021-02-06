@@ -421,12 +421,12 @@ export default {
                                                 window.location.href = 'https://api.golpino.com/api/pay/'+ nd.data.id
                                             }
                                         }
-                                    },(nns,nne)=>{
-
+                                    },(theServer,theError)=>{
+                                            
                                     })
                                 }
                         },(nse,ne)=>{
-
+                                
                         })
                     }
                     else{

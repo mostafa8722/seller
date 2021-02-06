@@ -26,7 +26,6 @@
 <script>
 import Header from "./components/Main/Layout/NewHeader"
 import Footer from "./components/Main/Layout/NewFooter"
-import AdminHeader from "./components/Main/Layout/AdminHeader"
 import global from "./state/global"
 import stateValues from "./state/values"
 import EventBus from "./EventBus/EventBus"
@@ -43,7 +42,6 @@ export default {
   components:{
     Header,
     Footer,
-    AdminHeader,
     SellerPage,
     ForSeller,
     SellerView,

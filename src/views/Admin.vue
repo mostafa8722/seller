@@ -7,7 +7,7 @@
 
 <script>
 import IconImage from '../components/Common/icon'
-import AdminHeader from '../components/Main/Layout/AdminHeader'
+import AdminHeader from '../components/Admin/Layout/AdminHeader'
 export default {
     components:{
         IconImage,

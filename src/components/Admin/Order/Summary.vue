@@ -104,6 +104,7 @@ export default {
     font-size: 0.9rem;
     font-weight: lighter;
     min-height: 50vh;
+    /* width: 100vw; */
 }
 
 .search-section{
