@@ -24,6 +24,11 @@ const routes = [
         path:'orders/:id',
         name:'Golpino User Profile Order Page',
         component:()=>import ('../components/Main/Orders/AnOrder.vue')
+      },
+      {
+        path:'comment/:id',
+        name:'Golpino User Comment Page',
+        component:()=>import ('../components/Main/Orders/comment/CommentForm.vue')
       }
     ]
   },
@@ -325,6 +330,35 @@ const routes = [
       path: '/qwertyzxcvb/admin/edit/subject/:id',
       name: 'Golpino Edit Subject Page',
       component: () => import('../components/Admin/Forms/Subject.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },{
+      path: '/qwertyzxcvb/admin/complaints',
+      name: 'Golpino Admin Contacts Page',
+      component: () => import('../components/Admin/Display/ContactUs.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },{
+      path: '/qwertyzxcvb/admin/comments',
+      name: 'Golpino Admin Comments Page',
+      component: () => import('../components/Admin/Comments/Comments.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },{
+      path: '/qwertyzxcvb/admin/comment/:id',
+      name: 'Golpino Admin Comment Page',
+      component: () => import('../components/Admin/Comments/partials/Comment.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },
+    {
+      path: '/qwertyzxcvb/admin/users',
+      name: 'Golpino Admin Users Page',
+      component: () => import('../components/Admin/Users/Users.vue'),
       meta:{
         requiresAdmin:true
       }

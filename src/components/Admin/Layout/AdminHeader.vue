@@ -5,7 +5,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse admin-header" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <router-link :to="{name:'Golpino Display Categories Page'}">
@@ -51,6 +51,11 @@
                     <router-link :to="{name:'Golpino Complaint Subjects Page'}">
                         <a class="nav-link" href="#">موضوعات تماس با ما<span class="sr-only">(current)</span></a>
                     </router-link>
+                </li>
+                <li class="nav-item active">
+                    <router-link :to="{name:'Golpino Admin Contacts Page'}">
+                        <a class="nav-link" href="#">شکایات<span class="sr-only">(current)</span></a>
+                    </router-link>
                 </li>                    
                 <li class="nav-item active">
                     <router-link :to="{name:'Golpino Verify Shops Page'}">
@@ -62,8 +67,18 @@
                         <a class="nav-link" href="#">لیست فروشگاه ها<span class="sr-only">(current)</span></a>
                     </router-link>
                 </li>
+                <li class="nav-item active">
+                    <router-link :to="{name:'Golpino Admin Comments Page'}">
+                        <a class="nav-link" href="#">نظرات<span class="sr-only">(current)</span></a>
+                    </router-link>
+                </li>
+                <li class="nav-item active">
+                    <router-link :to="{name:'Golpino Admin Users Page'}">
+                        <a class="nav-link" href="#">کاربران<span class="sr-only">(current)</span></a>
+                    </router-link>
+                </li>
                 <li class="nav-item active" @click="logout">
-                    <a class="nav-link" href="#">خروج <span class="sr-only">(current)</span></a>
+                    <a class="nav-link tBold" href="#">خروج <span class="sr-only">(current)</span></a>
                 </li>                    
             </ul>
         </div>
@@ -82,3 +97,9 @@ export default {
     inject:['global']
 }
 </script>
+<style scoped>
+.admin-header{
+    font-size: 0.8rem;
+    font-weight: lighter;
+}
+</style>

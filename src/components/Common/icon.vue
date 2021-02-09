@@ -1,6 +1,6 @@
 <template>
-    <img v-if="clickable" :src="address" :class="classes + ' clickable'" @click="onClickHandler" alt="icon">
-    <img v-else :src="address" :class="classes" alt="icon">
+    <img @mouseover="()=>hover(true)" @mouseleave="()=>hover(false)" v-if="clickable" :src="address" :class="classes + ' clickable'" @click="onClickHandler" alt="icon">
+    <img @mouseover="()=>hover(true)" @mouseleave="()=>hover(false)" v-else :src="address" :class="classes" alt="icon">
 </template>
 <script>
 export default {
@@ -15,11 +15,23 @@ export default {
         clickable:{
             type:Boolean,
             default:false
+        },
+        hoverable:{
+            type:Boolean,
+            default:false
         }
     },
     methods:{
         onClickHandler:function(){
             this.$emit('iconClicked')
+        },
+        hover:function(which){
+            if(this.hoverable){
+                if(which)
+                    this.$emit('hovered')
+                else
+                    this.$emit('unhovered')
+            }
         }
     }
 }

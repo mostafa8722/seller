@@ -1,6 +1,6 @@
 <template>
   <tr class="product">
-    <!-- <td>{{theOrder.id}}</td> -->
+    <td class="small-cell">{{theOrder.id}}</td>
     <td class="small-cell">{{theOrder.seller_name}}</td>
     <td class="mid-cell"><p>{{theOrder.address}}</p></td>
     <td class="small-cell">{{theOrder.user_phone}}</td>
@@ -64,14 +64,12 @@ tr {
 }
 
 .mid-cell p{
-  white-space: nowrap;
+  white-space: pre-wrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  width:25vw;
 }
 
 .large-cell{
-  width: 15vw;
+  width: 23%;
 }
 
 </style>

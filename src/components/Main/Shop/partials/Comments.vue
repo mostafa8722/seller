@@ -2,7 +2,7 @@
     <div>
         <h3>امتیازات و نظرات</h3>
         <p>امتیازات و نظرات مشتریان را راجع به محصولات مشاهده کنید</p>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-6">
                 <p class="overall">4.8</p>
                 <image-icon v-for="(r,i) in fullStars" :key="i" address="/assets/site/images/seller-icons/star-gold.svg"></image-icon>
@@ -45,12 +45,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <a-comment></a-comment>
-        <a-comment></a-comment>
-        <a-comment></a-comment>
-        <a-comment></a-comment>
-        <a-comment></a-comment>
+        </div> -->
+        <a-comment :theShop="theShop" :theComment="c" v-for="(c,i) in comments" :key="i"></a-comment>
     </div>
 </template>
 <script>
@@ -64,6 +60,7 @@ export default {
     data:()=>({
         stars:4.1
     }),
+    props:['comments','theShop'],
     computed:{
         fullStars:function(){
             let fulls = []

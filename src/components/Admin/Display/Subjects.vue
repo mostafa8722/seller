@@ -9,17 +9,17 @@
                 <th>نام</th>
                 <th>ابزار</th>
             </tr>
-            <show-district @deleteMe="remove" v-for="(s,i) in subjects" :key="i" :theSubject="s" ></show-district>
+            <show-subject @deleteMe="remove" v-for="(s,i) in subjects" :key="i" :theSubject="s" ></show-subject>
         </table>
     </div> 
 </template>
 <script>
 import Service from "../../../utils/admin-service"
 import {ref,computed,onMounted,inject} from "@vue/composition-api"
-import ShowDistrict from "./partials/district"
+import ShowSubject from "./partials/subject"
 export default {
     components:{
-        ShowDistrict
+        ShowSubject
     },
     setup(){
         const theService = computed(()=>{
@@ -29,14 +29,14 @@ export default {
         const subjects = ref(null)
 
         onMounted(() => {
-            theService.value.receive('admin/contact/subjects',{},getSubjects,errorHandler)
+            theService.value.receive('admin/contact/subject',{},getSubjects,errorHandler)
         })
 
-        const errorHandler = (e)=>{
+        const errorHandler = (s,e)=>{
 
         }
         const getSubjects = (status,data) => {
-            districts.value = data.data
+            subjects.value = data.data
         }
 
         const remove = (id) => {
@@ -46,7 +46,7 @@ export default {
         const successfullReq = (s,d) => {
             if(s == 200){
                 global.alertToggle('درخواست موفقیت آمیز بود!')
-                theService.value.receive('admin/district/1',{},getDistricts,errorHandler)
+                theService.value.receive('admin/contact/subject',{},getSubjects,errorHandler)
             }
         }
 

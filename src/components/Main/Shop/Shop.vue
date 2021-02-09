@@ -74,7 +74,7 @@
                     <custom-button iconSize="mt-2" icon="/assets/site/images/seller-icons/left-arrow.svg" classes="shop-nav"></custom-button>
                 </div>
             </div> -->
-            <!-- <shop-comments></shop-comments> -->
+            <shop-comments :comments="theShop.comments" :theShop="theShop.name"></shop-comments>
         </div>
         <product-modal @addToBasket="addProductToCart" :theProduct="modalProduct"></product-modal>
     </div>    

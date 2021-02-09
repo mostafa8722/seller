@@ -70,7 +70,7 @@ const service = (requireAuth) => {
         }
         return request
       })
-      myService.defaults.timeout = 5000
+      // myService.defaults.timeout = 5000
     
       // myService.interceptors.response.use(handleSuccess);
 

@@ -24,7 +24,7 @@
     <div v-else-if="kind=='area'" :class="'shownInput text-input ' + container">
         <image-icon v-if="icon!=''" :address="icon" classes="mid text-input-icon" ></image-icon>
         <label v-if="label != ''" :for="id">{{label}}</label>
-        <textarea :rows="rows" :id="id" type="text" :class="'custom-text ' + classes" v-model="myModel.value" :placeholder="placeholder"></textarea>
+        <textarea :rows="rows" :id="id" type="text" :class="'custom-text ' + classes+ (!myModel.valid ? ' invalid ' : '')" v-model="myModel.value" :placeholder="placeholder"></textarea>
         <p v-if="!myModel.valid" class="error-message">{{(myModel.message ? myModel.message : '')}}</p>
     </div>
     <div v-else-if="kind=='tag'" :class="'shownInput text-input ' + container">

@@ -74,9 +74,16 @@ export default {
           // alert(follow)
           window.location.href = "https://app.golpino.com/payment/success?id=" + id + "&follow=" + follow
         }
-        else {
-            window.location.href = 'https://app.golpino.com'
-          }
+        if(window.location.href.includes('shop')){
+          let url = window.location.href
+          
+          let res = url.split("/shop/")
+
+          window.location.href = "https://app.golpino.com/shop/" + res[1]
+        }
+        else{
+           window.location.href = 'https://app.golpino.com'
+        }
       }
   },
   methods:{
@@ -243,10 +250,34 @@ button:hover{
     padding-bottom: 8px;
 }
 
+.green-btn{
+    background-color: #30ab0e;
+    color: #fff;
+    border:none;
+    border-radius: 5px;
+    width: 100px;
+    font-size: 0.8rem;
+    font-weight: lighter;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
 .white-btn{
     background-color: #fff;
     border:1px solid #000;
     color:#000;
+    border-radius: 5px;
+    width: 100px;
+    font-size: 0.8rem;
+    font-weight: lighter;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.gray-btn{
+    background-color: #fff;
+    border:1px solid #bababa;
+    color:#bababa;
     border-radius: 5px;
     width: 100px;
     font-size: 0.8rem;

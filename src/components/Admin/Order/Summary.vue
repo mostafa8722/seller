@@ -12,7 +12,7 @@
             </div>
             <table class="mt-2">
                 <tr>
-                    <!-- <th>شماره سفارش</th> -->
+                    <th class="small-cell">شماره سفارش</th>
                     <th class="small-cell">نام فروشگاه</th>
                     <!-- <th>جمع کل</th>
                     <th>تخفیف</th> -->

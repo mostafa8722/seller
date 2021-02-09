@@ -25,7 +25,7 @@
               container="full-width"
               classes="full-width"
               v-bind:theModel.sync="theComplaint.user.name"
-              label="نام و نام خانوادگی *"
+              label="نام و نام خانوادگی"
               placeholder="نام و نام خانوادگی"
             ></custom-input>
           </div>
@@ -62,16 +62,20 @@
           </div>
         </div>
         <div class="upload-box" id="dropBox" @dragleave="(e)=>dragLeaveHandler(e)" @dragover="(e)=>dragOverHandler(e)"  @drop="(e)=>dropHandler(e)">
-          <p>عکس یا ویدئوی خود را جهت بارگذاری داخل کادر بیاندازید</p>
+          <p> تصویر مورد نظر خود را جهت بارگذاری داخل کادر بیاندازید</p>
           <p>حداکثر 50 مگابایت</p>
           <custom-button
-            label="انتخاب عکس یا ویدئو"
+            label="انتخاب عکس"
             iconSize="big"
             classes="file-btn"
+            @clicked="openInput"
             icon="/assets/site/images/seller-icons/upload.svg"
           ></custom-button>
           <div class="file-show" v-if="files != ''">
             <img :src="img" alt="image">
+          </div>
+          <div class="image-error" v-if="imageError != ''">
+            <p>{{imageError}}</p>
           </div>
         </div>
         <input
@@ -84,7 +88,7 @@
           accept="image/*"
         />
         <div class="actually-send">
-          <button class="purple-btn mt-2">ثبت شکایت</button>
+          <button class="purple-btn mt-2" @click="sendComplaint">ثبت شکایت</button>
         </div>
       </div>
     </div>
@@ -146,10 +150,11 @@
 import IconImage from "../../Common/icon";
 import CustomInput from "../../Common/CustomInput";
 import CustomButton from "../../Common/customButton";
-import { ref } from "@vue/composition-api";
+import { computed, onMounted, ref } from "@vue/composition-api";
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LIcon,LControl } from "vue2-leaflet";
 import "leaflet/dist/leaflet.css";
+import Service from "../../../utils/service"
 export default {
   components: {
     IconImage,
@@ -160,7 +165,11 @@ export default {
     LMarker,
      LIcon
   },
-  setup() {
+  setup(props,context) {
+    const theService = computed(()=>{
+      return Service(false)
+    })
+    const imageError = ref('')
     const complaintTypes = ref([
       { text: "دیرکرد", value: 1 },
       { text: "خرابی", value: 2 },
@@ -171,7 +180,17 @@ export default {
       user: { name: {value:null,valid:true}, phone: {value:null,valid:true} ,email:{value:null,valid:true}},
     });
     const step = ref(3);
+    onMounted(()=>{
+      theService.value.receive('contact',{},(s,d)=>{
+        d.data.map((c)=>{
+          c.text = c.desc
+          c.value = c.id
+        })
+        complaintTypes.value = d.data
+      },(s,e)=>{
 
+      })
+    })
     const mapOptions=ref({
         zoom: 13,
       center: latLng(35.76, 51.433611),
@@ -195,14 +214,12 @@ export default {
     const centerUpdate = (center)=> {
         address.value.lat = center.lat
         address.value.lng = center.lng
-        console.log({center})
-        console.log({address:address.value})
         mapOptions.value.currentCenter = center;
     }
 
     const files = ref('')
     const img = ref(null)
-
+    const imgFile = ref(null)
     const  dropHandler = (ev) => {
       console.log('File(s) dropped')
       document.getElementById('dropBox').style.background = '#fff'
@@ -218,7 +235,6 @@ export default {
             var file = ev.dataTransfer.items[i].getAsFile()
             files.value = file
             img.value = URL.createObjectURL(file)
-            // console.log('... file[' + i + '].name = ' + file.kind)
           }
         }
       } else {
@@ -247,8 +263,86 @@ export default {
       ev.preventDefault()
     }
 
+    const sendComplaint = () => {
+      let isValid = true
+      if(theComplaint.value.user.phone.value == null || theComplaint.value.user.phone.value == ''){
+        if(theComplaint.value.user.email.value == null || theComplaint.value.user.email.value == ''){
+          isValid = false
+          theComplaint.value.user.phone.valid = false
+          theComplaint.value.user.email.valid = false
+          theComplaint.value.user.phone.message = 'وارد کردن یکی از دو فیلد نام یا ایمیل اجباریست'
+          theComplaint.value.user.email.message = 'وارد کردن یکی از دو فیلد نام یا ایمیل اجباریست'
+        }
+      }
+      if(theComplaint.value.text.value == null || theComplaint.value.text.value == ''){
+        isValid = false
+        theComplaint.value.text.valid = false
+        theComplaint.value.text.message = 'لطفا توضیحات خود را وارد کنید'
+      }
+      if(theComplaint.value.type.value == null){
+        isValid = false
+        theComplaint.value.type.valid = false
+        theComplaint.value.type.message = 'لطفا موضوع را انتخاب کنید'
+      }
+      if(isValid){
+        let f = new FormData()
+        if(!(theComplaint.value.user.email.value == null || theComplaint.value.user.email.value == '')){
+          f.append('email',theComplaint.value.user.email.value)
+        }
+        if(!(theComplaint.value.user.phone.value == null || theComplaint.value.user.phone.value == '')){
+          f.append('phone',theComplaint.value.user.phone.value)
+        }
+        if(!(theComplaint.value.user.name.value == null || theComplaint.value.user.name.value == '')){
+          f.append('name',theComplaint.value.user.name.value)
+        }
+        if(!(theComplaint.value.type.value == null || theComplaint.value.type.value == '')){
+          f.append('subject_id',theComplaint.value.type.value.value)
+        }
+        if(files.value != ''){
+          f.append('image',files.value)
+        }
+        f.append('desc',theComplaint.value.text.value)
+        theService.value.transmit('contact',f,(s,d)=>{
+          context.root.$router.push('/')
+        },(s,e)=>{
+          if(e.response.data.error.invalid_params){
+            e.response.data.error.invalid_params.map((ep)=>{
+              if(ep.field == 'phone'){
+                theComplaint.value.user.phone.valid = false
+                theComplaint.value.user.phone.message = ep.message
+              }
+              else if(ep.field == 'email'){
+                theComplaint.value.user.email.valid = false
+                theComplaint.value.user.email.message = ep.message
+              }
+              else if(ep.field == 'image'){
+                imageError.value = ep.message
+              }
+              else if(ep.field == 'desc'){
+                theComplaint.value.text.valid = false
+                theComplaint.value.text.message = ep.message
+              }
+              else if(ep.field == 'subject_id'){
+                theComplaint.value.type.valid = false
+                theComplaint.value.type.message = ep.message
+              }
+            })
+          }
+        })
+      }
 
-    return { complaintTypes,dragLeaveHandler, theComplaint, step,mapOptions,centerUpdate,zoomUpdate,img ,address,files,dragOverHandler,dropHandler};
+    }
+
+    const openInput = () => {
+        document.getElementById("img").click()
+    }
+
+   const addImage = (e) => {
+      img.value = URL.createObjectURL(e.target.files[0])
+      files.value = e.target.files[0]
+    }
+    
+    return { addImage,openInput,imageError,sendComplaint,complaintTypes,dragLeaveHandler, theComplaint, step,mapOptions,centerUpdate,zoomUpdate,img ,address,files,dragOverHandler,dropHandler};
   },
 };
 </script>
@@ -256,6 +350,16 @@ export default {
 .contact-page {
   font-weight: lighter;
 }
+
+.hiddenInput{
+    position: absolute;
+    visibility: hidden;
+}
+
+.image-error p{
+  color:#ff3629;
+}
+
 
 .contact-page h1 {
   font-weight: bold;

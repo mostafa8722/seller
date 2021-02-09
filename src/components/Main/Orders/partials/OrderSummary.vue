@@ -7,7 +7,7 @@
     <td>{{theOrder.delivery_cost}}</td>
     <td>{{theOrder.payable}}</td>
     <td><Etiquette :status="parseInt(theOrder.status)"></Etiquette></td>
-    <td><router-link :to="{name:'Golpino User Profile Order Page',params:{id:theOrder.id}}"><button class="white-btn">مشاهده / پیگیری</button></router-link><button @click="reOrderMe" class="purple-btn mr-1">سفارش مجدد</button></td>
+    <td><router-link :is="!(theOrder.status != 0 && theOrder.status != 1 && theOrder.status != 7) ? 'span' : 'router-link'" :to="{name:'Golpino User Comment Page',params:{id:theOrder.id}}"><button :class="'ml-1' + ((theOrder.status != 0 && theOrder.status != 1 && theOrder.status != 7) ? ' white-btn' : ' gray-btn deactive')">ثبت نظر</button></router-link><router-link :to="{name:'Golpino User Profile Order Page',params:{id:theOrder.id}}"><button class="white-btn">مشاهده / پیگیری</button></router-link><button @click="reOrderMe" class="purple-btn mr-1">سفارش مجدد</button></td>
   </tr>
 </template>
 <script>

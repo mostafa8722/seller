@@ -36,7 +36,7 @@ export default {
         })
 
         const getSubjectToEdit = (s,d) => {
-            subject.value = {name:{value:d.data.name,valid:true},id:d.data.id}
+            subject.value = {name:{value:d.data.desc,valid:true},id:d.data.id}
         }
         //form
         const subject = ref({name:{value:null,valid:true}})

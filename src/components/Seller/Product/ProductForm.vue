@@ -200,6 +200,7 @@ export default {
                         product.name = {value:d.data.product.name,valid:true}
                         product.price = {value:d.data.product.price,valid:true}
                         product.remaining = {value:d.data.product.remain,valid:true}
+                        alert("x")
                         if(d.data.category.parent_id == null)
                             product.category_id ={value:{value:d.data.product.category_id,text:d.data.category.name},valid:true}
                         else{
