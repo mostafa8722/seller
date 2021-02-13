@@ -21,8 +21,8 @@ const service = (requireAuth) => {
 
     let headers = {
       common:{
-        // "Accept":'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-        // 'Content-Type': 'application/x-www-form-urlencoded'
+        "Accept":'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'Content-Type': 'application/json'
       },
           
           // "Access-Control-Allow-Origin": '*',
@@ -30,7 +30,7 @@ const service = (requireAuth) => {
           // "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
           // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization, access-control-allow-origin",
           // "Access-Control-Request-Headers": "X-PINGOTHER, Content-Type",
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/json'
           // 'X-PINGOTHER':'pingpong',
           
 

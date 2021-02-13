@@ -246,16 +246,20 @@ export default {
         })
 
         watch(()=>sendCost.fields[0].value.value,(n,o)=>{
+            let x = false
             if(n!=o){
                 if(sellerSendCosts.value != null && sellerSendCosts.value != []){
                     sellerSendCosts.value.map((sc)=>{
                         if(n.value == sc.distance_id){
                             sendCost.fields[1].value.value = sc.cost
+                            x = true
                         }
                     })
                 }
             }
-            
+            if(!x){
+                sendCost.fields[1].value.value = 'نا معلوم'
+            }
         })
 
         const getSellerInfos = () => {

@@ -13,17 +13,19 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="a-pay-form">
+                    <div class="a-pay-form">
                         <div class="pay-form-title">
                                 <icon-image address="/assets/site/images/seller-icons/address.svg"></icon-image>
                                 <p class="mini-title tLighter mr-1">امتیاز سفارش</p>
                         </div>
                         <div class="pay-form-form">
                             <div class="row">
-                                <div class="col-7">
-                                    میزان رضایت خود از سفارش را مشخص کنید
+                                <div class="col-3">
+                                    <p :class="scoreSubmitted ? 'green' : ''">
+                                        {{scoreText}}
+                                    </p>
                                 </div>
-                                <div class="col-5 score" @mouseleave="()=>saveStars(savedStars)">
+                                <div class="col-6 score" @mouseleave="()=>saveStars(savedStars)">
                                     <p class="mini-title tNormal">امتیاز : {{savedStars + 1}} از 5</p>
                                     <icon-image :hoverable="true" :clickable="true" @iconClicked="()=>saveStars(4)" @hovered="()=>starChanger(true,4)" @unhovered="()=>starChanger(false,4)" :address="starIcon5" classes="big"></icon-image>
                                     <icon-image :hoverable="true" :clickable="true" @iconClicked="()=>saveStars(3)" @hovered="()=>starChanger(true,3)" @unhovered="()=>starChanger(false,3)" :address="starIcon4" classes="big"></icon-image>
@@ -31,9 +33,12 @@
                                     <icon-image :hoverable="true" :clickable="true" @iconClicked="()=>saveStars(1)" @hovered="()=>starChanger(true,1)" @unhovered="()=>starChanger(false,1)" :address="starIcon2" classes="big"></icon-image>
                                     <icon-image :hoverable="true" :clickable="true" @iconClicked="()=>saveStars(0)" @hovered="()=>starChanger(true,0)" @unhovered="()=>starChanger(false,0)" :address="starIcon1" classes="big"></icon-image>
                                 </div>
+                                <div class="col-3">
+                                    <button @click="submitScore" class="purple-btn">ثبت امتیاز</button>
+                                </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="a-pay-form">
                         <div class="pay-form-title">
                                 <icon-image address="/assets/site/images/seller-icons/description.svg"></icon-image>
@@ -255,7 +260,22 @@ export default {
                 
             })
         }
-        return {successfulComment,submitComment,seller,savedStars,saveStars,global,comment,starIcon1,starIcon2,starIcon3,starIcon4,starIcon5,starChanger}
+
+        const submitScore = () =>{
+            let f = new FormData()
+            f.append('score',parseInt(savedStars.value + 1))
+            authService.value.transmit('buy/order/score/'+ context.root.$route.params.id,f,(s,d)=>{
+                scoreSubmitted.value = true
+                scoreText.value = 'امتیاز با موفقیت ثبت شد'
+            },(s,e)=>{
+                if(e.response.data.error.invalid_params[0].field=='message'){
+                    scoreText.value = 'شما قبلا امتیاز ثبت کرده اید!'
+                }                
+            })
+        }
+        const scoreText = ref('میزان رضایت خود از سفارش را مشخص کنید')
+        const scoreSubmitted = ref(false)
+        return {scoreText,scoreSubmitted,submitScore,successfulComment,submitComment,seller,savedStars,saveStars,global,comment,starIcon1,starIcon2,starIcon3,starIcon4,starIcon5,starChanger}
     }
 }
 </script>
@@ -315,5 +335,7 @@ export default {
     position: relative;
     top:3px;
 }
-
+.score{
+    text-align: center;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="pay-page">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8" v-if="!loadingToBank">
                 <div class="pay-form">
                     <div class="a-pay-form" v-if="cartErrors != null">
                         <div class="pay-form-title">
@@ -133,6 +133,12 @@
                             </div>
                         </div>
                     </div> -->
+                </div>
+            </div>
+            <div class="col-8 loading-whole" v-else>
+                <div><p>در حال ارسال به درگاه پرداخت</p></div>
+                <div class="d-flex justify-content-center loading">
+                    <div class="dot-elastic"></div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -392,7 +398,14 @@ export default {
                     productsToBuy.push(c.id)
                     quantities.push(c.quantity)
             })
-            let basketToSend = ((orderDesc.value.value!=null)?{number:quantities,product_id:productsToBuy,desc:orderDesc.value.value} : {number:quantities,product_id:productsToBuy})
+            // let f = new FormData()
+            // f.append('number',JSON.stringify(quantities))
+            // f.append('product_id',JSON.stringify(productsToBuy))
+            // if(orderDesc.value.value!=null){
+            //     f.append("desc",orderDesc.value.value)
+            // }
+            let basketToSend = ((orderDesc.value.value!=null)?{number:quantities,product_id:productsToBuy,desc:orderDesc.value.value} :{number:quantities,product_id:productsToBuy})
+
             authService.value.transmit('buy/checkbasket/'+address.value.value,basketToSend,(s,d)=>{
                 cartErrors.value = null
                 payable.value = currencyFormatter(d.data.payable + "")
@@ -403,6 +416,7 @@ export default {
                 deliveryCost.value = currencyFormatter(d.data.delivery_cost + "")
                 currentCart.value = d.data.id
                 if(shallPay){
+                    loadingToBank.value = true
                     if(hasSetDiscount.value != false){
                         let f = new FormData()
                         f.append('name',hasSetDiscount.value)
@@ -417,28 +431,31 @@ export default {
                             if(cartErrors.value == null){
                                     authService.value.transmit('pay/check/' + nd.data.id , {} , (nns,nnd)=>{
                                         if(nns == 200){
+                                            loadingToBank.value = false
                                             if(nnd.data.success == true){
                                                 window.location.href = 'https://api.golpino.com/api/pay/'+ nd.data.id
                                             }
                                         }
                                     },(theServer,theError)=>{
-                                            
+                                            loadingToBank.value = false
                                     })
                                 }
                         },(nse,ne)=>{
-                                
+                                loadingToBank.value = false
                         })
                     }
                     else{
+                        loadingToBank.value = true
                         if(cartErrors.value == null){
                                     authService.value.transmit('pay/check/' + d.data.id , {} , (nns,nnd)=>{
                                         if(nns == 200){
                                             if(nnd.data.success == true){
+                                                loadingToBank.value = false
                                                 window.location.href = 'https://api.golpino.com/api/pay/'+ d.data.id
                                             }
                                         }
                                     },(nns,nne)=>{
-
+                                        loadingToBank.value = false
                                     })
                                 }
                     }
@@ -526,7 +543,9 @@ export default {
         }
 
 
-        return {discountError,discount_id,discountName,submitDiscount,orderDesc,activeCart,redirectToSearch,global,sendAddress,districts,test,doPay,cartChanged,payable,tax,deliveryCost,total,discount,cartErrors,deleteCart,userAddresses,address,timeIntervalHandler,methods,paymentMethod,credit,useCredit,cartItems}
+        const loadingToBank = ref(false)
+
+        return {loadingToBank,discountError,discount_id,discountName,submitDiscount,orderDesc,activeCart,redirectToSearch,global,sendAddress,districts,test,doPay,cartChanged,payable,tax,deliveryCost,total,discount,cartErrors,deleteCart,userAddresses,address,timeIntervalHandler,methods,paymentMethod,credit,useCredit,cartItems}
     }
 }
 </script>
@@ -670,6 +689,16 @@ export default {
 
 .cart-items{
     border-bottom: 1px solid rgba(127, 127, 127, 0.25);
+}
+
+.loading-whole{
+    padding-top: 10rem;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.loading{
+    height: 80vh;
 }
 
 .cart-summary-item{
