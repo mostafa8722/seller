@@ -33,6 +33,7 @@ import { computed,ref,inject, onUpdated, onMounted} from "@vue/composition-api"
 import OrderSummary from "../Orders/Summary"
 import UserInfo from "./partials/UserInfo"
 import Service from "../../../utils/service"
+import $ from 'jquery'
 export default {
     components:{
         OrderSummary,
@@ -73,11 +74,11 @@ export default {
                 authService.value.transmit('user/logout',{},(s,d)=>{
                     if(s == 200){
                         $cookies.set('Golpino_token','',-999999999)
-                        context.root.$router.push('/')
                         stateValues.setCart([])
                         global.setUserName("")
                         global.toggleLogin(false)
                         global.setUserAddresses([])
+                        window.location.href = 'https://golpino.com'
                     }
                 })
             }

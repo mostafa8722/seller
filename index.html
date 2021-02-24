@@ -1,0 +1,23 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+</head>
+
+<body>
+  <script>
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( "GET", 'https://api.golpino.com/api/buy/order/active', false );
+		var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiOGJhNTQwMzhmOWZhZjk1YWM5Yzk0YmViMGQyMzQwMTEzZDc4ZmViNWQ1NDc4MDNiYWM1ZDA4NzFkMTg3NGI1OTM2MGJhNzYwYzkxYWUzYTMiLCJpYXQiOiIxNjEzOTA4NjMzLjc5OTYwNiIsIm5iZiI6IjE2MTM5MDg2MzMuNzk5NjEwIiwiZXhwIjoiMTY0NTQ0NDYzMy43OTQzNTkiLCJzdWIiOiI2MiIsInNjb3BlcyI6W119.Jhkj2e9cSEFAiQE9N0U1ggRamwJNN9RMmEEGAGnP54oFNrfokKK8lklSv53_Xf4_oHRZnjsddPdHDhDPBbvs2vnW3OfD_rXnKDK_as2T7z8BA6kcJ_jiVCOr55Ni3NdM_JvtijKHk7iOYbRoM0XA_fo_qumoYgm_DXVxrDcwo-XwMwQTAcOq2msK6i5o9pjbklEq9MPWbsukQF-bgUuzcKyy5XopN6zpkrnFCUlZmlUKi-viOqwrHbhAYYQGFKKsAxqHKvHydIgyRw5ONmvBZt6Ac4XlBQ_6pUmKQ5YpjIEm2CYEQhm9IhL0X2UOliVtZWozOyHMMmRWXf-oQLu1lKd-x0ZDukByB8inFh-XOAfg7p_RLg2X0A198fgKzkI3fc71_PGXPbiwQTpojjNuQp0bFFX_LBDF_hZcyKDTsr830FjLSiPALjdgYsTjgds6ewoEqrnny_uCRuVrHhRhDZGu3rZAZI_1g4oPx_Al_Vft_WMlhGdUk4QyGN3tWE_1HkR1pVyJgHbojJS6sKoV095nXyI0wRB9WIwk3bfRqE8y-1EmHNWvAKPYbNTLXn6Vw6JSzqcOYhqIfkxSKQvS28P6X930G66Ahv-zC2T-p0jUJaIOROqxzwEUw0vR_PabqiyM1DYYjOPsGcdVWhUsa6l1XUQwRpIG04A-MMB1VFA';
+		xmlHttp.setRequestHeader('Authorization', 'Bearer ' + token);		// false for synchronous request
+		xmlHttp.send( null );
+  </script>
+  <div>5555</div>
+</body>
+</html>

@@ -250,14 +250,17 @@ export default {
                         break;
                 }
             }
-
+        const commentText = ref(null)
         const submitComment = () => {
             let f = new FormData()
             f.append('message',comment.desc.value)
             authService.value.transmit('buy/order/comment/'+ context.root.$route.params.id,f,(s,d)=>{
                 successfulComment.value = true
             },(s,e)=>{
-                
+                if(e.response.data.error.invalid_params[0].field=='message'){
+                    comment.desc.valid = false
+                    comment.desc.message = 'شما قبلا نظر ثبت کرده اید!'
+                }
             })
         }
 
@@ -275,7 +278,7 @@ export default {
         }
         const scoreText = ref('میزان رضایت خود از سفارش را مشخص کنید')
         const scoreSubmitted = ref(false)
-        return {scoreText,scoreSubmitted,submitScore,successfulComment,submitComment,seller,savedStars,saveStars,global,comment,starIcon1,starIcon2,starIcon3,starIcon4,starIcon5,starChanger}
+        return {commentText,scoreText,scoreSubmitted,submitScore,successfulComment,submitComment,seller,savedStars,saveStars,global,comment,starIcon1,starIcon2,starIcon3,starIcon4,starIcon5,starChanger}
     }
 }
 </script>

@@ -363,6 +363,30 @@ const routes = [
         requiresAdmin:true
       }
     },
+    {
+      path: '/qwertyzxcvb/admin/delivery-time',
+      name: 'Golpino Admin Delivery Times Page',
+      component: () => import('../components/Admin/Display/DeliveryTime.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },
+    {
+      path: '/qwertyzxcvb/admin/add/delivery-time',
+      name: 'Golpino Add Delivery Time Page',
+      component: () => import('../components/Admin/Forms/DeliveryTime.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },
+    {
+      path: '/qwertyzxcvb/admin/add/delivery-time/:id',
+      name: 'Golpino Edit Delivery Time Page',
+      component: () => import('../components/Admin/Forms/DeliveryTime.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },
   // SELLER
   {
     path: '/seller',

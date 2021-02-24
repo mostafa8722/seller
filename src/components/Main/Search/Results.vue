@@ -2,20 +2,25 @@
     <div class="result-page">
         <div class="search-bar pt-2 pl-2 pr-2 pb-0">
             <div class="row">
-                <div class="search-bar-section" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'col-3' : 'col-4')">
+                <div class="search-bar-section" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'mycol-2' : 'col-3')">
                     <new-input inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="full-width" v-bind:inputModel.sync="selectedCategory" :selectItems="categories" classes="no-border no-background" placeholder="دسته بندی"></new-input>
                 </div>
-                <div class="col-3 search-bar-section" v-if="searchAddress.value == null || searchAddress.value.value == null">
+                <div class="mycol-2 search-bar-section" v-if="searchAddress.value == null || searchAddress.value.value == null">
                     <custom-input :placeholder="(selectedDistrict.value == null ? 'منطقه' : '')" inputClass="tNormal" kind="searchInput" container="full-width mt-2" extraClasses="barely-visible" v-bind:theModel.sync="selectedDistrict" :suggestions="districts" @addTag="selectDistrict" classes="no-border">
                                     <p class="shopName" v-if="selectedDistrict.value != null">{{selectedDistrict.value.name}}</p>
                                 </custom-input>
                 </div>
-                <div class="search-bar-section" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'col-3' : 'col-4')">
-                    <custom-input :placeholder="(searchShop.value == null ? 'فروشگاه' : '')" kind="searchInput" :suggestions="shopResults" @addTag="selectShop" labelClass="tLighter" container="full-width mt-2" v-bind:theModel.sync="shopQuery" classes="block no-border full-width">
+                <div class="search-bar-section" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'mycol-2' : 'col-3')">
+                    <custom-input :nofilter="true" :placeholder="(searchShop.value == null ? 'نام فروشگاه' : '')" kind="searchInput" :suggestions="shopResults" @addTag="selectShop" labelClass="tLighter" container="full-width mt-2" v-bind:theModel.sync="shopQuery" classes="block no-border full-width">
                        <p class="shopName" v-if="searchShop.value != null">{{searchShop.name}}</p>
                     </custom-input>
                 </div>
-                <div :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'col-3' : 'col-4')">
+                <div class="search-bar-section" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'mycol-2' : 'col-3')">
+                    <custom-input :nofilter="true" :placeholder="(searchProduct.value == null ? 'نام محصول' : '')" kind="searchInput" :suggestions="productResults" @addTag="selectProduct" labelClass="tLighter" container="full-width mt-2" v-bind:theModel.sync="productQuery" classes="block no-border full-width">
+                       <p class="shopName" v-if="searchProduct.value != null">{{searchProduct.name}}</p>
+                    </custom-input>
+                </div>
+                <div :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'mycol-2' : 'col-3')">
                     <div class="h-100 w-100 d-flex justify-content-center align-items-center">
                         <button class="purple-btn" @click="refreshSearch">جستجو</button>
                     </div>
@@ -34,7 +39,8 @@
             <h1 class="mini-title"> گلفروشی های تهران</h1>
             <p class="mini-title tLighter" v-if="theQuery.district && theQuery.district != null"> | منطقه ی {{theQuery.district}}</p>
             <p class="mini-title tLighter" v-if="theQuery.category && theQuery.category != null"> | دسته بندی {{theQuery.category}}</p>
-            <p class="mini-title tLighter" v-if="theQuery.district && theQuery.shop != null"> | فروشگاه {{theQuery.shop}}</p>
+            <p class="mini-title tLighter" v-if="theQuery.shop && theQuery.shop != null"> | فروشگاه "{{theQuery.shop}}"</p>
+            <p class="mini-title tLighter" v-if="theQuery.product && theQuery.product != null"> | محصول "{{theQuery.product}}"</p>
             <p class="tLighter mt-1">{{shops.length}} مورد یافت شد</p>
         </div>
         <div class="full-width d-flex justify-content-center" :class="(!result ? 'mt-5' : '')" v-if="loading">
@@ -125,6 +131,7 @@ export default {
         const categories = ref([])
         const districts = ref([])
         const shopResults = ref([])
+        const productResults = ref([])
         const userAddresses = ref([])
         const loading = ref(false)
         const global = inject('global')
@@ -186,6 +193,13 @@ export default {
             else
                 return null
         })
+        const productName = computed(()=>{
+            if(context.root.$route.query.product_name){
+                return context.root.$route.query.product_name
+            }
+            else
+                return null
+        })
         const searchCategory = computed(()=>{
             if(context.root.$route.query.category){
                 let q = ""
@@ -213,6 +227,7 @@ export default {
                 return {value:null,valid:true}
         })
         const searchShop = ref({valid:true,value:null})
+        const searchProduct = ref({value:null,valid:true})
         const searchAddress = computed(()=>{
             if(context.root.$route.query.address){
                 return {value:context.root.$route.query.address,valid:true}
@@ -222,6 +237,7 @@ export default {
         })
         const selectedAddress = ref({valid:true,value:null})
         const shopQuery = reactive({value:null,valid:true})
+        const productQuery = reactive({value:null,valid:true})
         
         onMounted(()=>{
             loading.value = true
@@ -241,6 +257,20 @@ export default {
                         shopResults.value = d.data
                         shopResults.value.map((sh)=>{
                             sh.text = sh.name
+                            sh.value = sh.id
+                        })
+                    }
+                    
+                },errorHandler)
+            }
+        })
+        watch(productQuery,(n,o)=>{
+            if(n.d != ''){
+                theService.value.receive('search/productname?product_name='+n.id,{},(s,d)=>{
+                    if(s == 200){
+                        productResults.value = d.data
+                        productResults.value.map((sh)=>{
+                            sh.text = 'گل فروشی ' + sh.name + '(' + sh.number + ' محصول مشابه)'
                             sh.value = sh.id
                         })
                     }
@@ -358,17 +388,17 @@ export default {
             shopQuery.value = ''
             shopQuery.id = ''
         }
+        const selectProduct = (productShop)=>{
+            searchProduct.value = productShop
+            context.root.$router.push('/shop/'+productShop.id)
+            productQuery.value = ''
+            productQuery.id = ''
+        }
         const refreshSearch = () => {
                 let sQuery = ""
                 if(selectedCategory.value.value != null){
                     if(selectedCategory.value.value.value != null)
                         sQuery = sQuery + "category=" + selectedCategory.value.value.name
-                }
-                if(selectedDistrict.value.value != null){
-                    if(sQuery != ""){
-                        sQuery = sQuery+"&"
-                    }
-                    sQuery = sQuery + "district=" + selectedDistrict.value.value.name
                 }
                 if(selectedDistrict.value.value != null){
                     if(sQuery != ""){
@@ -392,6 +422,14 @@ export default {
                         sQuery = sQuery + 'name=' + shopQuery.id
                     }
                 }
+                if(productQuery.id){
+                    if(productQuery.id != ''){
+                        if(sQuery != ""){
+                            sQuery = sQuery+"&"
+                        }
+                        sQuery = sQuery + 'product_name=' + productQuery.id
+                    }
+                }
                 
                 
                 context.root.$router.push('/search?'+sQuery).catch(err => {})
@@ -408,13 +446,14 @@ export default {
                     query = {...query,district:searchDistrict.value.value.name} 
                 }
                 if(searchShop.value.value != null){
-                    query = {...query,shop:searchDistrict.value.name}
+                    query = {...query,shop:searchShop.value.name}
                 }
-                
+                if(searchProduct.value.value != null){
+                    query = {...query,shop:searchProduct.value.name}
+                }
                 stateValues.setShops(d.data,query)
             }
         }
-
         const doSearch = () => {
             let query = ''
             loading.value = true
@@ -435,6 +474,12 @@ export default {
                         query = query + '&name=' + shopName.value
                     else
                         query = query + 'name=' + shopName.value
+            }
+            if(productName.value != null){
+                    if(query != '')
+                        query = query + '&product_name=' + productName.value
+                    else
+                        query = query + 'product_name=' + productName.value
             }
             if(searchAddress.value.value != null){
                     if(query != '')
@@ -503,7 +548,7 @@ export default {
          const selectDistrict = (di) => {
             selectedDistrict.value.value = di
         }
-        return {selectedAddress,showAll,loading,refreshSearch,selectedCategory,selectedDistrict,selectDistrict,displayChange,grid,priceMarks,priceMax,priceMin,formatToolTip,priceRange,sortFilter,sortFilters, typeFilter,typeFilters,gotUserAddresses,isLoggedIn,loginToAddAddress,searchCategory,searchDistrict,searchShop,searchAddress,sendAddress,userAddresses,result,shops,categories,districts,addresses,doSearch,selectShop,shopResults,shopQuery,theQuery}
+        return {selectedAddress,showAll,loading,refreshSearch,selectedCategory,selectedDistrict,selectDistrict,displayChange,grid,priceMarks,priceMax,priceMin,formatToolTip,priceRange,sortFilter,sortFilters, typeFilter,typeFilters,gotUserAddresses,isLoggedIn,loginToAddAddress,searchCategory,searchDistrict,searchShop,searchAddress,sendAddress,userAddresses,result,shops,categories,districts,addresses,doSearch,selectShop,selectProduct,productResults,productQuery,searchProduct,shopResults,shopQuery,theQuery}
     }
 }
 </script>
@@ -583,4 +628,10 @@ export default {
     font-size: 0.8rem;
     font-weight: lighter;
 }
+
+.mycol-2{
+    flex: 0 0 19.9%;
+    max-width: 19.9%;
+}
+
 </style>

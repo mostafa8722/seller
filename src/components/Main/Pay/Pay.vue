@@ -387,6 +387,10 @@ export default {
                                 discountError.value.show = true
                                 discountError.value.text = e.response.data.error.invalid_params[0].message
                             }
+                            else if(e.response.data.error.invalid_params[0].field == 'message'){
+                                discountError.value.show = true
+                                discountError.value.text = e.response.data.error.invalid_params[0].message
+                            }
                         }
                 })
             }
@@ -433,7 +437,7 @@ export default {
                                         if(nns == 200){
                                             loadingToBank.value = false
                                             if(nnd.data.success == true){
-                                                window.location.href = 'https://api.golpino.com/api/pay/'+ nd.data.id
+                                                window.location.href = 'https://golpino.com/api/public/api/pay/'+ nd.data.id
                                             }
                                         }
                                     },(theServer,theError)=>{
@@ -451,7 +455,7 @@ export default {
                                         if(nns == 200){
                                             if(nnd.data.success == true){
                                                 loadingToBank.value = false
-                                                window.location.href = 'https://api.golpino.com/api/pay/'+ d.data.id
+                                                window.location.href = 'https://golpino.com/api/public/api/pay/'+ d.data.id
                                             }
                                         }
                                     },(nns,nne)=>{

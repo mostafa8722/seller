@@ -187,7 +187,7 @@ export default {
                     return 'no-auth'
                 }
         }
-        'search/seller/category/' + shopId.value
+        // 'search/seller/category/' + shopId.value
         const getCategories = () => {
             theService.value.receive('search/category',{},(s,d)=>{
                 if(s == 200){
@@ -204,7 +204,6 @@ export default {
                                     }
                                 })
                             })
-                            console.log("shopc",shopCategories)
                             categories.value = [{value:null,text:'تمامی دسته بندی ها'}].concat(shopCategories)
                         }
                     },(s,e)=>{})
@@ -231,10 +230,11 @@ export default {
         const showModal = (v)=>{
             extraImages.value = []
             theService.value.receive('search/product/image/'+ v.id,{},(s,d)=>{
-                    if(s == 200)
+                    if(s == 200){
                         extraImages.value = [...d.data]
                         modalProduct.value = {...v,extraImages:extraImages.value}
-                        $('#productModal').modal('show')
+                        $('#productModal').modal('show')   
+                    }
                 },(s,e)=>{
 
                 })

@@ -102,6 +102,10 @@ export default {
         name:{
             type:String
         },
+        nofilter:{
+            type:Boolean,
+            default:false
+        },
         icon:{
             type:String,
             default:''
@@ -161,8 +165,9 @@ export default {
         return{
             selectShow:false,
             id:null,
-            possibles:[],
-            initiation:(this.initial ? true : false)
+            initiation:(this.initial ? true : false),
+            noSuggestion:false,
+            allSuggestion:false
         }
     },
     methods:{
@@ -184,49 +189,65 @@ export default {
         },
         suggest(e){
             e.stopPropagation()
-            if(this.suggestions.length<1){
-                setTimeout(()=>{
-                    if(e.target.value != ""){
-                        this.possibles = this.suggestions.filter((s)=>{
-                            return s.text.includes(e.target.value)
-                        })
-                    }
-                    else{
-                        this.possibles = []
-                    }
-                },1000)
-            }
-            else{
-                if(e.target.value != ""){
-                        this.possibles = this.suggestions.filter((s)=>{
-                            return s.text.includes(e.target.value)
-                        })
-                    }
-                    else{
-                        this.possibles = []
-                    }
-            }
+            this.allSuggestion = false
+            this.noSuggestion = false
+            // console.log("xxxxxxx",this.suggestions.length)
+            // if(this.suggestions.length<1){
+                // setTimeout(()=>{
+                    // if(this.nofilter){
+                    //     this.possibles = this.suggestions
+                    // }
+                    // else{
+                    //     if(e.target.value != ""){
+                    //         this.possibles = this.suggestions.filter((s)=>{
+                    //         return s.text.includes(e.target.value)
+                    //     })
+                    //     }
+                    //     else{
+                            // this.possibles = []
+                //         }
+                //     }
+                // },1000)
+            // }
+            // else{
+            //     if(this.nofilter){
+            //             this.possibles = this.suggestions
+            //         }
+            //         else{
+            //             if(e.target.value != ""){
+            //                 this.possibles = this.suggestions.filter((s)=>{
+            //                 return s.text.includes(e.target.value)
+            //             })
+            //             }
+            //             else{
+            //                 this.possibles = []
+            //             }
+            //         }
+            // }
         },
         suggestAll(e){
             e.stopPropagation()
+            this.noSuggestion = false
             this.myModel.value = null
             if(this.myModel.id){
                 this.myModel.id = null
             }
-            if(e.target.value == ''){
-                this.possibles = this.suggestions
-            }
+            this.allSuggestion = true
+            // if(e.target.value == ''){
+            //     this.possibles = this.suggestions
+            // }
         },
         suggestNone(e){
             e.stopPropagation()
-            this.possibles = []
+            this.noSuggestion = true
+            this.allSuggestion = false
         },
         addTag(t){
             this.$emit('addTag',t)
             setTimeout(()=>{
                 document.getElementById(this.id).value = ''
             },10)
-            this.possibles=[]
+            this.noSuggestion = true
         },
         toggleCheck(){
             this.myModel = !this.myModel
@@ -259,6 +280,32 @@ export default {
         }
     },
     computed:{
+        possibles:function(){
+            if(this.noSuggestion){
+                return []
+            }
+            else if(this.allSuggestion){
+                return this.suggestions
+            }
+            else{
+                    if(this.nofilter && this.suggestions){
+                        return this.suggestions
+                    }
+                    else if(!this.suggestions){
+                        return []
+                    }
+                    else{
+                        if(this.myModel.id != ""){
+                            return this.suggestions.filter((s)=>{
+                             s.text.includes(this.myModel.id)
+                            })
+                        }
+                        else{
+                            return []
+                        }
+                    }
+            }
+        },
         selectValue:function(){
             return (this.myModel.value && this.myModel.value.text) ? this.myModel.value.text : this.placeholder
         },
@@ -295,7 +342,7 @@ export default {
         $('.hidden-text').parents().click((e)=>{
             if(!e.target.classList.contains('hidden-text')){
                 if((this.kind == 'searchInput' || this.kind =='tag') && this.possibles && this.possibles.length && this.possibles.length>0){
-                    this.possibles = []
+                    this.noSuggestion = true
                     this.myModel.value = null
                 }
             }
@@ -336,6 +383,10 @@ label{
     width: auto;
     position: relative;
     height: auto;
+}
+
+.opaque{
+    opacity: 1 !important;
 }
 
 .hiddenInput{

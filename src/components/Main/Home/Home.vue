@@ -16,21 +16,26 @@
                 <p class="mt-3">ما همیشه در دسترس هستیم تا گل های سفارشی شما در کمتر از ۱ ساعت   , از نزدیک ترین گلفروشی به شما , و با بهترین کیفیت به دست شما برسد . مزیت ما همکاری با ۳۰۰ گلفروشی و با پشتوانه اتحادیه گل و گیاه می باشد</p>
             </div>
                     <div class="search-bar pt-1 pr-2 pl-2 pb-0">
-                        <div class="row">
-                            <div class="search-bar-section p-2" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'col-3' : 'col-4')">
+                        <div class="row w-100">
+                            <div class="search-bar-section p-2" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'mycol-2' : 'col-3')">
                                 <custom-input inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="full-width" v-bind:theModel.sync="searchCategory" :selectItems="categories" classes="no-border light-facade" placeholder="دسته بندی"></custom-input>
                             </div>
-                            <div class="col-3 search-bar-section p-2" v-if="searchAddress.value == null || searchAddress.value.value == null">
+                            <div class="mycol-2 search-bar-section p-2" v-if="searchAddress.value == null || searchAddress.value.value == null">
                                 <custom-input :placeholder="(searchDistrict.value == null ? 'منطقه' : '')" inputClass="tNormal" kind="searchInput" container="full-width mt-2" extraClasses="barely-visible" v-bind:theModel.sync="searchDistrict" :suggestions="districts" @addTag="selectDistrict" classes="no-border">
                                     <p class="shopName" v-if="searchDistrict.value != null">{{searchDistrict.name}}</p>
                                 </custom-input>
                             </div>
-                            <div class="search-bar-section p-2" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'col-3' : 'col-4')">
-                                <custom-input placeholder="نام فروشگاه" kind="searchInput" :suggestions="shopResults" @addTag="selectShop" extraClasses="barely-visible" labelClass="tLighter p-1" container="full-width mt-2" v-bind:theModel.sync="shopQuery" classes="block full-width">
+                            <div class="search-bar-section p-2" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'mycol-2' : 'col-3')">
+                                <custom-input :nofilter="true" placeholder="نام فروشگاه" kind="searchInput" :suggestions="shopResults" @addTag="selectShop" extraClasses="barely-visible" labelClass="tLighter p-1" container="full-width mt-2" v-bind:theModel.sync="shopQuery" classes="block full-width">
                                     <p class="shopName" v-if="searchShop.value != null">{{searchShop.name}}</p>
                                 </custom-input>
                             </div>
-                            <div :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'col-3' : 'col-4')">
+                            <div class="search-bar-section p-2" :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'mycol-2' : 'col-3')">
+                                <custom-input :nofilter="true" placeholder="نام محصول" kind="searchInput" :suggestions="productResults" @addTag="selectProduct" extraClasses="barely-visible" labelClass="tLighter p-1" container="full-width mt-2" v-bind:theModel.sync="productQuery" classes="block full-width">
+                                    <p class="shopName" v-if="searchProduct.value != null">{{searchShop.name}}</p>
+                                </custom-input>
+                            </div>
+                            <div :class="((searchAddress.value == null || searchAddress.value.value == null) ? 'mycol-2' : 'col-3')">
                                 <div class="h-100 w-100 d-flex justify-content-center align-items-center">
                                     <button class="purple-btn" @click="doSearch">جستجو</button>
                                 </div>
@@ -502,6 +507,7 @@ export default {
 
         const searchCategory = ref({valid:true,value:null})
         const searchShop = ref({valid:true,value:null})
+        const searchProduct = ref({valid:true,value:null})
         const searchDistrict = ref({valid:true,value:null})
         const searchAddress = reactive({valid:true,value:null})
         const addressInitiation = ref(true)
@@ -512,6 +518,7 @@ export default {
         }
 
         const shopQuery = reactive({value:null,valid:true})
+        const productQuery = reactive({value:null,valid:true})
 
         watch(shopQuery,(n,o)=>{
             if(n.d != ''){
@@ -528,11 +535,26 @@ export default {
                 },errorHandler)
             }
         })
+        watch(productQuery,(n,o)=>{
+            if(n.d != ''){
+                theService.value.receive('search/productname?product_name='+n.id,{},(s,d)=>{
+                    if(s == 200){
+                        productResults.value = d.data
+                        productResults.value.map((sh)=>{
+                            sh.text = 'گل فروشی ' + sh.name + '(' + sh.number + ' محصول مشابه)'
+                            sh.value = sh.id
+                        })
+                    }
+                    
+                },errorHandler)
+            }
+        })
         
         //component
         const categories = ref(null)
         const districts = ref(null)
         const shopResults = ref([])
+        const productResults = ref([])
         const userAddresses = ref([])
         const sampleProducts = ref([])
         const articles = ref([
@@ -541,7 +563,7 @@ export default {
             {image:'https://golpino.com/mag/wp-content/uploads/plants0025.jpg',title:'گیاه هوازی تیلاندسیا گیاهی بدون نیاز به خاک',sum:'تیلاندسیا چیست؟ گیاه هوازی تیلاندسیا از گیاهان بومی مناطق آمریکای جنوبی است.این گیاه در کشورهای پرو، مکزیک و کلمبیا رشد می کند. در این مناطق تیلاندسیا با استفاده از رطوبت هوا رشد خود را ادامه می دهد و نیازی به خاک ندارد.',url:'https://golpino.com/mag/tillandsia/'}
         ])
         onMounted(()=>{
-            theService.value.receive('search?category_id=3',{},(s,d)=>{
+            theService.value.receive('search?category_id=12',{},(s,d)=>{
                 if(s==200){
                     sampleShops.value = d.data
                 }
@@ -594,6 +616,15 @@ export default {
                     categories.value = [{value:null,text:'تمامی دسته بندی ها'}].concat(categories.value)
                 }
             },errorHandler)
+//                         axios.get('https://api.golpino.com/api/search/category', {}, {
+//    headers: {
+//           // remove headers
+//         }
+//       }).then(res => {
+//         console.log(res);
+//       }).catch(err => {
+//         console.log(err.response);
+//       });
         }
 
         const getDistricts = () =>{
@@ -671,6 +702,12 @@ export default {
             shopQuery.value = ''
             shopQuery.id = ''
         }
+        const selectProduct = (productShop)=>{
+            searchProduct.value = productShop
+            context.root.$router.push('/shop/'+productShop.id)
+            productQuery.value = ''
+            productQuery.id = ''
+        }
         const addSuccess = (s,d) => {
             console.log({d})
         }
@@ -727,6 +764,14 @@ export default {
                             sQuery = sQuery+"&"
                         }
                         sQuery = sQuery + 'name=' + shopQuery.id
+                    }
+                }
+                if(productQuery.id){
+                    if(productQuery.id != ''){
+                        if(sQuery != ""){
+                            sQuery = sQuery+"&"
+                        }
+                        sQuery = sQuery + 'product_name=' + productQuery.id
                     }
                 }
                 // stateValues.setShops(d.data,query)
@@ -841,7 +886,7 @@ export default {
         }
         // THIS CODE IS TEMP END
 
-        return{tempStaticShops,articles,gotUserAddresses,addProductToCart,newAddressSelection,sampleProducts,sampleCategories,searchSampleCategory,sampleShops,loginToAddAddress,isLoggedIn,searchDistrict,districts,searchShop,selectShop,selectDistrict,categories,category,results,querry,sendAddress,searchCategory,userAddresses,searchAddress,doSearch,shopQuery,shopResults}
+        return{tempStaticShops,articles,gotUserAddresses,addProductToCart,newAddressSelection,sampleProducts,sampleCategories,searchSampleCategory,sampleShops,loginToAddAddress,isLoggedIn,searchDistrict,districts,searchShop,selectShop,searchProduct,selectProduct,selectDistrict,categories,category,results,querry,sendAddress,searchCategory,userAddresses,searchAddress,doSearch,shopQuery,shopResults,productResults,productQuery}
     },
     components:{
         Carousel,
@@ -1104,14 +1149,19 @@ export default {
 <style scoped>
 .search-bar{
     background-color: #EEEEEE;
-    width: 60%;
+    width: 75%;
     border:1px solid rgba(127, 127, 127, 0.2);
     border-radius: 6px;
     position: absolute;
     top:52%;
     z-index: 0;
-    right:20%;
+    right:12.5%;
     background-color: #fff;
+}
+
+.mycol-2{
+    flex: 0 0 19.9%;
+    max-width: 19.9%;
 }
 
 .search-bar .row{

@@ -21,21 +21,35 @@ const service = (requireAuth) => {
 
     let headers = {
       common:{
-        "Accept":'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-        'Content-Type': 'application/json'
+        // "Accept":'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        // "Accept":'*/*',
+        // 'Content-Type': 'application/json'
       },
-          
+      // 'Content-Type': 'application/json'
           // "Access-Control-Allow-Origin": '*',
           // "accept-language":'en',
           // "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
           // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization, access-control-allow-origin",
           // "Access-Control-Request-Headers": "X-PINGOTHER, Content-Type",
-          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/json'
           // 'X-PINGOTHER':'pingpong',
-          
-
+          // 'Content-Type':'application/x-www-form-urlencoded',
+          // 'Access-Control-Request-Method': 'GET',
+          // 'Access-Control-Request-Headers': 'origin, x-requested-with',
+          // 'Origin': 'https://api.golpino.com',
+          // 'Accept': 'application/json,*/*',
+          //  'Content-Type': 'application/json',
+          //   'Access-Control-Allow-Origin': '*',
+          //    'Access-Control-Allow-Headers': 'Authorization'
+              
       }
-      
+      // axios.defaults.headers.common['Origin'] = 'https://api.golpino.com';
+      // axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,HEAD,OPTIONS,POST,PUT';
+      // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+      // axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, X-Auth-Token, Origin, Authorization';
+      // //
+      // axios.defaults.headers.common['Access-Control-Allow-Credentials'] = true;
+      //axios.defaults.withCredentials = true;
     if(requireAuth){
         const cookie = computed(()=>{
           return cookieFinder()
@@ -43,12 +57,12 @@ const service = (requireAuth) => {
         headers.Authorization = "Bearer " + cookie.value
     }
     let myService = axios.create({
-        baseURL: apiBaseUrl,
         headers: headers,
-        // withCredentials: false,
+        baseURL:API_BASE_URL,
       })
-
+      // myService.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
       myService.interceptors.request.use(request => {
+
         if(request.data && request.data.get){
           if(request.data.get('mobile')){
             let persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g]
@@ -74,16 +88,18 @@ const service = (requireAuth) => {
 
       // myService.defaults.timeout = 5000
     
-
+      // myService.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+      // myService.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
+      // myService.defaults.withCredentials = true;
+      // myService.defaults.crossDomain = true;
       myService.receive = (path, data , mySuccess ,myError) => {
-
-        return myService.get(path , data).then(
+        return myService.get(path ,data).then(
           (response) => mySuccess(response.status, response.data)
         ).catch((e)=> useErrorHandler(e,myError))
       }
 
       myService.transmit = (path, payload, mySuccess ,myError) => {
-        return myService.post(path , payload).then((response) => mySuccess(response.status, response.data))
+        return myService.post(path ,payload).then((response) => mySuccess(response.status, response.data))
         .catch((e) => useErrorHandler(e,myError))
       }
       
@@ -119,3 +135,7 @@ export default service
 
 
         // https://github.com/axios/axios/issues/891#issuecomment-340760222
+                // console.log({request})
+        // if (request.data instanceof FormData) {
+        //   Object.assign(request.headers, request.data.getHeaders());
+        // }

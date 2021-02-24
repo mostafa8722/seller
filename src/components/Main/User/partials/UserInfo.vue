@@ -31,7 +31,7 @@ import CustomInput from '../../../Common/CustomInput'
 import AddressModal from '../../../Common/AddressModal'
 import Service from "../../../../utils/service"
 import UserAddress from "./UserAddress"
-import { computed,ref,on, onMounted,inject, reactive, watch } from '@vue/composition-api'
+import { computed,ref, onMounted,inject, reactive, watch } from '@vue/composition-api'
 import $ from 'jquery'
 export default {
     components:{
@@ -74,6 +74,13 @@ export default {
             },(s,e)=>{
 
             })
+            // authService.value.transmit('cors',{},(s,d)=>{
+            //     let x = d.data
+            //     console.log('zzzzzzzzzzzzzzzzzzzz',x)
+            //     console.log({d})
+            // },(s,e)=>{
+
+            // })
         }
         const getDistricts = () =>{
             theService.value.receive('search/district',{},(s,d)=>{

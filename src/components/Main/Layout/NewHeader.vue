@@ -30,7 +30,7 @@
                     </div>
                     <div v-else-if="authStep == 4">
                         <custom-input kind="text" key="8" container="full-width mt-3" classes="full-width" theType="password" v-bind:theModel.sync="password" label="لطفا کلمه ی عبور خود را وارد کنید" placeholder="کلمه ی عبور"></custom-input>
-                        <button class="btn auth-btn mt-3" @click="handleForgetPassword">فراموشی کلمه ی عبور</button>    
+                        <button class="btn auth-btn mt-3" @click="handleForgetPassword">دریافت رمز یکبار مصرف</button>    
                     </div>
                     <div v-else-if="authStep == 5">
                         <custom-input kind="text" key="2" container="full-width" classes="full-width" v-bind:theModel.sync="code" label="لطفا کد ارسال شده را وارد کنید" placeholder="کد"></custom-input>
@@ -395,8 +395,14 @@ export default {
             }
             if(data.data.status == 1)
             authStep.value++
-            else if(data.data.status == 2)
-            authStep.value = authStep.value + 2
+            else if(data.data.status == 2){
+                let x = cookieFinder()
+                if(x == null || x == '' || x == 'no-auth'){
+                    authStep.value = authStep.value + 4
+                }
+                else
+                authStep.value = authStep.value + 2
+            }
             else if(data.data.status == 3)
             authStep.value = 4
         }

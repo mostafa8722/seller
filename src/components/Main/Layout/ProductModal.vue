@@ -38,7 +38,7 @@
                     <h3 class="mt-4" v-else>{{theProduct.formattedPrice}} تومان</h3>
                     <div class="delivery mt-4">
                         <div class="delivery-cube mini-title"></div>
-                        <p class="tLighter mini-title">ارسال رایگان در 24 ساعت</p>
+                        <p class="tLighter mini-title">ارسال رایگان در محدوده</p>
                     </div>
                     <div class="buy-settings">
                             <h5 class="tNormal mb-3">جزئیات خرید</h5>
@@ -118,7 +118,7 @@ import IconImage from "../../Common/icon"
 import CustomButton from "../../Common/customButton"
 import Service from '../../../utils/service'
 export default {
-    components: {
+components: {
     IconImage,
     CustomInput,
     CustomButton
