@@ -21,13 +21,14 @@
             <table class="mt-2">
                 <tr>
                     <th class="small-cell">نام فروشگاه</th>
-                    <th>نام فروشنده</th>
+                    <th class="small-cell">نام فروشنده</th>
                     <th class="small-cell">شماره تلفن</th>
                     <th class="small-cell">آدرس</th>
                     <th class="small-cell">منطقه</th>
+                    <th class="small-cell">وضعیت فروشگاه</th>
                     <th>گزینه ها</th>
                 </tr>
-                <one-shop @goToPanel="goToPanel" v-for="(shop,i) in shops" :key="i" :theShop="shop"></one-shop>
+                <one-shop @changeMe="changeShopStatus" @goToPanel="goToPanel" v-for="(shop,i) in shops" :key="i" :theShop="shop"></one-shop>
             </table>
         </div>
     </div>
@@ -133,7 +134,28 @@ export default {
         }
 
 
-        return {search,selectDistrict,theCategory,theDistrict,districts,categories,shops,shopMobile,goToPanel}
+        const changeShopStatus = (targ) => {
+            if(targ.active == 1){
+                theService.value.transmit('admin/seller/disable/'+targ.id ,{},(s,d)=>{
+                    alert('با موفقیت ثبت شد')
+                    getAllShops()
+                },
+                (s,e)=>{
+
+                })
+            }
+            else{
+                theService.value.transmit('admin/seller/enable/'+targ.id ,{},(s,d)=>{
+                    alert('با موفقیت ثبت شد')
+                    getAllShops()
+                },
+                (s,e)=>{
+
+                })
+            }
+        }
+
+        return {changeShopStatus,search,selectDistrict,theCategory,theDistrict,districts,categories,shops,shopMobile,goToPanel}
     }
 }
 </script>

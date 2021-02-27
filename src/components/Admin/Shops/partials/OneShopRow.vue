@@ -1,10 +1,11 @@
 <template>
   <tr class="product">
     <td class="small-cell">{{theShop.name}}</td>
-    <td class="mid-cell"><p>{{theShop.seller_name}}</p></td>
+    <td class="small-cell"><p>{{theShop.seller_name}}</p></td>
     <td class="small-cell">{{theShop.mobile}}</td>
     <td class="small-cell">{{theShop.address}}</td>
     <td class="small-cell">{{theShop.district}}</td>
+    <td class="small-cell"><button @click="changeMe" :class="(theShop.active != 1 ? 'purple-btn' : 'red-btn')">{{(theShop.active == 1 ? 'غیر فعال شود' : 'فعال شود')}}</button></td>
     <td class="small-cell"><button @click="goToPanel" class="purple-btn ml-2">ورود به پنل</button></td>
   </tr>
 </template>
@@ -18,7 +19,10 @@ export default {
   methods:{
     goToPanel:function(){
       this.$emit('goToPanel',this.theShop.id)
-    }
+    },
+    changeMe:function(){
+      this.$emit('changeMe',{id:this.theShop.id,active:this.theShop.active})
+    },
   }
 };
 </script>

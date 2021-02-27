@@ -82,36 +82,24 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="a-pay-form">
+                    <div class="a-pay-form">
                         <div class="pay-form-title">
                                 <icon-image address="/assets/site/images/seller-icons/close.svg"></icon-image>
                                 <p class="mini-title tLighter">زمان تحویل</p>
                         </div>
-                        <div class="pay-form-form delivery-time">
+                        <!-- <div class="pay-form-form delivery-time">
                             <div class="time-table">
                                 <div class="intervals">
-                                    <div @click="()=>timeIntervalHandler(0)" id="interval0" class="time-interval active-interval">
-                                        <p>سه شنبه</p>
-                                        <p>4 شهریور</p>
-                                    </div><div @click="()=>timeIntervalHandler(1)" id="interval1" class="time-interval">
-                                        <p>سه شنبه</p>
-                                        <p>4 شهریور</p>
-                                    </div><div @click="()=>timeIntervalHandler(2)" id="interval2" class="time-interval">
-                                        <p>سه شنبه</p>
-                                        <p>4 شهریور</p>
-                                    </div><div @click="()=>timeIntervalHandler(3)" id="interval3" class="time-interval">
-                                        <p>سه شنبه</p>
-                                        <p>4 شهریور</p>
-                                    </div><div @click="()=>timeIntervalHandler(4)" id="interval4" class="time-interval">
-                                        <p>سه شنبه</p>
-                                        <p>4 شهریور</p>
+                                    <div v-for="(d,i) in weekDayz" @click="()=>timeIntervalHandler(i)" :key="i" :id="'interval'+i" class="time-interval">
+                                        <p>{{d.day}}</p>
+                                        <p>{{d.date}}</p>
                                     </div>
                                 </div>
                                 <div class="hours p-3">
                                     <custom-input kind="radio" container="hour-interval" :selectItems="userAddresses" name="address" v-bind:theModel.sync="address"></custom-input>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="a-pay-form">
                             <div class="pay-form-title">
                                     <icon-image address="/assets/site/images/seller-icons/close.svg"></icon-image>
@@ -132,7 +120,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
             <div class="col-8 loading-whole" v-else>
@@ -220,6 +208,7 @@ import CartItem from "../Layout/CartItem"
 import AddressModal from "../../Common/AddressModal"
 import Service from "../../../utils/service"
 import currencyFormatter from "../../use/fomatCurrency"
+import weekDays from '../../use/returnWeekDay'
 import $ from 'jquery'
 export default {
     components:{
@@ -320,6 +309,7 @@ export default {
 
         onMounted(()=>{
             getDistricts()
+            timeIntervalHandler(0)
             let x = null
 
             if(activeCart.value != false){
@@ -549,7 +539,9 @@ export default {
 
         const loadingToBank = ref(false)
 
-        return {loadingToBank,discountError,discount_id,discountName,submitDiscount,orderDesc,activeCart,redirectToSearch,global,sendAddress,districts,test,doPay,cartChanged,payable,tax,deliveryCost,total,discount,cartErrors,deleteCart,userAddresses,address,timeIntervalHandler,methods,paymentMethod,credit,useCredit,cartItems}
+        const weekDayz = ref(weekDays.getNextSixDays())
+
+        return {weekDayz, loadingToBank,discountError,discount_id,discountName,submitDiscount,orderDesc,activeCart,redirectToSearch,global,sendAddress,districts,test,doPay,cartChanged,payable,tax,deliveryCost,total,discount,cartErrors,deleteCart,userAddresses,address,timeIntervalHandler,methods,paymentMethod,credit,useCredit,cartItems}
     }
 }
 </script>
@@ -642,7 +634,7 @@ export default {
 }
 
 .time-interval{
-    width: 20%;
+    width: 14.2%;
     margin:0px !important;
     padding-top: 8px;
     border:none;

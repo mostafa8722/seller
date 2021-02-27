@@ -493,7 +493,7 @@ const routes = [
   // BASE
   {
     path: '/',
-    name: 'Home',
+    name: 'Golpino Home Page',
     component: () => import(/* webpackChunkName: "about" */ '../components/Main/Home/Home.vue')
   },
 

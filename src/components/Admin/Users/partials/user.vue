@@ -5,12 +5,18 @@
     <td ><p>{{theUser.mobile}}</p></td>
     <td >{{theUser.order_number}}</td>
     <td >{{theUser.district}}</td>
+    <td ><button @click="goToPanel" class="purple-btn">ورود به حساب</button></td>
   </tr>
 </template>
 <script>
 import { ref } from "@vue/composition-api"
 export default {
   props: ["theUser"],
+  methods:{
+    goToPanel:function(){
+      this.$emit('goToPanel',this.theUser.id)
+    }
+  }
 };
 </script>
 <style scoped>

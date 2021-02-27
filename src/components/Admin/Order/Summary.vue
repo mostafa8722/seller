@@ -14,10 +14,9 @@
                 <tr>
                     <th class="small-cell">شماره سفارش</th>
                     <th class="small-cell">نام فروشگاه</th>
-                    <!-- <th>جمع کل</th>
-                    <th>تخفیف</th> -->
                     <th>آدرس</th>
                     <th class="small-cell">شماره تلفن</th>
+                    <th class="small-cell">تاریخ پرداخت</th>
                     <th class="small-cell">هزینه ارسال</th>
                     <th class="small-cell">قابل پرداخت</th>
                     <th class="small-cell">وضعیت</th>

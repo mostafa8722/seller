@@ -4,8 +4,7 @@
     <td class="small-cell">{{theOrder.seller_name}}</td>
     <td class="mid-cell"><p>{{theOrder.address}}</p></td>
     <td class="small-cell">{{theOrder.user_phone}}</td>
-    <!-- <td>{{theOrder.amount}}</td>
-    <td>{{theOrder.discount}}</td> -->
+    <td class="small-cell">{{theDate}}</td>
     <td class="small-cell">{{theOrder.delivery_cost}}</td>
     <td class="small-cell">{{theOrder.payable}}</td>
     <td class="small-cell"><Etiquette :status="parseInt(theOrder.status)"></Etiquette></td>
@@ -17,6 +16,7 @@
 import { ref } from "@vue/composition-api"
 import Etiquette from './etiquette'
 import CustomInput from '../../../Common/CustomInput'
+import jalalim from 'jalali-moment'
 export default {
   props: ["theOrder"],
   components:{
@@ -36,6 +36,11 @@ export default {
   methods:{
     reviseOrder:function(){
       this.$emit('reviseOrder',{id:this.theOrder.id,status:this.status.value.value})
+    }
+  },
+  computed:{
+    theDate:function(){
+      return jalalim(this.theOrder.pay_time).locale('fa').format('YY/MM/DD')
     }
   }
 };

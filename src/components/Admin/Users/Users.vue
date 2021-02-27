@@ -4,21 +4,28 @@
             <h3 class="tNormal">کاربران</h3>
             <h5 class="tNormal mt-3 mini-title">تعداد کل :</h5>
             <h5 class="mini-title mr-2 tNormal mt-3">{{users.length}}</h5>
-            <table class="mt-2">
+            <div class="search-section">
+                <custom-input kind="text" container="mini-title ml-5 mt-5" classes="mini-title mr-2" v-bind:theModel.sync="userMobile" label="جستجوی کاربر" placeholder="شماره موبایل"></custom-input>
+                <button class="purple-btn" @click="searchUser">جستجو</button>
+                <button class="purple-btn mr-2" @click="showAll">نمایش همه</button>
+            </div>
+            <table class="mt-2" v-if="searchError == ''">
                 <tr>
                     <th class="small-cell">نام</th>
                     <th class="small-cell">تاریخ ثبت نام</th>
                     <th class="small-cell">شماره تلفن</th>
                     <th class="small-cell">تعداد سفارش</th>
                     <th class="small-cell">محله</th>
+                    <th class="small-cell">ابزار</th>
                 </tr>
-                <one-user v-for="(u,i) in users" :key="i" :theUser="u"></one-user>
+                <one-user @goToPanel="goToPanel" v-for="(u,i) in (searchUsers.length>0 ? searchUsers : users)" :key="i" :theUser="u"></one-user>
             </table>
+            <div v-else>{{searchError}}</div>
         </div>
     </div>
 </template>
 <script>
-import { computed, onMounted, ref} from "@vue/composition-api"
+import { computed, onMounted, ref ,inject} from "@vue/composition-api"
 import OneUser from './partials/user'
 import Service from '../../../utils/admin-service'
 import CustomInput from '../../Common/CustomInput'
@@ -29,8 +36,8 @@ export default {
         CustomInput
     },
     setup(props,context){
-        const users = ref(null)
-
+        const users = ref([])
+        const global = inject('global')
         const theService = computed(()=>{
             return Service(false)
         })
@@ -46,7 +53,40 @@ export default {
             })
         })
 
-        return {users}
+        const userMobile = ref({value:null,valid:true})
+        const searchUsers = ref([])
+        const searchError = ref('')
+
+        const searchUser = () => {
+            searchError.value = ''
+            let x = users.value.filter((u)=>{
+                if(u.mobile == userMobile.value.value)
+                    return u
+                })
+            searchUsers.value = x
+            if(searchUsers.value.length ==0 ){
+                searchError.value = 'کاربری با این مشخصات یافت نشد'
+            }
+        }
+
+        const showAll = () => {
+            searchError.value = ''
+            searchUsers.value = []
+        }
+
+        const goToPanel = (id) => {
+            theService.value.receive('admin/user/return/token/'+id,{},(s,d)=>{
+                $cookies.set("Golpino_token",d.data,2147483647)
+                global.toggleLogin(true)
+                global.setUserType('user')
+                let routeData = context.root.$router.resolve({name: 'Golpino Home Page'})
+                window.open(routeData.href, '_blank')
+            },(s,e)=>{
+
+            })
+        }
+
+        return {users,userMobile,searchUsers,searchUser,showAll,searchError,goToPanel}
     }
 }
 </script>

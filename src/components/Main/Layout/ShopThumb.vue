@@ -1,8 +1,8 @@
 <template>
     <div class="shop-thumb" v-if="grid">
-        <!-- <div class="shop-score pr-2 pl-2 pt-1 pb-1">
-            <span class="icon-star ml-1"></span>4.4
-        </div> -->
+        <div class="shop-score pr-2 pl-2 pt-1 pb-1">
+            <span class="icon-star mr-1"></span>{{theShop.score}}
+        </div>
         <div class="shop-pin">
             <span class="icon-bookmark mr-1"></span>
         </div>
@@ -13,12 +13,16 @@
             <img :src="theShop.logo" alt="" class="logo-image">
         </div>
         <div class="shop-detail p-3">
-            <p class="shop-name">{{theShop.name}}</p>
-            <div class="shop-address">
+            <p class="shop-name mini-title">{{theShop.name}}</p>
+            <p class="mini-title pt-1 shop-comments">({{theShop.comment_number}} نظر)</p>
+            <div class="shop-address mt-2">
                 <p class="mini-title"><image-icon address="/assets/site/images/seller-icons/shoploc.svg"></image-icon>{{theShop.address}}</p>
             </div>
+            <div class="shop-address">
+                <p class="mini-title mt-2 shop-time"><image-icon address="/assets/site/images/seller-icons/timer.svg"></image-icon>زمان آماده سازی {{theShop.preparation_time}} دقیقه</p>
+            </div>
         </div>
-        <div class="shop-tools p-2">
+        <div class="shop-tools mt-2 p-2">
             <router-link :to="'/shop/'+theShop.id">
                 <button class="shop-visit" @click="visitShop">مشاهده ی فروشگاه<span class="icon-more mr-2"></span></button>
             </router-link>
@@ -29,9 +33,13 @@
             <img :src="theShop.logo" alt="" class="logo-image">
         </div>
         <div class="row-shop-detail mini-title p-3">
-            <p class="shop-name">{{theShop.name}}</p>
+            <p class="shop-name mini-title">{{theShop.name}}</p>
+            <p class="mini-title mb-3 pt-1 shop-comments">({{theShop.comment_number}} نظر)</p>
             <div class="shop-address">
                 <p class="mini-title"><image-icon address="/assets/site/images/seller-icons/shoploc.svg"></image-icon>{{theShop.address}}</p>
+            </div>
+            <div class="shop-address">
+                <p class="mini-title shop-time"><image-icon address="/assets/site/images/seller-icons/timer.svg"></image-icon>زمان آماده سازی {{theShop.preparation_time}} دقیقه</p>
             </div>
         </div>
         <!-- <div class="shop-pin">
@@ -39,7 +47,7 @@
         </div> -->
         <div class="row-shop-tools mini-title p-2">
             <div class="row-shop-score pr-2 pl-2 pt-1 pb-1 mb-3">
-                <span class="icon-star ml-1"></span>4.4
+                <span class="icon-star ml-1"></span>{{theShop.score}}
             </div>
             <router-link :to="'/shop/'+theShop.id">
                 <button class="shop-visit" @click="visitShop">مشاهده ی فروشگاه<span class="icon-more mr-2"></span></button>
@@ -80,7 +88,7 @@ export default {
     display: inline-block;
     overflow: hidden;
     position: relative;
-    height: 300px;
+    height: 325px;
 }
 
 .shop-thumb:hover{
@@ -107,6 +115,7 @@ export default {
     background-color: #9147FF;
     color:#fff;
     position: absolute;
+    font-size: 0.8rem;
     top:8px;
     left:15px;
     text-align: end;
@@ -206,6 +215,16 @@ export default {
 
 .shop-address div{
     width: 80%;
+}
+
+.shop-time{
+    color: rgba(127,127,127,.65);
+}
+
+.shop-comments{
+    color: rgba(127,127,127,.65);
+    float: left;
+    font-size: 0.8rem;
 }
 
 .mini-title{
