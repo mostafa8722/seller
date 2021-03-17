@@ -86,6 +86,11 @@ const routes = [
     name: 'Golpino Search Page',
     component:() => import('../components/Main/Search/Results.vue'),
     props:route => ({category:(route.query.category ? route.query.category : null),district:(route.query.district ? route.query.district : null),address:(route.query.address ? route.query.address : null),name: (route.query.name ? route.query.name : null)})
+  },{
+    path:'/cors',
+    name: 'Golpino Search Page',
+    component:() => import('../components/Main/Search/ResultsCors.vue'),
+    props:route => ({category:(route.query.category ? route.query.category : null),district:(route.query.district ? route.query.district : null),address:(route.query.address ? route.query.address : null),name: (route.query.name ? route.query.name : null)})
   },
   {
     path:'/user/orders',

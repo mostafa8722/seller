@@ -281,26 +281,30 @@ export default {
     },
     computed:{
         possibles:function(){
-            if(this.noSuggestion){
+            if(this.noSuggestion){        
                 return []
             }
-            else if(this.allSuggestion){
+            else if(this.allSuggestion){        
                 return this.suggestions
             }
-            else{
-                    if(this.nofilter && this.suggestions){
+            else{        
+                    if(this.nofilter && this.suggestions){                
                         return this.suggestions
                     }
-                    else if(!this.suggestions){
+                    else if(!this.suggestions){                
                         return []
                     }
                     else{
                         if(this.myModel.id != ""){
-                            return this.suggestions.filter((s)=>{
-                             s.text.includes(this.myModel.id)
+                            let x = []
+                            this.suggestions.map((s)=>{
+                                if(s.text.includes(this.myModel.id))
+                                    x.push(s)
                             })
+
+                            return x
                         }
-                        else{
+                        else{                    
                             return []
                         }
                     }

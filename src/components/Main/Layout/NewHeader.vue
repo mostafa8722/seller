@@ -252,6 +252,13 @@ export default {
                 },(s,e)=>{
                     })
             }
+            else{
+                if(localStorage.golpino_cart){
+                    let cookieCart = JSON.parse(localStorage.golpino_cart)
+                                if(cookieCart != null && cookieCart != [])
+                                stateValues.setCart(cookieCart)
+                }
+            }
         })
         const cookieFinder = () =>
             {
@@ -303,7 +310,7 @@ export default {
         const password = ref({value:null,valid:true})
         const rePassword = ref({value:null,valid:true})
 
-// 09309053068
+
         // AUTH
         const countDownCounter = ref(0)
         let coundDownInterval = null

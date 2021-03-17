@@ -82,12 +82,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="a-pay-form">
+                    <!-- <div class="a-pay-form">
                         <div class="pay-form-title">
                                 <icon-image address="/assets/site/images/seller-icons/close.svg"></icon-image>
                                 <p class="mini-title tLighter">زمان تحویل</p>
                         </div>
-                        <!-- <div class="pay-form-form delivery-time">
+                        <div class="pay-form-form delivery-time">
                             <div class="time-table">
                                 <div class="intervals">
                                     <div v-for="(d,i) in weekDayz" @click="()=>timeIntervalHandler(i)" :key="i" :id="'interval'+i" class="time-interval">
@@ -99,7 +99,7 @@
                                     <custom-input kind="radio" container="hour-interval" :selectItems="userAddresses" name="address" v-bind:theModel.sync="address"></custom-input>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="a-pay-form">
                             <div class="pay-form-title">
                                     <icon-image address="/assets/site/images/seller-icons/close.svg"></icon-image>
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-8 loading-whole" v-else>
@@ -309,7 +309,7 @@ export default {
 
         onMounted(()=>{
             getDistricts()
-            timeIntervalHandler(0)
+            // timeIntervalHandler(0)
             let x = null
 
             if(activeCart.value != false){

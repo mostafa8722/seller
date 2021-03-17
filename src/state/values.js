@@ -60,8 +60,6 @@ const minusQuantity = (product) => {
 
 const removeFromCart = (product) => {
   shoppingCart.value = shoppingCart.value.filter((i)=>{
-    console.log(i.id)
-    console.log(product.id)
     if(i.id != product.id){
       return i
     }

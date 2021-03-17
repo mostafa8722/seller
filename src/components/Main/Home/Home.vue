@@ -586,9 +586,6 @@ export default {
                     })
                     sampleProducts.value = [...sampleProducts.value,...samples]
                     sampleProducts.value = shuffle(sampleProducts.value)
-                    // sampleProducts.value.map((p)=>{
-                    //     p.formattedPrice = currencyFormatter(p.price + "")
-                    // })
                 },(s,e)=>{
 
                 })

@@ -1,7 +1,7 @@
 <template>
     <div class="shop-thumb" v-if="grid">
         <div class="shop-score pr-2 pl-2 pt-1 pb-1">
-            <span class="icon-star mr-1"></span>{{theShop.score}}
+            <span class="icon-star mr-1"></span>{{theScore}}
         </div>
         <div class="shop-pin">
             <span class="icon-bookmark mr-1"></span>
@@ -47,7 +47,7 @@
         </div> -->
         <div class="row-shop-tools mini-title p-2">
             <div class="row-shop-score pr-2 pl-2 pt-1 pb-1 mb-3">
-                <span class="icon-star ml-1"></span>{{theShop.score}}
+                <span class="icon-star ml-1"></span>{{theScore}}
             </div>
             <router-link :to="'/shop/'+theShop.id">
                 <button class="shop-visit" @click="visitShop">مشاهده ی فروشگاه<span class="icon-more mr-2"></span></button>
@@ -73,6 +73,11 @@ export default {
     },
     components:{
         ImageIcon
+    },
+    computed:{
+        theScore:function(){
+            return Math.round(this.theShop.score * 10) / 10
+        }
     }
 }
 </script>
