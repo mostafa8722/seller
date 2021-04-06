@@ -3,7 +3,7 @@
 // const API_BASE_URL = "http://nazardoon.com/new_golpino/public/api/"
 // const API_BASE_URL = "https://api.golpino.com/api/"
 // const API_BASE_URL = "/api/public/api/"
-const API_BASE_URL = "https://gol.aminabedi.com/api/"
+const API_BASE_URL = "https://api.golpino.com/api/"
 const WP_BASE_URL = "https://golpino.com/mag/api/"
 // const API_BASE_URL = "http://192.168.1.56/new-golp"
 

@@ -30,7 +30,7 @@
     <div v-else-if="kind=='tag'" :class="'shownInput text-input ' + container">
         <label v-if="label != ''" :for="id">{{label}}</label>
         <div :class="'tagManager row m-0 ' + extraClasses">
-            <input  autocomplete="off" :id="id" type="text" :class="'hidden-text col-5 ' + classes"  @focus="(e)=>suggestAll(e)" @input="(e)=>suggest(e)" v-model="myModel.id" :placeholder="placeholder">
+            <input  autocomplete="off" :id="id" type="text" :class="'hidden-text col-5 ' + classes + (!myModel.valid ? ' invalid ' : '')"  @focus="(e)=>suggestAll(e)" @input="(e)=>suggest(e)" v-model="myModel.id" :placeholder="placeholder">
             <div class="tags col-7">
                 <slot></slot>
             </div>
@@ -40,11 +40,12 @@
                 </div>
             </div>
         </div>
+        <p v-if="!myModel.valid" class="error-message">{{(myModel.message ? myModel.message : '')}}</p>
     </div>
     <div v-else-if="kind=='searchInput'" :class="'shownInput text-input ' + container">
         <label v-if="label != ''" :for="id" :class="labelClass">{{label}}</label>
         <div :class="'tagManager row m-0 ' + extraClasses">
-            <input autocomplete="off" :id="id" type="text" :class="'hidden-text full-width ' + classes" @focus="(e)=>suggestAll(e)" @input="(e)=>suggest(e)" v-model="myModel.id" :placeholder="placeholder">
+            <input autocomplete="off" :id="id" type="text" :class="'hidden-text full-width ' + classes + (!myModel.valid ? ' invalid ' : '')" @focus="(e)=>suggestAll(e)" @input="(e)=>suggest(e)" v-model="myModel.id" :placeholder="placeholder">
             <div class="searchInputResult">
                 <div @click="resetSearch">
                     <slot></slot>
@@ -56,6 +57,7 @@
                 </div>
             </div>
         </div>
+        <p v-if="!myModel.valid" class="error-message">{{(myModel.message ? myModel.message : '')}}</p>
     </div>
     <div v-else-if="kind=='tick'" :class="'shownInput check-input ' + container">
         <div class="shownCheckBox mr-1 mini-title" @click="toggleCheck">

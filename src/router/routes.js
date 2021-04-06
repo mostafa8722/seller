@@ -392,6 +392,14 @@ const routes = [
         requiresAdmin:true
       }
     },
+    {
+      path: '/qwertyzxcvb/admin/add/delivery-time/:id',
+      name: 'Golpino Admin Banner Page',
+      component: () => import('../components/Admin/Forms/Banners.vue'),
+      meta:{
+        requiresAdmin:true
+      }
+    },
   // SELLER
   {
     path: '/seller',

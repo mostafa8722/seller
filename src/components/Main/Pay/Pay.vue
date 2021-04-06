@@ -5,7 +5,7 @@
                 <div class="pay-form">
                     <div class="a-pay-form" v-if="cartErrors != null">
                         <div class="pay-form-title">
-                               <p class="cartError">لطفا به موارد زیر دقت کنید</p>
+                            <p class="cartError">لطفا به موارد زیر دقت کنید</p>
                         </div>
                         <div class="pay-form-form">
                             <div class="row">

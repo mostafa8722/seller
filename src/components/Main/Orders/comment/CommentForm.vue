@@ -341,4 +341,5 @@ export default {
 .score{
     text-align: center;
 }
+
 </style>

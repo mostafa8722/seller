@@ -82,6 +82,11 @@
                         <a class="nav-link" href="#">زمان تحویل<span class="sr-only">(current)</span></a>
                     </router-link>
                 </li>
+                <li class="nav-item active">
+                    <router-link :to="{name:'Golpino Admin Banner Page'}">
+                        <a class="nav-link" href="#">بنرها<span class="sr-only">(current)</span></a>
+                    </router-link>
+                </li>
                 <li class="nav-item active" @click="logout">
                     <a class="nav-link tBold" href="#">خروج <span class="sr-only">(current)</span></a>
                 </li>                    
