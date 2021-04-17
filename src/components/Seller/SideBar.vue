@@ -3,7 +3,7 @@
         <div class="emblem mini-title">
             <icon-image address="/assets/site/images/seller-icons/golpino.svg" classes="golpino"></icon-image>
         </div>
-        <nav class="side-nav mt-2 pr-1 pl-1">
+        <nav  class="side-nav mt-2 pr-1 pl-1">
             <p class="pl-3">منوهای اصلی</p>
             <menu-item :to="{name:'Golpino Seller Dashboard'}" icon="/assets/site/images/seller-icons/home.svg" @activated="handleMenu" :active="activeItem" id="1" title="داشبورد"></menu-item>
             <menu-item v-if="verified" :to="{name:'Golpino Seller Products'}" icon="/assets/site/images/seller-icons/shop.svg" @activated="handleMenu" :active="activeItem" id="2" title="محصولات"></menu-item>

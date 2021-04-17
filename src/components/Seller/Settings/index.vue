@@ -1,162 +1,164 @@
 <template>
     <div class="container">
         <div class="container mt-3 settings">
-            <div class="right-bar">
-                <div class="top-right p-3 d-flex justify-content-between">
-                    <div class="user">
-                        <div class="mini-title">
-                            <rounded-image src="/assets/site/images/popular.png" kind="mid"></rounded-image>
-                            <p class="mini-title">محمد نقوی</p>
-                        </div>
-                        <p>mohamad.naghavi71@gmail.com</p>
-                    </div>
-                    <image-icon address="/assets/site/images/seller-icons/three-dots.svg"></image-icon>
-                </div>
-                <div class="mid-right p-3">
-                    <div class="d-flex justify-content-between">
-                        <p class="mini-title">شماره حساب های شما</p>
-                        <image-icon address="/assets/site/images/seller-icons/three-dots.svg"></image-icon>
-                    </div>
-                    <div class="mini-title up-locker">
-                        <img src="/assets/site/images/seller-icons/up.svg" alt="image">
-                    </div>
-                    <div class="mini-title">
-                        <p>بانک ملت</p>
-                        <p class="mini-title mr-1">4405</p>
-                        <p class="mini-title mr-1">4405</p>
-                        <p class="mini-title mr-1">4405</p>
-                        <p class="mini-title mr-1">4405</p>
-                    </div>
-                    <div>
-                        <p>شماره شبا</p>
-                        <p>1231243425636453632423123</p>
-                    </div>
-                </div>
-                <div class="menu-right pt-3">
-                    <menu-item v-for="(item,i) in menuItems" :id="i" :key="i" :active="activeMenu" @selected="activateMenu" :theItem="item"></menu-item>
-                </div>
-            </div>
-            <div class="main-section pt-3">
-                <div class="general-settings" v-if="activeMenu == 0">
-                    <h3>اطلاعات فروشگاه</h3>
-                    <p>اطلاعات اولیه همچون آدرس و ساعات کاری را وارد کنید</p>
-                    <!-- <div class="section-divider">
-                        <p>اطلاعات شخصی</p>
-                    </div>
-                    <custom-field :deactive="model.deactive" @edit="()=>activateModel(i)" @activate="()=>activateModel(i)" v-for="(model,i) in basicModels.fields" :key="i" :theField="model.name">
-                        <custom-input :classes="model.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="model.deactive" kind="text" container="full-width" v-bind:theModel.sync="model.value"></custom-input>
-                    </custom-field> -->
-                    <div class="section-divider">
-                        <p>اطلاعات فروشگاه</p>
-                    </div>
-                    <custom-field :deactive="descs.deactive" @edit="()=>submitValue('descs')" @activate="()=>activateModel('descs')" theField="توضیحات فروشگاه">
-                        <div class="row p-2">
-                            <div class="col-4">
-                                <custom-input labelClass="tLighter mini-title" key='z12' :classes="descs.deactive ? 'deactive full-width' : ' full-width'" :deactive="descs.deactive" kind="text" container="full-width mt-1 ml-1" v-bind:theModel.sync="descs.fields[0].value" :label="descs.fields[0].name"></custom-input>
-                            </div>
-                            <div class="col-8">
-                                <custom-input labelClass="tLighter mini-title" key='z22' :classes="descs.deactive ? 'deactive full-width' : ' full-width'" :deactive="descs.deactive" kind="area" rows="2" container="full-width mt-1 ml-1" v-bind:theModel.sync="descs.fields[1].value" :label="descs.fields[1].name"></custom-input>  
-                            </div>
-                        </div>
-                    </custom-field>
-                    <custom-field :deactive="workTime.deactive" @edit="()=>submitValue('workTime')" @activate="()=>activateModel('workTime')" theField="ساعت کاری (ساعت:دقیقه)">
-                        <div class="row p-2">
-                            <div class="col-4">
-                                <custom-input labelClass="tLighter" key='z1' :classes="workTime.deactive ? 'deactive full-width' : ' full-width'" :deactive="workTime.deactive" kind="text" container="half-width mt-1 ml-1" v-bind:theModel.sync="workTime.fields[0].value" :label="workTime.fields[0].name"></custom-input>
-                            </div>
-                            <div class="col-4">
-                                <custom-input labelClass="tLighter" key='z2' :classes="workTime.deactive ? 'deactive full-width' : ' full-width'" :deactive="workTime.deactive" kind="text" container="half-width mt-1 ml-1" v-bind:theModel.sync="workTime.fields[1].value" :label="workTime.fields[1].name"></custom-input>  
-                            </div>
-                            <div class="col-4">
-                                <custom-input labelClass="tLighter" key='z2' :classes="workTime.deactive ? 'deactive full-width' : ' full-width'" :deactive="workTime.deactive" kind="dropDown" :selectItems="days" container="half-width mt-1" v-bind:theModel.sync="theWorkDay" label="روز"></custom-input>  
-                            </div>
-                        </div>
-                    </custom-field>
-                    <custom-field :deactive="preparationTime.deactive" @edit="()=>submitValue('ppTime')" @activate="()=>activateModel('ppTime')" theField="زمان آماده سازی">
-                        <custom-input key='z3' :classes="preparationTime.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="preparationTime.deactive" kind="text" container="full-width" v-bind:theModel.sync="preparationTime.fields[0].value"></custom-input>
-                    </custom-field>
-                    <custom-field v-if="distances != null" :deactive="sendCost.deactive" @edit="()=>submitValue('sendCost')" @activate="()=>activateModel('sendCost')" theField="هزینه ی ارسال">
-                        <div class="row p-2">
-                            <div class="col-6">
-                                <custom-input key="z4" :initial="true" label="مسافت" :classes="sendCost.deactive ? 'deactive full-width' : 'full-width'" :deactive="sendCost.deactive" kind="dropDown" container="full-width" :selectItems="distances" v-bind:theModel.sync="sendCost.fields[0].value"></custom-input>
-                            </div>
-                            <div class="col-6">
-                                <custom-input key="z5" label="هزینه" :classes="sendCost.deactive ? 'deactive full-width' : 'full-width'" :deactive="sendCost.deactive" kind="text" container="full-width" v-bind:theModel.sync="sendCost.fields[1].value"></custom-input>  
-                            </div>
-                        </div>                  
-                    </custom-field>
-                    <custom-field :deactive="serviceRange.deactive" @edit="()=>submitValue('serviceRange')" @activate="()=>activateModel('serviceRange')" theField="محدوده ی خدمات رسانی">
-                        <custom-input key="z6" :classes="serviceRange.deactive ? 'deactive block half-width' : 'block half-width'" :deactive="serviceRange.deactive" kind="dropDown" container="full-width" :selectItems="serviceRanges" v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>
-                    </custom-field>
-                    <custom-field :modal="!hasAddress" :deactive="shopAddress.deactive" @edit="()=>submitValue('shopAddress')" @activate="()=>activateModel('shopAddress')" theField="آدرس مغازه">
-                        <custom-input key="z7" :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="shopAddress.deactive" kind="text" container="full-width" v-bind:theModel.sync="shopAddress.fields[0].value"></custom-input>
-                    </custom-field>
-                    <custom-field  :deactive="logoImage.deactive" @edit="()=>submitValue('logoImage')" @activate="()=>activateModel('logoImage')" theField="لوگو">
-                        <div class="row pt-3 pb-3 mt-1">
-                            <div class="col-3">
-                                <p>لوگو</p>
-                            </div>
-                            <div class="col-4" v-if="!logoImage.deactive">
-                                <input type="file" accept="image" @change="(e)=>getImage(e,1)">
-                            </div>
-                            <div class="col-5 seller-logo-locker">
-                                <img v-if="theImage.logo != null" :src="theImage.logo" alt="image">
-                            </div>
-                        </div>
-                        <div class="row pt-3 pb-3 mt-1">
-                            <div class="col-3">
-                                <p>بنر</p>
-                            </div>
-                            <div class="col-4" v-if="!logoImage.deactive">
-                                <input type="file" accept="image" @change="(e)=>getImage(e,2)">
-                            </div>
-                            <div class="col-5 seller-logo-locker">
-                                <img v-if="theImage.banner != null" :src="theImage.banner" alt="image">
-                            </div>
-                        </div>
-                        <div class="row pt-3 pb-3 mt-1">
-                            <div class="col-3">
-                                <p>جواز</p>
-                            </div>
-                            <div class="col-4" v-if="!logoImage.deactive">
-                                <input type="file" accept="image" @change="(e)=>getImage(e,3)">
-                            </div>
-                            <div class="col-5 seller-logo-locker">
-                                <img v-if="theImage.licence != null" :src="theImage.licence" alt="image">
-                            </div>
-                        </div>
-                    </custom-field>
-                </div>
-                <div class="financial-settings" v-if="activeMenu == 5">
-                    <h3>اطلاعات حساب</h3>
-                    <p>اطلاعات حساب بانکی خود را وارد کنید</p>
-                    <div class="bank-tabs">
-                        <div class="mini-title half-width bank-tab bank-tab-active" @click="()=>bankTabHandler(1)" id="bankTab1">
-                            <p>افزودن حساب جدید</p>
-                        </div>
-                        <div class="mini-title half-width bank-tab" @click="()=>bankTabHandler(2)" id="bankTab2">
-                            <p>ویرایش حساب</p>
-                        </div>
-                    </div>
-                    <div class="bank-form">
-                        <custom-input v-if="editBankAccount" kind="dropDown" label="حساب بانکی" container="half-width mt-4" v-bind:theModel.sync="bankToEdit" :selectItems="accounts" placeholder="حساب بانکی"></custom-input>
-                        <custom-input kind="dropDown" label="بانک مربوطه" container="full-width mt-4" v-bind:theModel.sync="aBankAccount.bank" :selectItems="bankNames" placeholder="بانک مربوطه"></custom-input>
-                        <custom-input kind="text" label="شماره حساب" container="full-width mt-4" v-bind:theModel.sync="aBankAccount.accountNo" classes="block full-width"></custom-input>
-                        <custom-input kind="text" label="شماره شبا" container="full-width mt-4" v-bind:theModel.sync="aBankAccount.shebaNo" classes="block full-width"></custom-input>
-                        <custom-input kind="text" label="شماره کارت" container="full-width mt-4" v-bind:theModel.sync="aBankAccount.cardNo" classes="block full-width"></custom-input>
-                    </div>
-                    <button class="purple-btn mt-4 full-width" @click="submitFinancials">ثبت اطلاعات حساب</button>
-                </div>
-                <div class="notif-settings" v-else-if="activeMenu == 1">
-                    <h3>تنظیمات اعلان ها</h3>
-                    <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>
-                    <h4 class="mt-4">هشدارهای امنیتی</h4>
-                    <custom-input container="mt-3 full-width" v-for="(model , i) in notifModels" :key="'n' + i"  :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value" :label="model.label"></custom-input>
-                    <h4 class="mt-4">اخبارها</h4>
-                    <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>
-                    <custom-input container="mt-3 full-width" v-for="(model , i) in newsModels" :key="'u' + i"  :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value" :label="model.label"></custom-input>
-                </div>
-            </div>
+           <div class="row">
+             <div class="col-md-4 col-sm-12 right-bar">
+               <div class="top-right p-3 d-flex justify-content-between">
+                 <div class="user">
+                   <div class="mini-title">
+                     <rounded-image src="/assets/site/images/popular.png" kind="mid"></rounded-image>
+                     <p class="mini-title">محمد نقوی</p>
+                   </div>
+                   <p>mohamad.naghavi71@gmail.com</p>
+                 </div>
+                 <image-icon address="/assets/site/images/seller-icons/three-dots.svg"></image-icon>
+               </div>
+               <div class="mid-right p-3">
+                 <div class="d-flex justify-content-between">
+                   <p class="mini-title">شماره حساب های شما</p>
+                   <image-icon address="/assets/site/images/seller-icons/three-dots.svg"></image-icon>
+                 </div>
+                 <div class="mini-title up-locker">
+                   <img src="/assets/site/images/seller-icons/up.svg" alt="image">
+                 </div>
+                 <div class="mini-title">
+                   <p>بانک ملت</p>
+                   <p class="mini-title mr-1">4405</p>
+                   <p class="mini-title mr-1">4405</p>
+                   <p class="mini-title mr-1">4405</p>
+                   <p class="mini-title mr-1">4405</p>
+                 </div>
+                 <div>
+                   <p>شماره شبا</p>
+                   <p>1231243425636453632423123</p>
+                 </div>
+               </div>
+               <div class="menu-right pt-3">
+                 <menu-item v-for="(item,i) in menuItems" :id="i" :key="i" :active="activeMenu" @selected="activateMenu" :theItem="item"></menu-item>
+               </div>
+             </div>
+             <div class="col-md-8 col-sm-12 main-section pt-3">
+               <div class="general-settings" v-if="activeMenu == 0">
+                 <h3>اطلاعات فروشگاه</h3>
+                 <p>اطلاعات اولیه همچون آدرس و ساعات کاری را وارد کنید</p>
+                 <!-- <div class="section-divider">
+                     <p>اطلاعات شخصی</p>
+                 </div>
+                 <custom-field :deactive="model.deactive" @edit="()=>activateModel(i)" @activate="()=>activateModel(i)" v-for="(model,i) in basicModels.fields" :key="i" :theField="model.name">
+                     <custom-input :classes="model.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="model.deactive" kind="text" container="full-width" v-bind:theModel.sync="model.value"></custom-input>
+                 </custom-field> -->
+                 <div class="section-divider">
+                   <p>اطلاعات فروشگاه</p>
+                 </div>
+                 <custom-field :deactive="descs.deactive" @edit="()=>submitValue('descs')" @activate="()=>activateModel('descs')" theField="توضیحات فروشگاه">
+                   <div class="row p-2">
+                     <div class="col-4">
+                       <custom-input labelClass="tLighter mini-title" key='z12' :classes="descs.deactive ? 'deactive full-width' : ' full-width'" :deactive="descs.deactive" kind="text" container="full-width mt-1 ml-1" v-bind:theModel.sync="descs.fields[0].value" :label="descs.fields[0].name"></custom-input>
+                     </div>
+                     <div class="col-8">
+                       <custom-input labelClass="tLighter mini-title" key='z22' :classes="descs.deactive ? 'deactive full-width' : ' full-width'" :deactive="descs.deactive" kind="area" rows="2" container="full-width mt-1 ml-1" v-bind:theModel.sync="descs.fields[1].value" :label="descs.fields[1].name"></custom-input>
+                     </div>
+                   </div>
+                 </custom-field>
+                 <custom-field :deactive="workTime.deactive" @edit="()=>submitValue('workTime')" @activate="()=>activateModel('workTime')" theField="ساعت کاری (ساعت:دقیقه)">
+                   <div class="row p-2">
+                     <div class="col-4">
+                       <custom-input labelClass="tLighter" key='z1' :classes="workTime.deactive ? 'deactive full-width' : ' full-width'" :deactive="workTime.deactive" kind="text" container="half-width mt-1 ml-1" v-bind:theModel.sync="workTime.fields[0].value" :label="workTime.fields[0].name"></custom-input>
+                     </div>
+                     <div class="col-4">
+                       <custom-input labelClass="tLighter" key='z2' :classes="workTime.deactive ? 'deactive full-width' : ' full-width'" :deactive="workTime.deactive" kind="text" container="half-width mt-1 ml-1" v-bind:theModel.sync="workTime.fields[1].value" :label="workTime.fields[1].name"></custom-input>
+                     </div>
+                     <div class="col-4">
+                       <custom-input labelClass="tLighter" key='z2' :classes="workTime.deactive ? 'deactive full-width' : ' full-width'" :deactive="workTime.deactive" kind="dropDown" :selectItems="days" container="half-width mt-1" v-bind:theModel.sync="theWorkDay" label="روز"></custom-input>
+                     </div>
+                   </div>
+                 </custom-field>
+                 <custom-field :deactive="preparationTime.deactive" @edit="()=>submitValue('ppTime')" @activate="()=>activateModel('ppTime')" theField="زمان آماده سازی">
+                   <custom-input key='z3' :classes="preparationTime.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="preparationTime.deactive" kind="text" container="full-width" v-bind:theModel.sync="preparationTime.fields[0].value"></custom-input>
+                 </custom-field>
+                 <custom-field v-if="distances != null" :deactive="sendCost.deactive" @edit="()=>submitValue('sendCost')" @activate="()=>activateModel('sendCost')" theField="هزینه ی ارسال">
+                   <div class="row p-2">
+                     <div class="col-6">
+                       <custom-input key="z4" :initial="true" label="مسافت" :classes="sendCost.deactive ? 'deactive full-width' : 'full-width'" :deactive="sendCost.deactive" kind="dropDown" container="full-width" :selectItems="distances" v-bind:theModel.sync="sendCost.fields[0].value"></custom-input>
+                     </div>
+                     <div class="col-6">
+                       <custom-input key="z5" label="هزینه" :classes="sendCost.deactive ? 'deactive full-width' : 'full-width'" :deactive="sendCost.deactive" kind="text" container="full-width" v-bind:theModel.sync="sendCost.fields[1].value"></custom-input>
+                     </div>
+                   </div>
+                 </custom-field>
+                 <custom-field :deactive="serviceRange.deactive" @edit="()=>submitValue('serviceRange')" @activate="()=>activateModel('serviceRange')" theField="محدوده ی خدمات رسانی">
+                   <custom-input key="z6" :classes="serviceRange.deactive ? 'deactive block half-width' : 'block half-width'" :deactive="serviceRange.deactive" kind="dropDown" container="full-width" :selectItems="serviceRanges" v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>
+                 </custom-field>
+                 <custom-field :modal="!hasAddress" :deactive="shopAddress.deactive" @edit="()=>submitValue('shopAddress')" @activate="()=>activateModel('shopAddress')" theField="آدرس مغازه">
+                   <custom-input key="z7" :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="shopAddress.deactive" kind="text" container="full-width" v-bind:theModel.sync="shopAddress.fields[0].value"></custom-input>
+                 </custom-field>
+                 <custom-field  :deactive="logoImage.deactive" @edit="()=>submitValue('logoImage')" @activate="()=>activateModel('logoImage')" theField="لوگو">
+                   <div class="row pt-3 pb-3 mt-1">
+                     <div class="col-3">
+                       <p>لوگو</p>
+                     </div>
+                     <div class="col-4" v-if="!logoImage.deactive">
+                       <input type="file" accept="image" @change="(e)=>getImage(e,1)">
+                     </div>
+                     <div class="col-5 seller-logo-locker">
+                       <img v-if="theImage.logo != null" :src="theImage.logo" alt="image">
+                     </div>
+                   </div>
+                   <div class="row pt-3 pb-3 mt-1">
+                     <div class="col-3">
+                       <p>بنر</p>
+                     </div>
+                     <div class="col-4" v-if="!logoImage.deactive">
+                       <input type="file" accept="image" @change="(e)=>getImage(e,2)">
+                     </div>
+                     <div class="col-5 seller-logo-locker">
+                       <img v-if="theImage.banner != null" :src="theImage.banner" alt="image">
+                     </div>
+                   </div>
+                   <div class="row pt-3 pb-3 mt-1">
+                     <div class="col-3">
+                       <p>جواز</p>
+                     </div>
+                     <div class="col-4" v-if="!logoImage.deactive">
+                       <input type="file" accept="image" @change="(e)=>getImage(e,3)">
+                     </div>
+                     <div class="col-5 seller-logo-locker">
+                       <img v-if="theImage.licence != null" :src="theImage.licence" alt="image">
+                     </div>
+                   </div>
+                 </custom-field>
+               </div>
+               <div class="financial-settings" v-if="activeMenu == 5">
+                 <h3>اطلاعات حساب</h3>
+                 <p>اطلاعات حساب بانکی خود را وارد کنید</p>
+                 <div class="bank-tabs">
+                   <div class="mini-title half-width bank-tab bank-tab-active" @click="()=>bankTabHandler(1)" id="bankTab1">
+                     <p>افزودن حساب جدید</p>
+                   </div>
+                   <div class="mini-title half-width bank-tab" @click="()=>bankTabHandler(2)" id="bankTab2">
+                     <p>ویرایش حساب</p>
+                   </div>
+                 </div>
+                 <div class="bank-form">
+                   <custom-input v-if="editBankAccount" kind="dropDown" label="حساب بانکی" container="half-width mt-4" v-bind:theModel.sync="bankToEdit" :selectItems="accounts" placeholder="حساب بانکی"></custom-input>
+                   <custom-input kind="dropDown" label="بانک مربوطه" container="full-width mt-4" v-bind:theModel.sync="aBankAccount.bank" :selectItems="bankNames" placeholder="بانک مربوطه"></custom-input>
+                   <custom-input kind="text" label="شماره حساب" container="full-width mt-4" v-bind:theModel.sync="aBankAccount.accountNo" classes="block full-width"></custom-input>
+                   <custom-input kind="text" label="شماره شبا" container="full-width mt-4" v-bind:theModel.sync="aBankAccount.shebaNo" classes="block full-width"></custom-input>
+                   <custom-input kind="text" label="شماره کارت" container="full-width mt-4" v-bind:theModel.sync="aBankAccount.cardNo" classes="block full-width"></custom-input>
+                 </div>
+                 <button class="purple-btn mt-4 full-width" @click="submitFinancials">ثبت اطلاعات حساب</button>
+               </div>
+               <div class="notif-settings" v-else-if="activeMenu == 1">
+                 <h3>تنظیمات اعلان ها</h3>
+                 <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>
+                 <h4 class="mt-4">هشدارهای امنیتی</h4>
+                 <custom-input container="mt-3 full-width" v-for="(model , i) in notifModels" :key="'n' + i"  :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value" :label="model.label"></custom-input>
+                 <h4 class="mt-4">اخبارها</h4>
+                 <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>
+                 <custom-input container="mt-3 full-width" v-for="(model , i) in newsModels" :key="'u' + i"  :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value" :label="model.label"></custom-input>
+               </div>
+             </div>
+           </div>
         </div>
         <address-modal :districts="districts" @addressComplete="setAddress"></address-modal>
     </div>
@@ -685,12 +687,12 @@ export default {
 
 .right-bar{
     border-left: 1px solid rgba(127, 127, 127, 0.3);
-    width:25%;
+    /*width:25%;*/
     display: inline-block;
     margin:0px;
-    position: absolute;
-    top:0px;
-    right:0px;
+    /*position: absolute;*/
+    /*top:0px;*/
+    /*right:0px;*/
 }
 
 .mid-right{
@@ -699,12 +701,12 @@ export default {
 }
 
 .main-section{
-    width:73%;
+    /*width:73%;*/
     display: inline-block;
     margin:0px;
-    position: relative;
-    top: 0px;
-    right:27%;
+    /*position: relative;*/
+    /*top: 0px;*/
+    /*right:27%;*/
     min-height: 100vh;
 }
 

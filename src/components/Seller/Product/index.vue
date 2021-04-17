@@ -1,5 +1,5 @@
 <template>
-<div class="container products-page pt-4">
+<div class="container products-page pt-4" @resize="console.log('test')">
     <div class="d-flex justify-content-between">
         <h2 class="mini-title">محصولات</h2>
         <router-link :to="{name:'Golpino Seller Product Form'}"><custom-button classes="add-button" icon="/assets/site/images/seller-icons/white-plus.svg" label="افزودن محصول"></custom-button></router-link>
@@ -17,21 +17,27 @@
                 <custom-button classes="list-nav-button" icon="/assets/site/images/seller-icons/left-arrow.svg" iconSize="mid"></custom-button>
             </div>
         </div>
-        <div class="products-table mt-2">
+        <div class="products-table mt-2 desktopPro"  >
             <table>
-                <tr>
-                    <th>تصویر<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
-                    <th>نام محصول<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
-                    <th>دسته بندی<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
-                    <th>قیمت<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
-                    <th>قیمت با تخفیف<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
-                    <th>تعداد<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
-                    <th>تاریخ<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
-                    <th>اقدامات<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
+                <tr >
+                    <th >تصویر<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
+                    <th >نام محصول<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
+                    <th >دسته بندی<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
+                    <th  >قیمت<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
+                    <th  >قیمت با تخفیف<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
+                    <th  >تعداد<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
+                    <th  >تاریخ<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
+                    <th  >اقدامات<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image></th>
                 </tr>
-                <product-item @deleteMe="deleteProduct" v-for="(p,i) in products" :key="i" :theProduct="p"></product-item>
+                <product-item browser-size="desktop" @deleteMe="deleteProduct" v-for="(p,i) in products" :key="i" :theProduct="p"></product-item>
             </table>
         </div>
+        <div>
+          <product-item-mobile-view browser-size="mobile" @deleteMe="deleteProduct" v-for="(p,i) in products" :key="i" :theProduct="p"/>
+        </div>
+
+
+
     </div>
 
 </div>
@@ -43,14 +49,25 @@ import IconImage from '../Common/icon'
 import CustomInput from '../Common/CustomInput'
 import ProductItem from './partials/productItem'
 import Service from "../../../utils/seller-service"
+import ProductItemMobileView from "./partials/productItemMobileView";
 export default {
+
+  data:()=>({
+    // browserWidth: null
+  }),
+
     components:{
+      ProductItemMobileView,
         CustomButton,
         CustomInput,
         IconImage,
         ProductItem
     },
-    setup(){
+  created() {
+    // console.log(window.innerWidth)
+    // this.browserWidth = window.innerWidth
+  },
+  setup(){
         onMounted(()=>{
             getProducts()
         })
@@ -82,6 +99,36 @@ export default {
 }
 </script>
 <style scoped>
+
+
+@media only screen and (max-width: 700px){
+
+  .desktopPro{
+    display: none;
+  }
+  .products{
+    background-color: transparent;
+  }
+
+}
+@media only screen and (min-width: 700px){
+
+  .desktopPro{
+    /*display: none;*/
+  }
+  .products{
+    background-color: white;
+  }
+
+}
+
+
+.listHeader{
+  /*width: 600px;*/
+  /*text-align: -webkit-center;*/
+}
+
+
 .products-page{
     font-weight: lighter;
     font-size: 0.8rem;
@@ -96,8 +143,11 @@ h2{
     border:none;
 }
 
+
+
+
 .products{
-    background-color: #fff;
+
     padding:12px 18px 0px 18px;
 }
 
