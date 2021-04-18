@@ -10,7 +10,7 @@ import VueCookies from 'vue-cookies'
 import AnimateCSS from 'animate.css'
 import VueHead from 'vue-head'
 import VueMeta from 'vue-meta'
-
+import vuetify from '@/plugins/vuetify'
 Vue.use(VueMeta)
 
 Vue.use(AnimateCSS)
@@ -21,6 +21,7 @@ Vue.use(VueCookies)
 Vue.config.productionTip = false
 
 new Vue({
+  vuetify,
   router,
   render: h => h(App)
 }).$mount('#app')

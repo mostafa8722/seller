@@ -15,7 +15,6 @@
       <side-bar></side-bar>
     </div>
 
-
     <!--      :class="(!global.user.value.isLoggedIn ? 'full-width' : 'mini-title main')"-->
     <div id="main">
       <span style="font-size:30px;cursor:pointer" @click="openNav" v-if="!IsSideBarOpened">&#9776; </span>
