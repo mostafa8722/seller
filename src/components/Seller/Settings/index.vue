@@ -3,44 +3,47 @@
         <div class="container mt-3 settings">
            <div class="row">
              <div class="col-md-4 col-sm-12 right-bar">
-               <div class="top-right p-3 d-flex justify-content-between">
-                 <div class="user">
-                   <div class="mini-title">
-                     <rounded-image src="/assets/site/images/popular.png" kind="mid"></rounded-image>
-                     <p class="mini-title">محمد نقوی</p>
-                   </div>
-                   <p>mohamad.naghavi71@gmail.com</p>
-                 </div>
-                 <image-icon address="/assets/site/images/seller-icons/three-dots.svg"></image-icon>
-               </div>
-               <div class="mid-right p-3">
-                 <div class="d-flex justify-content-between">
-                   <p class="mini-title">شماره حساب های شما</p>
-                   <image-icon address="/assets/site/images/seller-icons/three-dots.svg"></image-icon>
-                 </div>
-                 <div class="mini-title up-locker">
-                   <img src="/assets/site/images/seller-icons/up.svg" alt="image">
-                 </div>
-                 <div class="mini-title">
-                   <p>بانک ملت</p>
-                   <p class="mini-title mr-1">4405</p>
-                   <p class="mini-title mr-1">4405</p>
-                   <p class="mini-title mr-1">4405</p>
-                   <p class="mini-title mr-1">4405</p>
-                 </div>
-                 <div>
-                   <p>شماره شبا</p>
-                   <p>1231243425636453632423123</p>
-                 </div>
-               </div>
+<!--               <div class="top-right p-3 d-flex justify-content-between">-->
+<!--                 <div class="user">-->
+<!--                   <div class="mini-title">-->
+<!--                     <rounded-image src="/assets/site/images/popular.png" kind="mid"></rounded-image>-->
+<!--                     <p class="mini-title">محمد نقوی</p>-->
+<!--                   </div>-->
+<!--                   <p>mohamad.naghavi71@gmail.com</p>-->
+<!--                 </div>-->
+<!--                 <image-icon address="/assets/site/images/seller-icons/three-dots.svg"></image-icon>-->
+<!--               </div>-->
+<!--               <div class="mid-right p-3">-->
+<!--                 <div class="d-flex justify-content-between">-->
+<!--                   <p class="mini-title">شماره حساب های شما</p>-->
+<!--                   <image-icon address="/assets/site/images/seller-icons/three-dots.svg"></image-icon>-->
+<!--                 </div>-->
+<!--                 <div class="mini-title up-locker">-->
+<!--                   <img src="/assets/site/images/seller-icons/up.svg" alt="image">-->
+<!--                 </div>-->
+<!--                 <div class="mini-title">-->
+<!--                   <p>بانک ملت</p>-->
+<!--                   <p class="mini-title mr-1">4405</p>-->
+<!--                   <p class="mini-title mr-1">4405</p>-->
+<!--                   <p class="mini-title mr-1">4405</p>-->
+<!--                   <p class="mini-title mr-1">4405</p>-->
+<!--                 </div>-->
+<!--                 <div>-->
+<!--                   <p>شماره شبا</p>-->
+<!--                   <p>1231243425636453632423123</p>-->
+<!--                 </div>-->
+<!--               </div>-->
                <div class="menu-right pt-3">
                  <menu-item v-for="(item,i) in menuItems" :id="i" :key="i" :active="activeMenu" @selected="activateMenu" :theItem="item"></menu-item>
                </div>
              </div>
              <div class="col-md-8 col-sm-12 main-section pt-3">
-               <div class="general-settings" v-if="activeMenu == 0">
-                 <h3>اطلاعات فروشگاه</h3>
-                 <p>اطلاعات اولیه همچون آدرس و ساعات کاری را وارد کنید</p>
+
+
+               <div class="general-settings" v-if="activeMenu == 0" >
+                 <!--                   <h3>اطلاعات فروشگاه</h3>-->
+                 <br>
+
                  <!-- <div class="section-divider">
                      <p>اطلاعات شخصی</p>
                  </div>
@@ -50,6 +53,7 @@
                  <div class="section-divider">
                    <p>اطلاعات فروشگاه</p>
                  </div>
+                 <p>اطلاعات اولیه همچون آدرس و ساعات کاری را وارد کنید</p>
                  <custom-field :deactive="descs.deactive" @edit="()=>submitValue('descs')" @activate="()=>activateModel('descs')" theField="توضیحات فروشگاه">
                    <div class="row p-2">
                      <div class="col-4">
@@ -128,7 +132,7 @@
                    </div>
                  </custom-field>
                </div>
-               <div class="financial-settings" v-if="activeMenu == 5">
+               <div class="financial-settings" v-if="activeMenu == 5" >
                  <h3>اطلاعات حساب</h3>
                  <p>اطلاعات حساب بانکی خود را وارد کنید</p>
                  <div class="bank-tabs">
@@ -148,7 +152,7 @@
                  </div>
                  <button class="purple-btn mt-4 full-width" @click="submitFinancials">ثبت اطلاعات حساب</button>
                </div>
-               <div class="notif-settings" v-else-if="activeMenu == 1">
+               <div class="notif-settings" v-if="activeMenu == 1">
                  <h3>تنظیمات اعلان ها</h3>
                  <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>
                  <h4 class="mt-4">هشدارهای امنیتی</h4>
@@ -157,6 +161,17 @@
                  <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>
                  <custom-input container="mt-3 full-width" v-for="(model , i) in newsModels" :key="'u' + i"  :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value" :label="model.label"></custom-input>
                </div>
+
+
+
+
+
+
+
+
+
+
+
              </div>
            </div>
         </div>
@@ -657,10 +672,29 @@ export default {
 
         
         return {descs,hasAddress,sellerSendCosts,districts,theWorkDay,days,getImage,theImage,logoImage,setAddress,shopAddress,serviceRange,serviceRanges,sendCost,distances,preparationTime,workTime,bankNames,editBankAccount,bankTabHandler,aBankAccount,bankToEdit,accounts,submitFinancials,submitValue,menuItems,basicModels,activateModel,secondaryModels,activeMenu,activateMenu,notifModels,newsModels,financialModels}
-    }
+    },
+  methods:{
+
+  }
 }
 </script>
 <style>
+.active{
+  color: #682AD5!important;
+}
+.tabBtn{
+  width: 25%;
+  margin-right: 5%;
+  color: gray;
+  border: 2px solid;
+  border-radius: 10px;
+  height: 30px;
+}
+
+.tabBtn:hover{
+  color: #682AD5!important; ;
+}
+
 .settings{
     background-color: #fff;
     font-size: 0.85rem;
