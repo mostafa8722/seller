@@ -3,8 +3,18 @@
         <h3 class="tt">ثبت / ورود فروشنده</h3>           
         <div class="seller-form mt-4">
             <div class="seller-tab" v-if="authStep == 1">
-                <custom-input kind="text" key="1" container="full-width ml-3 mt-3" classes="full-width" v-bind:theModel.sync="mobile" label="شماره موبایل"></custom-input>
-                <custom-input kind="text" key="2" container="full-width ml-3 mt-3" classes="full-width" v-bind:theModel.sync="password" label="گذرواژه"></custom-input>
+              <v-row>
+                <v-col>
+                  <custom-input kind="text" key="1" container="full-width ml-3 mt-3" classes="full-width" v-bind:theModel.sync="mobile" label="شماره موبایل"></custom-input>
+
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <custom-input kind="text" key="2" container="full-width ml-3 mt-3" classes="full-width" v-bind:theModel.sync="password" label="گذرواژه"></custom-input>
+
+                </v-col>
+              </v-row>
                 <div class="d-flex justify-content-between mt-3">
                     <p class="tool-paragrapgh mini-title" @click="goToRegister">ثبت نام</p>
                     <p class="tool-paragrapgh mini-title" @click="forgotPassword">فراموشی گذرواژه</p>
@@ -262,10 +272,23 @@ export default {
     border-radius: 8px;
     background-color: rgba(127, 127, 127, 0.1);
     border:1px solid rgba(127, 127, 127, 0.2);
-    width: 30%;
+    width: 80%;
     margin-right: auto;
     margin-left: auto;
 }
+
+
+@media only screen and (min-width: 1050px){
+  .seller-form{
+    width: 30%;
+  }
+}
+@media only screen and (max-width: 1050px){
+  .seller-form{
+    width: 80%;
+  }
+}
+
 
 .seller-tab{
     padding:1.5rem 2rem 1rem 2rem;

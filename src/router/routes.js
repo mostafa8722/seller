@@ -393,7 +393,7 @@ const routes = [
       }
     },
     {
-      path: '/qwertyzxcvb/admin/add/delivery-time/:id',
+      path: '/qwertyzxcvb/admin/banner',
       name: 'Golpino Admin Banner Page',
       component: () => import('../components/Admin/Forms/Banners.vue'),
       meta:{

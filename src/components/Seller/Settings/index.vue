@@ -50,102 +50,80 @@
             <custom-field :deactive="model.deactive" @edit="()=>activateModel(i)" @activate="()=>activateModel(i)" v-for="(model,i) in basicModels.fields" :key="i" :theField="model.name">
                 <custom-input :classes="model.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="model.deactive" kind="text" container="full-width" v-bind:theModel.sync="model.value"></custom-input>
             </custom-field> -->
-            <div >
+            <div>
               <h3>اطلاعات فروشگاه</h3>
             </div>
-<!--            <p>اطلاعات اولیه همچون آدرس و ساعات کاری را وارد کنید</p>-->
+            <!--            <p>اطلاعات اولیه همچون آدرس و ساعات کاری را وارد کنید</p>-->
             <p>{{ descs.fields[0].name }}</p>
             <v-row>
               <v-col>
-                <v-text-field dense filled :value="descs.fields[0].value.value"/>
+                <v-text-field disabled dense filled :value="descs.fields[0].value.value"/>
               </v-col>
             </v-row>
 
             <p>{{ descs.fields[1].name }}</p>
             <v-row>
               <v-col>
-                <v-text-field dense filled :value="descs.fields[1].value.value"/>
+                <v-text-field  dense filled v-model="descs.fields[1].value.value"/>
               </v-col>
             </v-row>
 
             <p>ساعت کاری</p>
-            <v-row>
-              <v-col cols="1">
-                <input style="margin-top: 25%;" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              </v-col>
-              <v-col cols="1">
-                <p style="margin-top: 30%;">
-                  شنبه
-                </p>
-              </v-col>
-              <v-col>
-                <v-text-field dense filled :value="workTime.fields[0].value.value" label="از ساعت"/>
-              </v-col>
-              <v-col>
-                <v-text-field dense filled :value="workTime.fields[1].value.value" label="تا ساعت"/>
 
-              </v-col>
+            <custom-field style="    margin-bottom: 20px;" :deactive="workTime.deactive" @edit="()=>submitValue('workTime')"
+                          @activate="()=>activateModel('workTime')" theField="ساعت کاری (ساعت:دقیقه)">
+              <div class="row p-2">
 
-            </v-row>
-            <v-row>
-              <v-col cols="1">
-                <input style="margin-top: 25%;" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              </v-col>
-              <v-col cols="1">
-                <p style="margin-top: 30%;">
-                  یکشنبه
-                </p>
-              </v-col>
-              <v-col>
-                <v-text-field dense filled :value="workTime.fields[0].value.value" label="از ساعت"/>
-              </v-col>
-              <v-col>
-                <v-text-field dense filled :value="workTime.fields[1].value.value" label="تا ساعت"/>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                  <custom-input style="width: 100%" labelClass="tLighter" key='z2'
+                                :deactive="workTime.deactive" kind="dropDown" :selectItems="days"
+                                container=" mt-1" v-bind:theModel.sync="theWorkDay"
+                                label="روز"></custom-input>
+                </div>
 
-              </v-col>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                  <custom-input style="width: 100%" labelClass="tLighter" key='z1'
+                                :deactive="workTime.deactive" kind="text" container="mt-1 ml-1"
+                                v-bind:theModel.sync="workTime.fields[0].value"
+                                :label="workTime.fields[0].name"></custom-input>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                  <custom-input style="width: 100%" labelClass="tLighter" key='z2'
+                                :deactive="workTime.deactive" kind="text" container=" mt-1 ml-1"
+                                v-bind:theModel.sync="workTime.fields[1].value"
+                                :label="workTime.fields[1].name"></custom-input>
+                </div>
 
-            </v-row>
-            <v-row>
-              <v-col cols="1">
-                <input style="margin-top: 25%;" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              </v-col>
-              <v-col cols="1">
-                <p style="margin-top: 30%;">
-                  دوشنبه
-                </p>
-              </v-col>
-              <v-col>
-                <v-text-field dense filled :value="workTime.fields[0].value.value" label="از ساعت"/>
-              </v-col>
-              <v-col>
-                <v-text-field dense filled :value="workTime.fields[1].value.value" label="تا ساعت"/>
+              </div>
+            </custom-field>
 
-              </v-col>
-
-            </v-row>
-            <p>زمان آماده سازی</p>
+            <p>زمان آماده سازی (دقیقه)</p>
             <v-row>
               <v-col>
-                <v-text-field dense filled :value="preparationTime.fields[0].value.value"/>
+                <v-text-field dense filled v-model="preparationTime.fields[0].value.value" @change="changeField"/>
               </v-col>
             </v-row>
 
-
+<br><br>
             <p>شرایط ارسال</p>
-            <v-row>
-              <v-col>
-                <v-text-field dense filled :value="sendCost.fields[0].value.value.text" label="مسافت"/>
-              </v-col>
-              <v-col>
-                <v-text-field dense filled :value="sendCost.fields[1].value.value" label="هزینه"/>
-              </v-col>
-            </v-row>
-            <p>محدوده خدمت رسانی</p>
-            <v-row>
-              <v-col>
-                <v-text-field dense filled :value="serviceRange.fields[0].value.value.text"/>
-              </v-col>
-            </v-row>
+            <custom-field v-if="distances != null" :deactive="sendCost.deactive" @edit="()=>submitValue('sendCost')"
+                          @activate="()=>activateModel('sendCost')" theField="هزینه ی ارسال">
+              <div class="row p-2">
+                <div class="col-6">
+                  <custom-input key="z4" :initial="true" label="مسافت (متر)"
+                                :classes="sendCost.deactive ? 'deactive full-width' : 'full-width'"
+                                :deactive="sendCost.deactive" kind="dropDown" container="full-width"
+                                :selectItems="distances" v-bind:theModel.sync="sendCost.fields[0].value"></custom-input>
+                </div>
+                <div class="col-6">
+                  <custom-input key="z5" label="هزینه (تومان)"
+                                :classes="sendCost.deactive ? 'deactive full-width' : 'full-width'"
+                                :deactive="sendCost.deactive" kind="text" container="full-width"
+                                v-bind:theModel.sync="sendCost.fields[1].value"></custom-input>
+                </div>
+              </div>
+            </custom-field>
+            <br>
             <p>آدرس مغازه</p>
             <v-row>
               <v-col>
@@ -172,69 +150,21 @@
             <!--                </div>-->
             <!--              </div>-->
             <!--            </custom-field>-->
-<!--            <custom-field :deactive="workTime.deactive" @edit="()=>submitValue('workTime')"-->
-<!--                          @activate="()=>activateModel('workTime')" theField="ساعت کاری (ساعت:دقیقه)">-->
-<!--              <div class="row p-2">-->
-<!--                <div class="col-4">-->
-<!--                  <custom-input labelClass="tLighter" key='z1'-->
-<!--                                :classes="workTime.deactive ? 'deactive full-width' : ' full-width'"-->
-<!--                                :deactive="workTime.deactive" kind="text" container="half-width mt-1 ml-1"-->
-<!--                                v-bind:theModel.sync="workTime.fields[0].value"-->
-<!--                                :label="workTime.fields[0].name"></custom-input>-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                  <custom-input labelClass="tLighter" key='z2'-->
-<!--                                :classes="workTime.deactive ? 'deactive full-width' : ' full-width'"-->
-<!--                                :deactive="workTime.deactive" kind="text" container="half-width mt-1 ml-1"-->
-<!--                                v-bind:theModel.sync="workTime.fields[1].value"-->
-<!--                                :label="workTime.fields[1].name"></custom-input>-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                  <custom-input labelClass="tLighter" key='z2'-->
-<!--                                :classes="workTime.deactive ? 'deactive full-width' : ' full-width'"-->
-<!--                                :deactive="workTime.deactive" kind="dropDown" :selectItems="days"-->
-<!--                                container="half-width mt-1" v-bind:theModel.sync="theWorkDay"-->
-<!--                                label="روز"></custom-input>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </custom-field>-->
-<!--            <custom-field :deactive="preparationTime.deactive" @edit="()=>submitValue('ppTime')"-->
-<!--                          @activate="()=>activateModel('ppTime')" theField="زمان آماده سازی">-->
-<!--              <custom-input key='z3'-->
-<!--                            :classes="preparationTime.deactive ? 'deactive block full-width' : 'block full-width'"-->
-<!--                            :deactive="preparationTime.deactive" kind="text" container="full-width"-->
-<!--                            v-bind:theModel.sync="preparationTime.fields[0].value"></custom-input>-->
-<!--            </custom-field>-->
-<!--            <custom-field v-if="distances != null" :deactive="sendCost.deactive" @edit="()=>submitValue('sendCost')"-->
-<!--                          @activate="()=>activateModel('sendCost')" theField="هزینه ی ارسال">-->
-<!--              <div class="row p-2">-->
-<!--                <div class="col-6">-->
-<!--                  <custom-input key="z4" :initial="true" label="مسافت"-->
-<!--                                :classes="sendCost.deactive ? 'deactive full-width' : 'full-width'"-->
-<!--                                :deactive="sendCost.deactive" kind="dropDown" container="full-width"-->
-<!--                                :selectItems="distances" v-bind:theModel.sync="sendCost.fields[0].value"></custom-input>-->
-<!--                </div>-->
-<!--                <div class="col-6">-->
-<!--                  <custom-input key="z5" label="هزینه"-->
-<!--                                :classes="sendCost.deactive ? 'deactive full-width' : 'full-width'"-->
-<!--                                :deactive="sendCost.deactive" kind="text" container="full-width"-->
-<!--                                v-bind:theModel.sync="sendCost.fields[1].value"></custom-input>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </custom-field>-->
-<!--            <custom-field :deactive="serviceRange.deactive" @edit="()=>submitValue('serviceRange')"-->
-<!--                          @activate="()=>activateModel('serviceRange')" theField="محدوده ی خدمات رسانی">-->
-<!--              <custom-input key="z6" :classes="serviceRange.deactive ? 'deactive block half-width' : 'block half-width'"-->
-<!--                            :deactive="serviceRange.deactive" kind="dropDown" container="full-width"-->
-<!--                            :selectItems="serviceRanges"-->
-<!--                            v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>-->
-<!--            </custom-field>-->
-<!--            <custom-field :modal="!hasAddress" :deactive="shopAddress.deactive" @edit="()=>submitValue('shopAddress')"-->
-<!--                          @activate="()=>activateModel('shopAddress')" theField="آدرس مغازه">-->
-<!--              <custom-input key="z7" :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'"-->
-<!--                            :deactive="shopAddress.deactive" kind="text" container="full-width"-->
-<!--                            v-bind:theModel.sync="shopAddress.fields[0].value"></custom-input>-->
-<!--            </custom-field>-->
+
+
+<!--                        <custom-field :deactive="serviceRange.deactive" @edit="()=>submitValue('serviceRange')"-->
+<!--                                      @activate="()=>activateModel('serviceRange')" theField="محدوده ی خدمات رسانی">-->
+<!--                          <custom-input key="z6" :classes="serviceRange.deactive ? 'deactive block half-width' : 'block half-width'"-->
+<!--                                        :deactive="serviceRange.deactive" kind="dropDown" container="full-width"-->
+<!--                                        :selectItems="serviceRanges"-->
+<!--                                        v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>-->
+<!--                        </custom-field>-->
+            <!--            <custom-field :modal="!hasAddress" :deactive="shopAddress.deactive" @edit="()=>submitValue('shopAddress')"-->
+            <!--                          @activate="()=>activateModel('shopAddress')" theField="آدرس مغازه">-->
+            <!--              <custom-input key="z7" :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'"-->
+            <!--                            :deactive="shopAddress.deactive" kind="text" container="full-width"-->
+            <!--                            v-bind:theModel.sync="shopAddress.fields[0].value"></custom-input>-->
+            <!--            </custom-field>-->
             <custom-field :deactive="logoImage.deactive" @edit="()=>submitValue('logoImage')"
                           @activate="()=>activateModel('logoImage')" theField="لوگو">
               <div class="row pt-3 pb-3 mt-1">
@@ -272,6 +202,11 @@
               </div>
             </custom-field>
           </div>
+
+
+
+          <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submit">ثبت تغییرات</v-btn>
+
           <div class="financial-settings" v-if="activeMenu == 5">
             <h3>اطلاعات حساب</h3>
             <p>اطلاعات حساب بانکی خود را وارد کنید</p>
@@ -747,6 +682,9 @@ export default {
       }
     }
 
+
+
+
     const submitValue = (v, i) => {
       let f = new FormData()
       switch (v) {
@@ -756,7 +694,7 @@ export default {
           break;
         case 'workTime':
           currentForm.value = 'worktime'
-          activateModel('workTime')
+          // activateModel('workTime')
           workTime.value.fields[0].value.valid = true
           workTime.value.fields[1].value.valid = true
           workTime.value.fields[0].value.message = ''
@@ -771,10 +709,11 @@ export default {
           preparationTime.value.fields[0].value.valid = true
           preparationTime.value.fields[0].value.message = ''
           f.append('time', preparationTime.value.fields[0].value.value)
+            console.log('sent')
           authService.value.transmit('seller/base/prepare', f, successfulOp, failedOp)
           break;
         case 'sendCost':
-          activateModel('sendCost')
+          // activateModel('sendCost')
           currentForm.value = 'sendcost'
           if (typeof sendCost.fields[0].value.value.id !== 'undefined')
             f.append('distance_id', sendCost.fields[0].value.value.id)
@@ -959,13 +898,50 @@ export default {
       financialModels
     }
   },
-  methods: {},
+  methods: {
+
+    submit(){
+      this.submitValue('descs');
+      this.submitValue('workTime');
+      this.submitValue('ppTime');
+      this.submitValue('sendCost');
+      this.submitValue('serviceRange');
+      // this.submitValue('shopAddress')
+    },
+    changeServiceRange(){
+      console.log($('#saturday').val())
+    },
+    setWorkDay() {
+      // workTime.value.fields[0].value.value = sellerWorkTime.value[n.value.value - 1].open_at
+      // workTime.value.fields[1].value.value = sellerWorkTime.value[n.value.value - 1].close_at
+      // workTime.value.id = sellerWorkTime.value[n.value.value - 1].id
+    }
+
+  },
   data: () => ({
-    workDays:[]
+    workDays: [],
+    changedPPTime: null
   }),
+  created() {
+    this.activateModel('workTime');
+    this.activateModel('sendCost');
+  }
+
+
 }
 </script>
 <style>
+
+.dropdown{
+  direction: ltr!important;
+}
+
+.btn-secondary {
+  color: #6c757d;
+   background-color: #fff;
+  border-color: #6c757d;
+}
+
 .active {
   color: #682AD5 !important;
 }
@@ -1060,5 +1036,30 @@ export default {
 
 .seller-logo-locker img {
   width: 50%;
+}
+
+
+.v-text-field--filled > .v-input__control > .v-input__slot, .v-text-field--full-width > .v-input__control > .v-input__slot, .v-text-field--outlined > .v-input__control > .v-input__slot {
+  align-items: stretch;
+  min-height: 0px !important;
+}
+
+.v-text-field > .v-input__control > .v-input__slot > .v-text-field__slot {
+  display: flex;
+  flex: 1 1 auto;
+  position: relative;
+  height: 40px;
+}
+
+.workDayRow {
+  height: 50px;
+}
+
+.workDayCheckBox {
+  margin-top: 20%
+}
+
+.workDayText{
+  margin-top: 10%;
 }
 </style>

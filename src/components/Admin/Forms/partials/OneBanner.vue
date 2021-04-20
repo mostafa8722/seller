@@ -3,7 +3,10 @@
         <td></td>
         <td></td>
         <td class="half-width"></td>
-        <td><button class="purple-btn ml-2">ویرایش</button><input type="file"><input type="file" class="hidden-input" id="img" name="img" accept="image/*" @change="(e)=>({})"></td>
+        <td>
+          <button class="purple-btn ml-2">ویرایش</button>
+          <input type="file"><input type="file" class="hidden-input" id="img" name="img" accept="image/*" @change="(e)=>({})">
+        </td>
     </tr>
 </template>
 <script>

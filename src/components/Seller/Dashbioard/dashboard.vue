@@ -1,113 +1,117 @@
 <template>
  <div class="menu-section pb-4">
-     <div class="section-top container">
-         <div class="notif-prompt p-2">
-             <icon-image address="/assets/site/images/seller-icons/attention.svg"></icon-image>
-             <p class="mini-title">شما یک سفارش در حال انتشار دارید</p>
-             <a href="#">مشاهده</a>
-         </div>
-         <div class=" d-flex justify-content-between mt-2 mb-1">
-            <h3 class="section-title">داشبورد</h3>
-            <custom-button classes="support-button" icon="/assets/site/images/seller-icons/purple-support.svg" v-on:clicked="callSupport" iconSize="mid" label="تماس با پشتیبانی"></custom-button>
-         </div>
-     </div>
-     <div class="row container">
-         <div class="col-md-6 col-lg-3 p-1">
-             <stat title="عودت" value="1800" percent="11" icon="/assets/site/images/seller-icons/plus.svg"></stat>
-         </div>
-         <div class="col-md-6 col-lg-3 p-1">
-             <stat title="عودت" value="1800" percent="11" icon="/assets/site/images/seller-icons/plus.svg"></stat>
-         </div>
-         <div class="col-md-6 col-lg-3 p-1">
-             <stat title="عودت" value="1800" percent="11" icon="/assets/site/images/seller-icons/plus.svg"></stat>
-         </div>
-         <div class="col-md-6 col-lg-3 p-1">
-             <stat title="عودت" value="1800" percent="11" icon="/assets/site/images/seller-icons/plus.svg"></stat>
-         </div>
-     </div>
-     <div class="row container charts">
-         <div class="col-md-12 p-1 col-lg-5 chart-col">
-             <div class="a-chart">
-                 <span><h6>فروش روزانه</h6></span>
-                <div class="doughChart-container">
-                    <doughnut-chart :chartData="data" :options="options"></doughnut-chart>
-                </div>
-                <span class="doughChart-stats">
-                     <table>
-                        <tr>
-                            <th>فروش امروز</th>
-                        </tr>
-                        <tr>
-                            <td>566000 تومان</td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <th><p class="pt-5 m-0">مجموع محصول فروخته شده</p></th>
-                        </tr>
-                        <tr>
-                            <td>188 گل</td>
-                        </tr>
-                    </table>
-              </span>
-             </div>
-         </div>
-         <div class="col-md-12 p-1 col-lg-7 chart-col">
-             <div class="a-chart">
-                <span class="d-flex justify-content-between mb-4">
-                    <h6 class="mini-title">بررسی اجمالی سفارشات</h6>
-                    <custom-input kind="dropDown" :selectItems="items" v-bind:theModel.sync="model"></custom-input>    
-                </span>
-                <div class="lineChart-container">
-                    <line-chart :chartData="data" :options="options" height="150%"></line-chart>
-                </div>
-             </div>
-         </div>
-     </div>
-     <div class="row container-fluid mt-1">
-         <div class="col-lg-7 col-md-12 p-1 transactions">
-             <div class="p-2 selling-stat">
-                <div class="d-flex justify-content-between p-3">
-                    <h6 class="mini-title">نقل و انتقالات</h6>
-                    <icon-image address="/assets/site/images/seller-icons/three-dots.svg"></icon-image>
-                </div>
-                <table>    
-                    <tr>
-                        <th>شماره سفارش</th>
-                        <th>بنام</th>
-                        <th>تاریخ</th>
-                        <th>مبلغ</th>
-                        <th>وضعیت سفارش</th>
-                    </tr>
-                    <transaction></transaction>
-                    <transaction></transaction>
-                    <transaction></transaction>
-                    <transaction></transaction>
-                </table>
-             </div>
-         </div>
-         <div class="col-lg-5 col-md-12 p-1 recents">
-             <div class="p-2 selling-stat">
-                <div class="d-flex justify-content-between p-3">
-                    <h6 class="mini-title">خریدهای اخیر</h6>
-                    <icon-image address="/assets/site/images/seller-icons/three-dots.svg"></icon-image>
-                </div>
-                <table>
-                <tr>
-                    <th>محصول</th>
-                    <th>مشتری</th>
-                    <th>دسته بندی</th>
-                    <th>مبلغ</th>
-                </tr>
-                <recent></recent>
-                <recent></recent>
-                <recent></recent>
-                <recent></recent>
-                <recent></recent>
-                </table>
-             </div>
-         </div>
-     </div>
+
+   <v-btn href="/shop/17">preview</v-btn>
+
+
+<!--     <div class="section-top container">-->
+<!--         <div class="notif-prompt p-2">-->
+<!--             <icon-image address="/assets/site/images/seller-icons/attention.svg"></icon-image>-->
+<!--             <p class="mini-title">شما یک سفارش در حال انتشار دارید</p>-->
+<!--             <a href="#">مشاهده</a>-->
+<!--         </div>-->
+<!--         <div class=" d-flex justify-content-between mt-2 mb-1">-->
+<!--            <h3 class="section-title">داشبورد</h3>-->
+<!--            <custom-button classes="support-button" icon="/assets/site/images/seller-icons/purple-support.svg" v-on:clicked="callSupport" iconSize="mid" label="تماس با پشتیبانی"></custom-button>-->
+<!--         </div>-->
+<!--     </div>-->
+<!--     <div class="row container">-->
+<!--         <div class="col-md-6 col-lg-3 p-1">-->
+<!--             <stat title="عودت" value="1800" percent="11" icon="/assets/site/images/seller-icons/plus.svg"></stat>-->
+<!--         </div>-->
+<!--         <div class="col-md-6 col-lg-3 p-1">-->
+<!--             <stat title="عودت" value="1800" percent="11" icon="/assets/site/images/seller-icons/plus.svg"></stat>-->
+<!--         </div>-->
+<!--         <div class="col-md-6 col-lg-3 p-1">-->
+<!--             <stat title="عودت" value="1800" percent="11" icon="/assets/site/images/seller-icons/plus.svg"></stat>-->
+<!--         </div>-->
+<!--         <div class="col-md-6 col-lg-3 p-1">-->
+<!--             <stat title="عودت" value="1800" percent="11" icon="/assets/site/images/seller-icons/plus.svg"></stat>-->
+<!--         </div>-->
+<!--     </div>-->
+<!--     <div class="row container charts">-->
+<!--         <div class="col-md-12 p-1 col-lg-5 chart-col">-->
+<!--             <div class="a-chart">-->
+<!--                 <span><h6>فروش روزانه</h6></span>-->
+<!--                <div class="doughChart-container">-->
+<!--                    <doughnut-chart :chartData="data" :options="options"></doughnut-chart>-->
+<!--                </div>-->
+<!--                <span class="doughChart-stats">-->
+<!--                     <table>-->
+<!--                        <tr>-->
+<!--                            <th>فروش امروز</th>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>566000 تومان</td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                    <table>-->
+<!--                        <tr>-->
+<!--                            <th><p class="pt-5 m-0">مجموع محصول فروخته شده</p></th>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>188 گل</td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--              </span>-->
+<!--             </div>-->
+<!--         </div>-->
+<!--         <div class="col-md-12 p-1 col-lg-7 chart-col">-->
+<!--             <div class="a-chart">-->
+<!--                <span class="d-flex justify-content-between mb-4">-->
+<!--                    <h6 class="mini-title">بررسی اجمالی سفارشات</h6>-->
+<!--                    <custom-input kind="dropDown" :selectItems="items" v-bind:theModel.sync="model"></custom-input>    -->
+<!--                </span>-->
+<!--                <div class="lineChart-container">-->
+<!--                    <line-chart :chartData="data" :options="options" height="150%"></line-chart>-->
+<!--                </div>-->
+<!--             </div>-->
+<!--         </div>-->
+<!--     </div>-->
+<!--     <div class="row container-fluid mt-1">-->
+<!--         <div class="col-lg-7 col-md-12 p-1 transactions">-->
+<!--             <div class="p-2 selling-stat">-->
+<!--                <div class="d-flex justify-content-between p-3">-->
+<!--                    <h6 class="mini-title">نقل و انتقالات</h6>-->
+<!--                    <icon-image address="/assets/site/images/seller-icons/three-dots.svg"></icon-image>-->
+<!--                </div>-->
+<!--                <table>    -->
+<!--                    <tr>-->
+<!--                        <th>شماره سفارش</th>-->
+<!--                        <th>بنام</th>-->
+<!--                        <th>تاریخ</th>-->
+<!--                        <th>مبلغ</th>-->
+<!--                        <th>وضعیت سفارش</th>-->
+<!--                    </tr>-->
+<!--                    <transaction></transaction>-->
+<!--                    <transaction></transaction>-->
+<!--                    <transaction></transaction>-->
+<!--                    <transaction></transaction>-->
+<!--                </table>-->
+<!--             </div>-->
+<!--         </div>-->
+<!--         <div class="col-lg-5 col-md-12 p-1 recents">-->
+<!--             <div class="p-2 selling-stat">-->
+<!--                <div class="d-flex justify-content-between p-3">-->
+<!--                    <h6 class="mini-title">خریدهای اخیر</h6>-->
+<!--                    <icon-image address="/assets/site/images/seller-icons/three-dots.svg"></icon-image>-->
+<!--                </div>-->
+<!--                <table>-->
+<!--                <tr>-->
+<!--                    <th>محصول</th>-->
+<!--                    <th>مشتری</th>-->
+<!--                    <th>دسته بندی</th>-->
+<!--                    <th>مبلغ</th>-->
+<!--                </tr>-->
+<!--                <recent></recent>-->
+<!--                <recent></recent>-->
+<!--                <recent></recent>-->
+<!--                <recent></recent>-->
+<!--                <recent></recent>-->
+<!--                </table>-->
+<!--             </div>-->
+<!--         </div>-->
+<!--     </div>-->
  </div>
 </template>
 <script>

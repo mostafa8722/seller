@@ -2,16 +2,51 @@
     <div class="container p-5">
         <div class="container summary">
             <h3 class="tNormal">نظرات</h3>
-            <table class="mt-2">
-                <tr>
-                    <th>نام</th>
-                    <th>متن نظر</th>
-                    <th>نام فروشگاه</th>
-                    <th>تاریخ</th>
-                    <th>گزینه ها</th>
-                </tr>
-                <comment-summary @verifyMe="verifyComment" v-for="(c,i) in comments" :key="i" :theComment="c"></comment-summary>
-            </table>
+
+
+
+          <v-simple-table>
+            <template v-slot:default>
+              <thead>
+              <tr>
+                <th class="text-right">
+                  نام
+                </th>
+                <th class="text-right">
+                  متن نظر
+                </th>
+                <th class="text-right">نام فروشگاه</th>
+                <th class="text-right">تاریخ</th>
+                <th class="text-right">گزینه ها</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr
+                  v-for="item in comments"
+                  :key="item.name"
+              >
+                <td style="white-space: normal">{{item.user}}</td>
+                <td style="white-space: normal">{{item.message}}</td>
+                <td style="white-space: normal">{{item.seller}}</td>
+                <td style="white-space: normal">{{item.date}}</td>
+                <comment-summary @verifyMe="verifyComment"  :the-comment="item"></comment-summary>
+              </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+
+
+
+<!--            <table class="mt-2">-->
+<!--                <tr>-->
+<!--                    <th>نام</th>-->
+<!--                    <th>متن نظر</th>-->
+<!--                    <th>نام فروشگاه</th>-->
+<!--                    <th>تاریخ</th>-->
+<!--                    <th>گزینه ها</th>-->
+<!--                </tr>-->
+<!--                <comment-summary @verifyMe="verifyComment" v-for="(c,i) in comments" :key="i" :theComment="c"></comment-summary>-->
+<!--            </table>-->
         </div>
     </div>
 </template>
@@ -56,7 +91,12 @@ export default {
 
 
         return {comments,verifyComment}
-    }
+    },
+  methods:{
+    // verifyMe:function(v){
+    //   this.$emit('verifyMe',{id:this.theComment.id,verify:v})
+    // }
+  }
 }
 </script>
 <style scoped>

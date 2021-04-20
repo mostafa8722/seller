@@ -21,7 +21,6 @@ import ShowBanner from "./partials/OneBanner"
 // import {useRoute} from "vue-router"
 export default {
     components:{
-        CustomInput,
         ShowBanner
     },
     setup(props,context){

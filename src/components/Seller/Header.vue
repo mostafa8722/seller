@@ -1,11 +1,11 @@
 <template>
     <div class="panel-header">
         <div class="d-flex justify-content-between">
-            <div class="tools">
-                <icon-image address="/assets/site/images/seller-icons/plus.svg" class="mid"></icon-image>
-                اضافه کردن جدید
-                <icon-image address="/assets/site/images/seller-icons/expand.svg" class="mid"></icon-image>
-            </div>
+<!--            <div class="tools">-->
+<!--                <icon-image address="/assets/site/images/seller-icons/plus.svg" class="mid"></icon-image>-->
+<!--                اضافه کردن جدید-->
+<!--                <icon-image address="/assets/site/images/seller-icons/expand.svg" class="mid"></icon-image>-->
+<!--            </div>-->
             <div class="info d-flex align-items-center">
                 <div class="mini-title notif">
                     <icon-image address="/assets/site/images/seller-icons/bell.svg" classes="big"></icon-image>

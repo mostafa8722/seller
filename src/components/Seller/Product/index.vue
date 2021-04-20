@@ -7,12 +7,25 @@
                        label="افزودن محصول"></custom-button>
       </router-link>
     </div>
+
+    <v-row>
+      <v-col cols="3">
+        <v-text-field v-model="searchTerm" placeholder="جستجوی محصولات"/>
+      </v-col>
+      <v-col>
+        تعداد محصولات موجود: {{  products.length }}
+      </v-col>
+      <v-col>
+        تعداد محصولات ناموجود: {{  products.filter(item => item.remain === 0 ).length }}
+      </v-col>
+    </v-row>
+
     <div class="products mt-2">
       <div class="product-tools d-flex justify-content-between">
         <div class="mini-title">
 
 
-          <input v-model="searchTerm" type="text">
+
 
 
           <!--                <custom-input placeholder="جستجوی محصول" icon="/assets/site/images/seller-icons/search.svg" kind="text" v-bind:theModel.sync="model"></custom-input>                -->
