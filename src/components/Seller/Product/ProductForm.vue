@@ -94,24 +94,25 @@
                 <p class="tNormal mini-title">خصوصیت ها</p>
               </div>
 
-                <div v-if="product.category_id.value">
-                  <v-row v-for="a in product.category_id.value.at" :key="a.id">
-                    <v-col style="text-align: -webkit-center;" class="col-2">
-                      <input type="checkbox" :id="a.name">
-                      {{ a.name }}:
-                    </v-col>
-                    <v-col>
-                      <v-row >
-                        <v-col v-for="b in a.options" :key="b.id">
-                          <input type="radio" :name="a.name" :value="b.name" :id="b.id" >
-                          {{ b.name }}
-                        </v-col>
-                      </v-row>
-                    </v-col>
+              <div v-if="product.category_id.value">
+                <v-row v-for="a in product.category_id.value.at" :key="a.id">
+                  <v-col style="text-align: -webkit-center;" class="col-2">
+                    <input type="checkbox" :id="a.name">
+                    {{ a.name }}:
+                  </v-col>
+                  <v-col>
+                    <v-row>
+                      <v-col v-for="b in a.options" :key="b.id">
+                        <input type="radio" :name="a.name" :value="b.name" :id="b.id">
+                        {{ b.name }}
+                      </v-col>
+                    </v-row>
+                  </v-col>
 
-                  </v-row>
-<!--                  <v-btn @click="assignAttrs">check</v-btn>-->
-                </div>
+                </v-row>
+                <v-btn @click="assignAttrs">check</v-btn>
+              </div>
+
             </div>
             <div class="col-12 mt-3">
               <custom-input kind="area" label="توضیحات" placeholder="توضیحات مربوط به محصول را وارد کنید"
@@ -141,9 +142,11 @@ import ProductItem from './partials/productItem'
 import myTag from '../../Common/tag'
 import Service from "../../../utils/seller-service"
 import axios from "axios";
+import Discount from "../../Main/Home/partials/Discount";
 
 export default {
   components: {
+    Discount,
     CustomButton,
     CustomInput,
     IconImage,
@@ -192,7 +195,7 @@ export default {
 
     watch(product.category_id, (n, o) => {
       console.log(n)
-      getSubCategories(n.value.id)
+      // getSubCategories(n.value.id)
       getAttrs()
 
     })
@@ -218,21 +221,6 @@ export default {
     const productToEdit = ref(null)
 
     onMounted(() => {
-
-      axios.get('https://api.golpino.com/api/seller/product')
-          .then(resp1 => {
-           console.log(resp1)
-
-
-          })
-          .catch(err => {
-            console.error(err);
-          });
-
-
-
-
-
       axios.get('https://api.golpino.com/api/seller/categories')
           .then(resp1 => {
             categories.value = resp1.data.data
@@ -267,7 +255,6 @@ export default {
 
 
                               }).catch(err => {
-                            // Handle Error Here
                             console.error(err);
                           });
                         })
@@ -289,6 +276,7 @@ export default {
 
       getTags()
       if (context.root.$route.params.id) {
+
         edit.value = true
         authService.value.receive('search/product/image/' + context.root.$route.params.id, {}, (s, d) => {
           if (s == 200)
@@ -301,28 +289,42 @@ export default {
         })
         authService.value.receive('seller/product/' + context.root.$route.params.id, {}, (s, d) => {
           if (s == 200) {
-            categories.value.map((c) => {
-              if (c.id == product.category_id.value) {
-                product.category_id.value = c
-              }
-            })
-
             productToEdit.value = {}
             productToEdit.value.name = d.data.product.name
             productToEdit.value.price = d.data.product.price
             productToEdit.value.remaining = d.data.product.remain
             productToEdit.value.discount = d.data.product.discount
             productToEdit.value.desc = d.data.product.desc
+            productToEdit.value.attributes = d.data.attribute
+            productToEdit.value.category_id = d.data.category.id
+
+
+            categories.value.map((c) => {
+              if (c.value == d.data.category.id) {
+                productToEdit.value.attrs = c
+              }
+            })
 
             product.name = {value: d.data.product.name, valid: true}
+            product.attributes = {value: d.data.attribute, valid: true}
             product.price = {value: d.data.product.price, valid: true}
             product.remaining = {value: d.data.product.remain, valid: true}
+
+
+
+          }
+
             // alert("x")
-            if (d.data.category.parent_id == null)
-              product.category_id = {
-                value: {value: d.data.product.category_id, text: d.data.category.name},
-                valid: true
-              }
+            // if (d.data.category.parent_id == null)
+            //   product.category_id = {
+            //     value: {value: d.data.product.category_id, text: d.data.category.name},
+            //     valid: true
+            //   }
+
+
+
+
+
             else {
               categories.value.map((c) => {
                 if (c.id) {
@@ -373,77 +375,10 @@ export default {
               }
             })
           }
-        }, (s, e) => {
+        , (s, e) => {
           console.log("this is error", e)
         })
       }
-
-
-      if (context.root.$route.params.id) {
-        axios.get('https://api.golpino.com/api/seller/attributes?category_id=' + product.category_id.value.value)
-            .then(resp2 => {
-              console.log(resp2)
-            })
-            .catch(err => {
-              console.error(err);
-            })
-      } else {
-        axios.get('https://api.golpino.com/api/seller/categories')
-            .then(resp1 => {
-              categories.value = resp1.data.data
-
-
-              categories.value.map((p) => {
-                p.text = p.name
-                p.value = p.id
-              })
-
-
-              categories.value.map((a) => {
-                a.at = []
-              })
-
-              categories.value.map((a) => {
-                    axios.get('https://api.golpino.com/api/seller/attributes?category_id=' + a.id)
-                        .then(resp2 => {
-                          resp2.data.data.map((b) => {
-                            attrs.value = [...attrs.value, b]
-                            a.at = [...a.at, b]
-                          })
-
-                          a.at.map((c) => {
-                            c.options = []
-                          })
-                          a.at.map((c) => {
-                            axios.get('https://api.golpino.com/api/seller/attributechild/' + c.id)
-                                .then(resp3 => {
-                                  resp3.data.data.map((d) => {
-                                    c.options = [...c.options, d]
-                                  })
-
-
-                                }).catch(err => {
-                              // Handle Error Here
-                              console.error(err);
-                            });
-                          })
-
-                        })
-                        .catch(err => {
-                          // Handle Error Here
-                          console.error(err);
-                        });
-                  }
-              )
-
-              console.log(attrs.value)
-
-            })
-            .catch(err => {
-              console.error(err);
-            });
-      }
-
 
     })
 
@@ -463,42 +398,20 @@ export default {
     }
 
     const getSubCategories = (id) => {
-      authService.value.receive('seller/subcategories/' + id, {}, (s, d) => {
-        if (s == 200)
-          subCategories.value = d.data
-        subCategories.value.map((c) => {
-          c.text = c.name
-          c.value = c.id
-        })
-      }, (s, e) => {
-        console.log("this is error", e)
-      })
+      // authService.value.receive('seller/subcategories/' + id, {}, (s, d) => {
+      //   if (s == 200)
+      //     subCategories.value = d.data
+      //   subCategories.value.map((c) => {
+      //     c.text = c.name
+      //     c.value = c.id
+      //   })
+      // }, (s, e) => {
+      //   console.log("this is error", e)
+      // })
     }
 
     const getAttrs = () => {
-      axios.get('https://api.golpino.com/api/seller/attributes?category_id=' + product.category_id.value.id)
-          .then(resp => {
-            attrs.value = [{}, {}, {}, {}]
-            for (let i = 0; i < resp.data.data.length; i++) {
-              attrs.value[i].text = resp.data.data[i].name
-              attrs.value[i].value = resp.data.data[i].id
-              axios.get('https://api.golpino.com/api/seller/attributechild/' + attrs.value[i].value)
-                  .then(resp => {
-                    attrs.value[i].childs = resp.data.data
-                  })
-                  .catch(err => {
-                    // Handle Error Here
-                    console.error(err);
-                  });
 
-            }
-            console.log(attrs)
-
-          })
-          .catch(err => {
-            // Handle Error Here
-            console.error(err);
-          });
 
 
       // authService.value.receive('seller/attributes?category_id=' + product.category_id.value.id, {}, (s, d) => {
@@ -669,6 +582,29 @@ export default {
           console.log({er})
         })
       } else {
+
+        var z = []
+        product.category_id.value.at.map((y) => {
+          if (document.getElementById(y.name).checked) {
+            var x = document.getElementsByName(y.name)
+
+            console.log(x)
+            for (let i = 0; i < x.length; i++) {
+              if (document.getElementsByName(y.name)[i].checked) {
+                z.push({amount:document.getElementsByName(y.name)[i].id , parentId: y.id})
+              }
+            }
+          }
+        })
+        if (z.length>1) {
+          for (let att =0;att <z.length;att++){
+            f.append('attribute_id[' + att + ']', z[att].amount)
+          }
+        } else {
+          f.append('attribute_id' , z[0].amount)
+        }
+
+
         f.append('name', product.name.value)
         f.append('price', parseInt(product.price.value))
         f.append('remain', parseInt(product.remaining.value))
@@ -677,7 +613,7 @@ export default {
         } else {
           if (product.category_id.value != null)
             delete product.category_id.value.at
-            f.append('category_id', parseInt(product.category_id.value.id))
+          f.append('category_id', parseInt(product.category_id.value.id))
         }
         f.append('discount', parseInt(product.discount.value))
         f.append('desc', product.desc.value)
@@ -690,16 +626,6 @@ export default {
         myTags.map((v, i) => {
           f.append('tag_id[' + i + ']', v)
         })
-        finalAttrs.value.map((aa) => {
-          if (aa.theChildAttr.value != null) {
-            product.attr_id.value.push(parseInt(aa.theChildAttr.value.id))
-          }
-        })
-        if (product.attr_id.value.length > 0)
-          product.attr_id.value.map((v, i) => {
-            f.append('attribute_id[' + i + ']', v)
-          })
-        // f.append('attribute_id',product.attr_id.value)
 
         authService.value.transmit('seller/product', f, () => {
           alert("با موفقیت ثبت شد!")
@@ -742,23 +668,32 @@ export default {
     }
 
     const assignAttrs = () => {
-
+      var z = []
       product.category_id.value.at.map((y) => {
         if (document.getElementById(y.name).checked) {
           var x = document.getElementsByName(y.name)
+
           console.log(x)
-          for (let i=0;i<x.length;i++){
+          for (let i = 0; i < x.length; i++) {
             if (document.getElementsByName(y.name)[i].checked) {
-
-              product.attr_id.value.push(document.getElementsByName(y.name)[i].value)
-
+              z.push({amount:document.getElementsByName(y.name)[i].id , parentId: y.id})
             }
           }
-
-
         }
       })
-      console.log(finalAttrs.value)
+
+
+      if (z.length>1) {
+        for (let att =0;att <z.length;att++){
+          f.append('attribute_id[' + att + ']', z[att].amount)
+        }
+      } else {
+        f.append('attribute_id' , z[0].amount)
+      }
+
+
+
+
 
     }
 
@@ -766,7 +701,6 @@ export default {
       getChildAttrs(x.value)
       // console.log(x.value)
     }
-
     return {
       assignAttrs,
       productToEdit,
