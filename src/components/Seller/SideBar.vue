@@ -9,9 +9,9 @@
             <menu-item v-if="verified" :to="{name:'Golpino Seller Products'}" icon="/assets/site/images/seller-icons/shop.svg" @activated="handleMenu" :active="activeItem" id="2" title="محصولات"></menu-item>
 <!--            <menu-item to="/seller" icon="/assets/site/images/seller-icons/layers.svg" @activated="handleMenu" :active="activeItem" id="3" title="سفارشات"></menu-item>-->
 <!--            <p class="pl-3 mt-3">جزئیات بیشتر</p>-->
-<!--            <menu-item to="/dashboard" icon="/assets/site/images/seller-icons/letter.svg" @activated="handleMenu" :active="activeItem" id="4" title="نظریات مشتریان"></menu-item>-->
+            <menu-item :to="{name:'Golpino Seller comments'}" icon="/assets/site/images/seller-icons/letter.svg" @activated="handleMenu" :active="activeItem" id="4" title="نظریات مشتریان"></menu-item>
 <!--            <menu-item to="/dashboard" icon="/assets/site/images/seller-icons/guide.svg" @activated="handleMenu" :active="activeItem" id="5" title="راهنما"></menu-item>-->
-<!--            <menu-item :to="{name:'Golpino Seller Financials'}" icon="/assets/site/images/seller-icons/dollar.svg" @activated="handleMenu" :active="activeItem" id="6" title="مالی"></menu-item>-->
+            <menu-item :to="{name:'Golpino Seller Financials'}" icon="/assets/site/images/seller-icons/dollar.svg" @activated="handleMenu" :active="activeItem" id="6" title="مالی"></menu-item>
             <menu-item :to="{name:'Golpino Seller Settings'}" icon="/assets/site/images/seller-icons/cog.svg" @activated="handleMenu" :active="activeItem" id="7" title="تنظیمات"></menu-item>
             <menu-item icon="/assets/site/images/seller-icons/cog.svg" @activated="handleMenu" :active="activeItem" id="8" title="خروج"></menu-item>
         </nav>

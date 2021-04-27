@@ -7,7 +7,7 @@
                 <custom-link classes="ml-5" url="aaa" title="پست الکترونیک" sub="info@golpino.com" iconSize="huge" icon="/assets/site/images/seller-icons/letter.svg"></custom-link>
             </div>
             <div class="row footer-footer">
-                <div class="col-2 p-0">
+                <div class="col-md-2 col-lg-2 col-12 col-sm-12 p-0">
                     <h5>گلپینو</h5>
                     <custom-link url="/about" title="درباره ما" classes="full-width mt-2"></custom-link>
                     <custom-link url="https://golpino.com/mag/" :isLonely="true" title="مجله ی گلپینو" classes="full-width mt-2"></custom-link>
@@ -17,19 +17,19 @@
                     <custom-link url="http://efgol.ir/" :isLonely="true" title="اتحادیه ی گل و گیاه" classes="full-width mt-2"></custom-link>
                     <!-- <custom-link url="aaa" title="حامیان ما" classes="full-width mt-2"></custom-link> -->
                 </div>
-                <div class="col-2">
+                <div class="col-md-2 col-lg-2 col-12 col-sm-12 p-0">
                     <h5>راهنمایی</h5>
                     <custom-link url="/faq" title="سوالات متداول" classes="full-width mt-2"></custom-link>
                     <custom-link url="https://golpino.com/mag/6345-2/" :isLonely="true" title="ثبت نام فروشندگان" classes="full-width mt-2"></custom-link>
                     <!-- <custom-link url="aaa" title="شرایط و قوانین" classes="full-width mt-2"></custom-link>
                     <custom-link url="aaa" title="حریم خصوصی" classes="full-width mt-2"></custom-link> -->
                 </div>
-                <div class="col-4">
+                <div class="col-md-2 col-lg-2 col-12 col-sm-12 p-0">
                     <h5>به ما اعتماد کنید</h5>
                     <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=174664&amp;Code=sBAMFHgGag7oTgxHYQIX"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=174664&amp;Code=sBAMFHgGag7oTgxHYQIX" alt="" style="cursor:pointer" id="sBAMFHgGag7oTgxHYQIX"></a>
                     <img id='jxlzsizpapfuapfujzpergvj' style='cursor:pointer' onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=195573&p=rfthpfvldshwdshwjyoexlao", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt='logo-samandehi' src='https://logo.samandehi.ir/logo.aspx?id=195573&p=nbpdbsiyujynujynyndtqfti' />
                 </div>
-                <div class="col-4">
+                <div class="col-md-2 col-lg-2 col-12 col-sm-12 p-0">
                     <!-- <h5>اپلیکشن فروشنده ها</h5> -->
                     <div class="row">
                         <!-- <div class="col-7 mt-3">

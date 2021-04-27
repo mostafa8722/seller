@@ -64,19 +64,23 @@ const routes = [
     path: '/user/payment',
     name: 'Golpino Payment Page',
     component: () => import('../components/Main/Pay/Pay.vue')
-  },{
+  },
+  {
     path: '/user/payment/:id',
     name: 'Golpino Payment Page',
     component: () => import('../components/Main/Pay/Pay.vue')
-  },{
+  },
+  {
     path: '/contact',
     name: 'Golpino Contact Page',
     component: () => import('../components/Main/About/ContactUs.vue')
-  },{
+  },
+  {
     path: '/terms-and-conditions',
     name: 'Golpino Terms And Conditions Page',
     component: () => import('../components/Main/About/Terms.vue')
-  },{
+  },
+  {
     path: '/sponsors',
     name: 'Golpino Sponsors Page',
     component: () => import('../components/Main/About/Sponsors.vue')
@@ -86,7 +90,8 @@ const routes = [
     name: 'Golpino Search Page',
     component:() => import('../components/Main/Search/Results.vue'),
     props:route => ({category:(route.query.category ? route.query.category : null),district:(route.query.district ? route.query.district : null),address:(route.query.address ? route.query.address : null),name: (route.query.name ? route.query.name : null)})
-  },{
+  },
+  {
     path:'/cors',
     name: 'Golpino Search Page',
     component:() => import('../components/Main/Search/ResultsCors.vue'),
@@ -135,224 +140,256 @@ const routes = [
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/add/district',
     name: 'Golpino Add Districts Page',
     component: () => import('../components/Admin/Forms/District.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/view/district',
     name: 'Golpino Display Districts Page',
     component: () => import('../components/Admin/Display/Districts.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/edit/district/:id',
     name: 'Golpino Edit District Page',
     component: () => import('../components/Admin/Forms/District.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/view/categories',
     name: 'Golpino Display Categories Page',
     component: () => import('../components/Admin/Display/Categories.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/add/category',
     name: 'Golpino Add Categories Page',
     component: () => import('../components/Admin/Forms/Category.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/edit/category/:id',
     name: 'Golpino Edit Category Page',
     component: () => import('../components/Admin/Forms/Category.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/view/tags',
     name: 'Golpino Display Tags Page',
     component: () => import('../components/Admin/Display/Tags.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/add/tag',
     name: 'Golpino Add Tags Page',
     component: () => import('../components/Admin/Forms/Tag.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/edit/tag/:id',
     name: 'Golpino Edit Tag Page',
     component: () => import('../components/Admin/Forms/Tag.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/view/ranges',
     name: 'Golpino Display Ranges Page',
     component: () => import('../components/Admin/Display/ServiceRanges.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/add/range',
     name: 'Golpino Add Ranges Page',
     component: () => import('../components/Admin/Forms/ServiceRange.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/edit/range/:id',
     name: 'Golpino Edit Range Page',
     component: () => import('../components/Admin/Forms/ServiceRange.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/view/distances',
     name: 'Golpino Display Distances Page',
     component: () => import('../components/Admin/Display/Distances.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/add/distance',
     name: 'Golpino Add Distances Page',
     component: () => import('../components/Admin/Forms/Distance.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/edit/distance/:id',
     name: 'Golpino Edit Distance Page',
     component: () => import('../components/Admin/Forms/Distance.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/view/attributes',
     name: 'Golpino Display Attributes Page',
     component: () => import('../components/Admin/Display/Attributes.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/add/attribute',
     name: 'Golpino Add Attributes Page',
     component: () => import('../components/Admin/Forms/Attribute.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/edit/attribute/:id',
     name: 'Golpino Edit Attribute Page',
     component: () => import('../components/Admin/Forms/Attribute.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/orders',
     name: 'Golpino Admin Orders Page',
     component: () => import('../components/Admin/Order/Summary.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/orders/:id',
     name: 'Golpino Admin Order Page',
     component: () => import('../components/Admin/Order/AnOrder.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
     path: '/qwertyzxcvb/admin/verify-shop',
     name: 'Golpino Admin Order Page',
     component: () => import('../components/Admin/Verify/VerifySeller.vue'),
     meta:{
       requiresAdmin:true
     }
-  },{
+  },
+  {
       path: '/qwertyzxcvb/admin/view/discounts',
       name: 'Golpino Display Discounts Page',
       component: () => import('../components/Admin/Display/Discounts.vue'),
       meta:{
         requiresAdmin:true
       }
-    },{
+    },
+  {
       path: '/qwertyzxcvb/admin/add/discount',
       name: 'Golpino Add Discount Page',
       component: () => import('../components/Admin/Forms/Discount.vue'),
       meta:{
         requiresAdmin:true
       }
-    },{
+    },
+  {
       path: '/qwertyzxcvb/admin/edit/discount/:id',
       name: 'Golpino Edit Discount Page',
       component: () => import('../components/Admin/Forms/Discount.vue'),
       meta:{
         requiresAdmin:true
       }
-    },{
+    },
+  {
       path: '/qwertyzxcvb/admin/verify-shops',
       name: 'Golpino Verify Shops Page',
       component: () => import('../components/Admin/Display/Shops.vue'),
       meta:{
         requiresAdmin:true
       }
-    },{
+    },
+  {
       path: '/qwertyzxcvb/admin/shops',
       name: 'Golpino Admin Shops Info Page',
       component: () => import('../components/Admin/Shops/ShopList.vue'),
       meta:{
         requiresAdmin:true
       }
-    },{
+    },
+  {
       path: '/qwertyzxcvb/admin/view/subjects',
       name: 'Golpino Complaint Subjects Page',
       component: () => import('../components/Admin/Display/Subjects.vue'),
       meta:{
         requiresAdmin:true
       }
-    },{
+    },
+  {
       path: '/qwertyzxcvb/admin/add/subject',
       name: 'Golpino Add Subject Page',
       component: () => import('../components/Admin/Forms/Subject.vue'),
       meta:{
         requiresAdmin:true
       }
-    },{
+    },
+  {
       path: '/qwertyzxcvb/admin/edit/subject/:id',
       name: 'Golpino Edit Subject Page',
       component: () => import('../components/Admin/Forms/Subject.vue'),
       meta:{
         requiresAdmin:true
       }
-    },{
+    },
+  {
       path: '/qwertyzxcvb/admin/complaints',
       name: 'Golpino Admin Contacts Page',
       component: () => import('../components/Admin/Display/ContactUs.vue'),
       meta:{
         requiresAdmin:true
       }
-    },{
+    },
+  {
       path: '/qwertyzxcvb/admin/comments',
       name: 'Golpino Admin Comments Page',
       component: () => import('../components/Admin/Comments/Comments.vue'),
       meta:{
         requiresAdmin:true
       }
-    },{
+    },
+  {
       path: '/qwertyzxcvb/admin/comment/:id',
       name: 'Golpino Admin Comment Page',
       component: () => import('../components/Admin/Comments/partials/Comment.vue'),
@@ -497,10 +534,16 @@ const routes = [
     path: '/seller/financials',
     name: 'Golpino Seller Financials',
     component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Financial/Payments.vue')
-  },{
+  },
+  {
     path: '/seller/orders',
     name: 'Golpino Seller Orders',
     component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Orders/Summary.vue')
+  },
+  {
+    path: '/seller/comments',
+    name: 'Golpino Seller comments',
+    component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Comments/CommentsList')
   },
 
   // BASE

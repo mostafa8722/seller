@@ -7,7 +7,7 @@
         <td >{{(theProduct.price - theProduct.price*theProduct.discount/100)}} تومان<span class="discount">{{theProduct.discount}}</span></td>
         <td >{{theProduct.remain}}</td>
         <td >{{theProduct.created_at}}</td>
-        <td ><image-icon address="/assets/site/images/seller-icons/red-trash.svg" :clickable="true" @iconClicked="deleteMe" classes="mid mr-3"></image-icon><image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true" @iconClicked="editMe" classes="mid mr-3"></image-icon><image-icon address="/assets/site/images/seller-icons/three-dots.svg" classes="mid mr-3"></image-icon></td>
+        <td ><image-icon address="/assets/site/images/seller-icons/red-trash.svg" :clickable="true" @iconClicked="deleteMe" classes="mid mr-3"></image-icon><image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true" @iconClicked="editMe" classes="mid mr-3"></image-icon></td>
     </tr>
 
 
