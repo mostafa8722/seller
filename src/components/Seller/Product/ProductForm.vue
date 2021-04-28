@@ -288,96 +288,100 @@ export default {
 
         })
         authService.value.receive('seller/product/' + context.root.$route.params.id, {}, (s, d) => {
-          if (s == 200) {
-            productToEdit.value = {}
-            productToEdit.value.name = d.data.product.name
-            productToEdit.value.price = d.data.product.price
-            productToEdit.value.remaining = d.data.product.remain
-            productToEdit.value.discount = d.data.product.discount
-            productToEdit.value.desc = d.data.product.desc
-            productToEdit.value.attributes = d.data.attribute
-            productToEdit.value.category_id = d.data.category.id
+              if (s == 200) {
+                productToEdit.value = {}
+                productToEdit.value.name = d.data.product.name
+                productToEdit.value.price = d.data.product.price
+                productToEdit.value.remaining = d.data.product.remain
+                productToEdit.value.discount = d.data.product.discount
+                productToEdit.value.desc = d.data.product.desc
+                productToEdit.value.attributes = d.data.attribute
+                productToEdit.value.category_id = d.data.category.id
 
 
-            categories.value.map((c) => {
-              if (c.value == d.data.category.id) {
-                productToEdit.value.attrs = c
+                categories.value.map((c) => {
+                  if (c.value == d.data.category.id) {
+                    productToEdit.value.attrs = c
+                  }
+                })
+
+                product.name = {value: d.data.product.name, valid: true}
+                product.category_id = {
+                  value: {
+                    id: d.data.category.id,
+                    value: d.data.category.id,
+                    name: d.data.category.name,
+                    text: d.data.category.name
+                  }, valid: true
+                }
+                product.attributes = {value: d.data.attribute, valid: true}
+                product.price = {value: d.data.product.price, valid: true}
+                product.remaining = {value: d.data.product.remain, valid: true}
+
+
               }
-            })
 
-            product.name = {value: d.data.product.name, valid: true}
-            product.attributes = {value: d.data.attribute, valid: true}
-            product.price = {value: d.data.product.price, valid: true}
-            product.remaining = {value: d.data.product.remain, valid: true}
-
-
-
-          }
-
-            // alert("x")
-            // if (d.data.category.parent_id == null)
-            //   product.category_id = {
-            //     value: {value: d.data.product.category_id, text: d.data.category.name},
-            //     valid: true
-            //   }
+                  // alert("x")
+                  // if (d.data.category.parent_id == null)
+                  //   product.category_id = {
+                  //     value: {value: d.data.product.category_id, text: d.data.category.name},
+                  //     valid: true
+              //   }
 
 
+              else {
+                categories.value.map((c) => {
+                  if (c.id) {
+                    if (c.id = d.data.category.parent_id)
+                      product.category_id.value = {text: c.name, value: c.id}
+                  }
+                })
+                product.subCat.value = {text: d.data.category.name, value: 1}
+              }
+              mainImage.value = d.data.product.image
+              product.discount = {value: d.data.product.discount, valid: true}
+              product.desc = {value: d.data.product.desc, valid: true}
+              product.image = {value: d.data.product.image, valid: true}
+              if (d.data.tag) {
+                product.tag_id = [...d.data.tag]
+                product.tag_id.map((tt) => {
+                  tt.text = tt.name
+                  tt.value = tt.id
+                })
+              }
 
-
-
-            else {
               categories.value.map((c) => {
-                if (c.id) {
-                  if (c.id = d.data.category.parent_id)
-                    product.category_id.value = {text: c.name, value: c.id}
+                if (c.id = d.data.category.parent_id)
+                  product.category_id.value = {text: c.name, value: c.id}
+              })
+              product.subCat.value = {text: d.data.category.name, value: 1}
+              if (d.data.product.attr_id) {
+                product.attr_id = {value: [...d.data.product.attr_id], valid: true}
+              }
+
+              finalAttrs.value = []
+              if (d.data.attribute) {
+                d.data.attribute.map((ta) => {
+                  finalAttrs.value.push({
+                    theParentAttr: {value: ta.parent_id, valid: true},
+                    theChildAttr: {value: ta.id, valid: true}
+                  })
+                })
+                finalAttrs.value = d.data.attribute
+              }
+
+
+              // let childCategori = getParrentCat(product.category_id.value)
+
+              categories.value.map((c) => {
+                if (c.id == product.category_id.value) {
+                  product.category_id.value = c
                 }
               })
-              product.subCat.value = {text: d.data.category.name, value: d.data.category.id}
             }
-            mainImage.value = d.data.product.image
-            product.discount = {value: d.data.product.discount, valid: true}
-            product.desc = {value: d.data.product.desc, valid: true}
-            product.image = {value: d.data.product.image, valid: true}
-            if (d.data.tag) {
-              product.tag_id = [...d.data.tag]
-              product.tag_id.map((tt) => {
-                tt.text = tt.name
-                tt.value = tt.id
-              })
-            }
-
-            categories.value.map((c) => {
-              if (c.id = d.data.category.parent_id)
-                product.category_id.value = {text: c.name, value: c.id}
+            , (s, e) => {
+              console.log("this is error", e)
             })
-            product.subCat.value = {text: d.data.category.name, value: d.data.category.id}
-            if (d.data.product.attr_id) {
-              product.attr_id = {value: [...d.data.product.attr_id], valid: true}
-            }
-
-            finalAttrs.value = []
-            if (d.data.attribute) {
-              d.data.attribute.map((ta) => {
-                finalAttrs.value.push({
-                  theParentAttr: {value: ta.parent_id, valid: true},
-                  theChildAttr: {value: ta.id, valid: true}
-                })
-              })
-              finalAttrs.value = d.data.attribute
-            }
-
-
-            // let childCategori = getParrentCat(product.category_id.value)
-
-            categories.value.map((c) => {
-              if (c.id == product.category_id.value) {
-                product.category_id.value = c
-              }
-            })
-          }
-        , (s, e) => {
-          console.log("this is error", e)
-        })
       }
 
     })
@@ -411,7 +415,6 @@ export default {
     }
 
     const getAttrs = () => {
-
 
 
       // authService.value.receive('seller/attributes?category_id=' + product.category_id.value.id, {}, (s, d) => {
@@ -563,6 +566,25 @@ export default {
       e.preventDefault()
       let f = new FormData()
       if (productToEdit.value != null) {
+
+        var z = []
+        product.category_id.value.at.map((y) => {
+          if (document.getElementById(y.name).checked) {
+            var x = document.getElementsByName(y.name)
+
+            console.log(x)
+            for (let i = 0; i < x.length; i++) {
+              if (document.getElementsByName(y.name)[i].checked) {
+                z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
+              }
+            }
+          }
+        })
+        if (z !== null) {
+          z.map((v, i) => {
+            f.append('attribute_id[' + i + ']', v.amount)
+          })
+        }
         if (productToEdit.value.name != product.name.value)
           f.append('name', product.name.value)
         if (productToEdit.value.price != product.price.value)
@@ -573,6 +595,10 @@ export default {
           f.append('discount', parseInt(product.discount.value))
         if (productToEdit.value.desc != product.desc.value)
           f.append('desc', product.desc.value)
+        if (productToEdit.value.category_id != product.category_id.value) {
+          delete product.category_id.value.at
+          f.append('category_id', product.category_id.value.value)
+        }
         if (!product.image.value)
           f.append('image', product.image)
         authService.value.transmit('seller/product/' + context.root.$route.params.id, f, () => {
@@ -591,30 +617,31 @@ export default {
             console.log(x)
             for (let i = 0; i < x.length; i++) {
               if (document.getElementsByName(y.name)[i].checked) {
-                z.push({amount:document.getElementsByName(y.name)[i].id , parentId: y.id})
+                z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
               }
             }
           }
         })
-        if (z.length>1) {
-          for (let att =0;att <z.length;att++){
-            f.append('attribute_id[' + att + ']', z[att].amount)
-          }
-        } else {
-          f.append('attribute_id' , z[0].amount)
+
+        if (z !== null) {
+          z.map((v, i) => {
+            f.append('attribute_id[' + i + ']', v.amount)
+          })
         }
+
 
 
         f.append('name', product.name.value)
         f.append('price', parseInt(product.price.value))
         f.append('remain', parseInt(product.remaining.value))
-        if (product.subCat.value != 'none') {
-          f.append('category_id', parseInt(product.subCat.value.id))
-        } else {
-          if (product.category_id.value != null)
-            delete product.category_id.value.at
-          f.append('category_id', parseInt(product.category_id.value.id))
+
+
+
+        if (product.category_id.value != null) {
+          f.append('category_id', parseInt(product.category_id.value.value))
         }
+
+
         f.append('discount', parseInt(product.discount.value))
         f.append('desc', product.desc.value)
         f.append('image', product.image)
@@ -626,6 +653,9 @@ export default {
         myTags.map((v, i) => {
           f.append('tag_id[' + i + ']', v)
         })
+        console.log(f.get('category_id'))
+        console.log(f.get('attribute_id'))
+        // console.log(f.get('category_id'))
 
         authService.value.transmit('seller/product', f, () => {
           alert("با موفقیت ثبت شد!")
@@ -676,23 +706,20 @@ export default {
           console.log(x)
           for (let i = 0; i < x.length; i++) {
             if (document.getElementsByName(y.name)[i].checked) {
-              z.push({amount:document.getElementsByName(y.name)[i].id , parentId: y.id})
+              z.push({amount: document.getElementsByName(y.name)[i].id, parentId: y.id})
             }
           }
         }
       })
 
 
-      if (z.length>1) {
-        for (let att =0;att <z.length;att++){
+      if (z.length > 1) {
+        for (let att = 0; att < z.length; att++) {
           f.append('attribute_id[' + att + ']', z[att].amount)
         }
       } else {
-        f.append('attribute_id' , z[0].amount)
+        f.append('attribute_id', z[0].amount)
       }
-
-
-
 
 
     }
