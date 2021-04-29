@@ -156,7 +156,7 @@ export default {
 <style scoped>
 
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 800px) {
 
   .desktopPro {
     display: none;
@@ -168,7 +168,7 @@ export default {
 
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 800px) {
   .mobilePro{
     display: none;
   }

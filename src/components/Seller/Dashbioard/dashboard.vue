@@ -1,19 +1,26 @@
 <template>
  <div class="menu-section pb-4">
 
-   <v-btn href="/shop/17">preview</v-btn>
 
 
 <!--     <div class="section-top container">-->
-<!--         <div class="notif-prompt p-2">-->
-<!--             <icon-image address="/assets/site/images/seller-icons/attention.svg"></icon-image>-->
-<!--             <p class="mini-title">شما یک سفارش در حال انتشار دارید</p>-->
-<!--             <a href="#">مشاهده</a>-->
-<!--         </div>-->
-<!--         <div class=" d-flex justify-content-between mt-2 mb-1">-->
-<!--            <h3 class="section-title">داشبورد</h3>-->
-<!--            <custom-button classes="support-button" icon="/assets/site/images/seller-icons/purple-support.svg" v-on:clicked="callSupport" iconSize="mid" label="تماس با پشتیبانی"></custom-button>-->
-<!--         </div>-->
+         <div class="notif-prompt p-2">
+             <icon-image address="/assets/site/images/seller-icons/attention.svg"></icon-image>
+             <p class="mini-title">شما یک سفارش در حال انتشار دارید</p>
+             <a href="#">مشاهده</a>
+         </div>
+         <div class=" d-flex justify-content-between mt-2 mb-1">
+            <custom-button classes="support-button" icon="/assets/site/images/seller-icons/purple-support.svg" v-on:clicked="callSupport" iconSize="mid" label="تماس با پشتیبانی"></custom-button>
+         </div>
+   <v-btn href="/shop/17">preview</v-btn>
+   <v-col>
+     تعداد محصولات موجود: {{  products.length }}
+   </v-col>
+   <v-col>
+     تعداد محصولات ناموجود: {{  products.filter(item => item.remain === 0 ).length }}
+   </v-col>
+
+
 <!--     </div>-->
 <!--     <div class="row container">-->
 <!--         <div class="col-md-6 col-lg-3 p-1">-->
@@ -115,7 +122,7 @@
  </div>
 </template>
 <script>
-import { ref,onMounted,watch } from "@vue/composition-api";
+import {ref, onMounted, watch, computed} from "@vue/composition-api";
 import Stat from './Partials/stat'
 import CustomButton from '../Common/customButton'
 import DoughnutChart from './Partials/DoughnutChart'
@@ -124,6 +131,7 @@ import Transaction from './Partials/transaction'
 import Recent from './Partials/recent'
 import CustomInput from '../Common/CustomInput'
 import LineChart from './Partials/LineChart.vue'
+import Service from "../../../utils/seller-service";
 export default {
     components:{
         Stat,
@@ -135,6 +143,9 @@ export default {
         IconImage,
         LineChart
     },
+
+
+
     setup(){
         function callSupport(){
             // CALL SUPPORT HERE
@@ -192,7 +203,23 @@ export default {
         position: 'relative'
         }
 
-        return{data,options,callSupport,style,model,items}
+
+      const authService = computed(() => {
+        return Service(true)
+      })
+      const products = ref(null)
+
+      const getProducts = () => {
+        authService.value.receive('seller/product', {}, (s, d) => {
+          if (s == 200)
+            products.value = d.data
+        }, (s, e) => {
+        })
+      }
+      onMounted(() => {
+        getProducts()
+      })
+        return{data,options,callSupport,style,model,items,products}
     }
 }
 </script>

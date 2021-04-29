@@ -7,12 +7,12 @@
 <!--                <icon-image address="/assets/site/images/seller-icons/expand.svg" class="mid"></icon-image>-->
 <!--            </div>-->
             <div class="info d-flex align-items-center">
-                <div class="mini-title notif">
-                    <icon-image address="/assets/site/images/seller-icons/bell.svg" classes="big"></icon-image>
-                    <span class="notif-number d-flex align-items-centerc justify-content-center">
-                        <p class="mini-title p-0 m-0">1</p>
-                    </span>
-                </div>
+<!--                <div class="mini-title notif">-->
+<!--                    <icon-image address="/assets/site/images/seller-icons/bell.svg" classes="big"></icon-image>-->
+<!--                    <span class="notif-number d-flex align-items-centerc justify-content-center">-->
+<!--                        <p class="mini-title p-0 m-0">1</p>-->
+<!--                    </span>-->
+<!--                </div>-->
                 <div class="user-locker mini-title mr-2 ml-2">
                     <img src="/assets/site/images/popular.png" class="user-image" alt="icon">
                 </div>
@@ -41,7 +41,7 @@ export default {
         padding:15px 18px 15px 18px;
         font-size: 0.85rem;
         font-weight: lighter;
-        height:10vh;
+        height:60px;
     }
 
     .notif{

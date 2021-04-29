@@ -2,7 +2,7 @@
   <div class="container">
     <div class="container mt-3 settings">
       <div class="row">
-        <div class="col-md-4 col-sm-12 right-bar">
+<!--        <div class="col-md-4 col-sm-12 right-bar">-->
           <!--               <div class="top-right p-3 d-flex justify-content-between">-->
           <!--                 <div class="user">-->
           <!--                   <div class="mini-title">-->
@@ -33,12 +33,12 @@
           <!--                   <p>1231243425636453632423123</p>-->
           <!--                 </div>-->
           <!--               </div>-->
-          <div class="menu-right pt-3">
-            <menu-item v-for="(item,i) in menuItems" :id="i" :key="i" :active="activeMenu" @selected="activateMenu"
-                       :theItem="item"></menu-item>
-          </div>
-        </div>
-        <div class="col-md-8 col-sm-12 main-section pt-3">
+<!--          <div class="menu-right pt-3">-->
+<!--            <menu-item v-for="(item,i) in menuItems" :id="i" :key="i" :active="activeMenu" @selected="activateMenu"-->
+<!--                       :theItem="item"></menu-item>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div class=" main-section pt-3">
 
 
           <div class="general-settings" v-if="activeMenu == 0">
@@ -931,7 +931,9 @@ export default {
 }
 </script>
 <style>
-
+.general-settings{
+  width: 100%;
+}
 .dropdown{
   direction: ltr!important;
 }
@@ -999,7 +1001,7 @@ export default {
 }
 
 .main-section {
-  /*width:73%;*/
+  width:100%;
   display: inline-block;
   margin: 0px;
   /*position: relative;*/

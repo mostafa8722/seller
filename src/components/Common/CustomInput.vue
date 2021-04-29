@@ -36,9 +36,17 @@
   <div v-else-if="kind=='tag'" :class="'shownInput text-input ' + container">
     <label v-if="label != ''" :for="id">{{ label }}</label>
     <div :class="'tagManager row m-0 ' + extraClasses">
+<!--      <input autocomplete="off" :id="id" type="text"-->
+<!--             :class="'hidden-text col-5 ' + classes + (!myModel.valid ? ' invalid ' : '')" @focus="(e)=>suggestAll(e)"-->
+<!--             @input="(e)=>suggest(e)" v-model="myModel.id" :placeholder="placeholder">-->
+
+
+
       <input autocomplete="off" :id="id" type="text"
-             :class="'hidden-text col-5 ' + classes + (!myModel.valid ? ' invalid ' : '')" @focus="(e)=>suggestAll(e)"
+             :class="'hidden-text col-5 ' " @focus="(e)=>suggestAll(e)"
              @input="(e)=>suggest(e)" v-model="myModel.id" :placeholder="placeholder">
+
+
       <div class="tags col-7">
         <slot></slot>
       </div>

@@ -84,7 +84,7 @@ export default {
 }
 
 .main-section{
-    width:73%;
+    width:100%;
     display: inline-block;
     margin:0px;
     position: relative;

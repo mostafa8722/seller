@@ -110,8 +110,8 @@
                   </v-col>
 
                 </v-row>
-                <v-btn @click="assignAttrs">check</v-btn>
               </div>
+
 
             </div>
             <div class="col-12 mt-3">
@@ -580,10 +580,14 @@ export default {
             }
           }
         })
-        if (z !== null) {
-          z.map((v, i) => {
-            f.append('attribute_id[' + i + ']', v.amount)
-          })
+        console.log(z)
+        if (z.lenght===1) {
+
+          f.append('attribute_id',z[0].amount)
+
+          // z.map((v, i) => {
+          //   f.append('attribute_id[' + i + ']', v.amount)
+          // })
         }
         if (productToEdit.value.name != product.name.value)
           f.append('name', product.name.value)
@@ -601,6 +605,10 @@ export default {
         }
         if (!product.image.value)
           f.append('image', product.image)
+
+
+
+        console.log(f.get('attribute_id'))
         authService.value.transmit('seller/product/' + context.root.$route.params.id, f, () => {
           alert("تغییرات ثبت شد")
           location.reload();
@@ -865,4 +873,9 @@ export default {
   padding: 1rem;
 }
 
+</style>
+<style>
+.tagManager > input{
+  background-color: rebeccapurple!important;
+}
 </style>
