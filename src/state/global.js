@@ -2,7 +2,8 @@ import { ref,computed } from "@vue/composition-api";
 
 const state = ref({
   alert : false,
-  message: ""
+  message: "",
+    seenOrders:0,
 });
 
 const alertToggle = (m)=>{
