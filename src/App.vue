@@ -10,9 +10,7 @@
     <!-- <admin-header v-if="path == 'admin'" @blackDrop="dropper"></admin-header> -->
     <!-- <router-view v-if="path != 'seller'"/> -->
     <!-- <seller-page v-else></seller-page> -->
-    <seller-view v-if="path.includes('golpino-for-vendor') || path.includes('seller')"></seller-view>
-    <admin-view v-else-if="path.includes('qwertyzxcvb')"></admin-view>
-    <user-view v-else></user-view>
+    <seller-view></seller-view>
     <Footer></Footer>
     <div v-if="drop" class="blackDrop" @click="hideDrop">
     </div>
@@ -32,8 +30,6 @@ import EventBus from "./EventBus/EventBus"
 import SellerPage from "./components/Seller/Seller"
 import ForSeller from "./components/Main/Layout/ForSellerHeader"
 import SellerView from "./views/Seller"
-import UserView from "./views/User"
-import AdminView from "./views/Admin"
 export default {
   data:()=>({
     drop:false,
@@ -45,8 +41,6 @@ export default {
     SellerPage,
     ForSeller,
     SellerView,
-    UserView,
-    AdminView
   },
   provide:{
     global,
