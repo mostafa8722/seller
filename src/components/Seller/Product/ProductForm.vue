@@ -123,7 +123,8 @@
             <input type="file" id="getExtraImage" class="hiddenInput" @change="(e)=>addExtraImage(e)" name="extraImg"
                    accept="image/*">
             <div class="col">
-              <button class="purple-btn mt-3" @click="(e)=>submitProduct(e)">ثبت محصول</button>
+              <button class="purple-btn mt-3" @click="(e)=>submitProductSingle(e)">ثبت محصول</button>
+              <button v-if="!edit" class="purple-btn mt-3" @click="(e)=>submitProduct(e)">ثبت و افزودن محصول جدید</button>
               <button class="white-btn mt-3 mr-3">انصراف</button>
             </div>
 
@@ -668,6 +669,144 @@ export default {
         authService.value.transmit('seller/product', f, () => {
           alert("با موفقیت ثبت شد!")
           location.reload();
+
+
+        }, (s, er) => {
+          console.log({er})
+          if (!s) {
+            er.response.data.error.invalid_params.map((err) => {
+              if (err.field == 'name') {
+                product.name.valid = false
+                product.name.message = err.message
+              } else if (err.field == 'remain') {
+                product.remaining.valid = false
+                product.remaining.message = err.message
+              } else if (err.field == 'price') {
+                product.price.valid = false
+                product.price.message = err.message
+              } else if (err.field == 'discount') {
+                product.discount.valid = false
+                product.discount.message = err.message
+              } else if (err.field == 'desc') {
+                product.desc.valid = false
+                product.desc.message = err.message
+              } else if (err.field == 'category_id') {
+                product.category_id.valid = false
+                product.category_id.message = err.message
+              }
+            })
+          }
+        })
+      }
+    }
+    const submitProductSingle = (e) => {
+      e.preventDefault()
+      let f = new FormData()
+      if (productToEdit.value != null) {
+
+        var z = []
+        product.category_id.value.at.map((y) => {
+          if (document.getElementById(y.name).checked) {
+            var x = document.getElementsByName(y.name)
+
+            console.log(x)
+            for (let i = 0; i < x.length; i++) {
+              if (document.getElementsByName(y.name)[i].checked) {
+                z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
+              }
+            }
+          }
+        })
+        console.log(z)
+        if (z.lenght===1) {
+
+          f.append('attribute_id',z[0].amount)
+
+          // z.map((v, i) => {
+          //   f.append('attribute_id[' + i + ']', v.amount)
+          // })
+        }
+        if (productToEdit.value.name != product.name.value)
+          f.append('name', product.name.value)
+        if (productToEdit.value.price != product.price.value)
+          f.append('price', parseInt(product.price.value))
+        if (productToEdit.value.remaining != product.remaining.value)
+          f.append('remain', parseInt(product.remaining.value))
+        if (productToEdit.value.discount != product.discount.value)
+          f.append('discount', parseInt(product.discount.value))
+        if (productToEdit.value.desc != product.desc.value)
+          f.append('desc', product.desc.value)
+        if (productToEdit.value.category_id != product.category_id.value) {
+          delete product.category_id.value.at
+          f.append('category_id', product.category_id.value.value)
+        }
+        if (!product.image.value)
+          f.append('image', product.image)
+
+
+
+        console.log(f.get('attribute_id'))
+        authService.value.transmit('seller/product/' + context.root.$route.params.id, f, () => {
+          alert("تغییرات ثبت شد")
+          location.reload();
+        }, (s, er) => {
+          console.log({er})
+        })
+      } else {
+
+        var z = []
+        product.category_id.value.at.map((y) => {
+          if (document.getElementById(y.name).checked) {
+            var x = document.getElementsByName(y.name)
+
+            console.log(x)
+            for (let i = 0; i < x.length; i++) {
+              if (document.getElementsByName(y.name)[i].checked) {
+                z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
+              }
+            }
+          }
+        })
+
+        if (z !== null) {
+          z.map((v, i) => {
+            f.append('attribute_id[' + i + ']', v.amount)
+          })
+        }
+
+
+
+        f.append('name', product.name.value)
+        f.append('price', parseInt(product.price.value))
+        f.append('remain', parseInt(product.remaining.value))
+
+
+
+        if (product.category_id.value != null) {
+          f.append('category_id', parseInt(product.category_id.value.value))
+        }
+
+
+        f.append('discount', parseInt(product.discount.value))
+        f.append('desc', product.desc.value)
+        f.append('image', product.image)
+        let myTags = []
+        product.tag_id.map((t) => {
+          myTags.push(t.id)
+        })
+        // f.append('tag_id',myTags)
+        myTags.map((v, i) => {
+          f.append('tag_id[' + i + ']', v)
+        })
+        console.log(f.get('category_id'))
+        console.log(f.get('attribute_id'))
+        // console.log(f.get('category_id'))
+
+        authService.value.transmit('seller/product', f, () => {
+          alert("با موفقیت ثبت شد!")
+          context.root.$router.push('/seller/products')
+
+
         }, (s, er) => {
           console.log({er})
           if (!s) {
@@ -753,6 +892,7 @@ export default {
       theChildAttr,
       theParentAttr,
       submitProduct,
+      submitProductSingle,
       subCategories,
       items,
       tags,

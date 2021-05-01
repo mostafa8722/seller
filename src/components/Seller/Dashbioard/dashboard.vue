@@ -4,11 +4,11 @@
     <v-row>
       <v-col :cols="12" :md="6" :lg="6" :sm="12">
         <v-card>
-<!--          <div class="notif-prompt p-2"  v-if="unseenProducts > 0"   >-->
-<!--            <icon-image address="/assets/site/images/seller-icons/attention.svg"></icon-image>-->
-<!--            <p class="mini-title">شما {{unseenProducts}}  سفارش جدید دارید</p>-->
-<!--            <a href="/seller/orders">مشاهده</a>-->
-<!--          </div>-->
+          <div class="notif-prompt p-2"  v-if="orders.length > global.state.value.seenOrders-1"   >
+            <icon-image address="/assets/site/images/seller-icons/attention.svg"></icon-image>
+            <p class="mini-title">شما {{orders.length - global.state.value.seenOrders}}  سفارش جدید دارید</p>
+            <a href="/seller/orders">مشاهده</a>
+          </div>
         </v-card>
       </v-col>
       <v-col :cols="6" :md="3" :lg="3" :sm="6">
@@ -22,10 +22,11 @@
 
       </v-col>
       <v-col :cols="6" :md="3" :lg="3" :sm="6">
-        <custom-button classes="support-button"
-                       iconSize="mid" label="مشاهده فروشگاه">
-
-        </custom-button>
+        <v-btn outlined color="#772CE8">
+          <a style="color: #772CE8" href="tel:+900300400">
+            مشاهده فروشگاه
+          </a>
+        </v-btn>
       </v-col>
     </v-row>
     <v-row>
@@ -148,7 +149,7 @@
   </div>
 </template>
 <script>
-import {ref, onMounted, watch, computed} from "@vue/composition-api";
+import {ref, onMounted, watch, computed, inject} from "@vue/composition-api";
 import Stat from './Partials/stat'
 import CustomButton from '../Common/customButton'
 import DoughnutChart from './Partials/DoughnutChart'
@@ -172,26 +173,6 @@ export default {
     IconImage,
     LineChart
   },
-  // data() {
-  //   return {
-  //     products: null
-  //   }
-  // },
-  // methods: {
-  //   getProducts() {
-  //     axios.get('https://api.golpino.com/api/seller/product').then(resp => {
-  //       // this.products = resp.data
-  //       console.log(resp)
-  //     }).catch(err => {
-  //       console.log(err)
-  //     })
-  //   }
-  // },
-  // mounted() {
-  //   this.getProducts()
-  // }
-
-
   setup() {
     function callSupport() {
       // CALL SUPPORT HERE
@@ -199,63 +180,70 @@ export default {
       this.$emit('newOrder')
     }
 
-    const items = [{text: 'ماهانه', value: 'ماهانه'}, {text: 'سالانه', value: 'سالانه'}, {
-      text: 'روزانه',
-      value: 'روزانه'
-    }, {text: 'text2', value: 'value2'}, {text: 'text2', value: 'value2'}, {text: 'text2', value: 'value2'}]
-    const model = ref("ماهانه")
-    watch(model, (newValue, oldValue) => {
-      change()
-    })
-    const data = ref({
-      datasets: [{
-        data: [10, 20, 30],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)'
-        ]
-      }],
-      labels: [
-        'Red',
-        'Yellow',
-        'Blue'
-      ]
-    });
+    // const items = [{text: 'ماهانه', value: 'ماهانه'}, {text: 'سالانه', value: 'سالانه'}, {
+    //   text: 'روزانه',
+    //   value: 'روزانه'
+    // }, {text: 'text2', value: 'value2'}, {text: 'text2', value: 'value2'}, {text: 'text2', value: 'value2'}]
+    // const model = ref("ماهانه")
+    // watch(model, (newValue, oldValue) => {
+    //   change()
+    // })
+    // const data = ref({
+    //   datasets: [{
+    //     data: [10, 20, 30],
+    //     backgroundColor: [
+    //       'rgba(255, 99, 132, 0.2)',
+    //       'rgba(54, 162, 235, 0.2)',
+    //       'rgba(255, 206, 86, 0.2)'
+    //     ]
+    //   }],
+    //   labels: [
+    //     'Red',
+    //     'Yellow',
+    //     'Blue'
+    //   ]
+    // });
+    // function change() {
+    //   data.value = {
+    //     datasets: [{
+    //       data: [25, 5, 35],
+    //     }],
+    //     labels: [
+    //       'Red',
+    //       'Yellow',
+    //       'Blue'
+    //     ],
+    //     color: [
+    //       'red',
+    //       'yellow',
+    //       'blue'
+    //     ]
+    //   }
+    // }
+    // const options = {
+    //   legend: {position: 'bottom'},
+    //   responsive: true
+    // };
+    // const style = {
+    //   height: `10px`,
+    //   position: 'relative'
+    // }
 
-    function change() {
-      data.value = {
-        datasets: [{
-          data: [25, 5, 35],
-        }],
-        labels: [
-          'Red',
-          'Yellow',
-          'Blue'
-        ],
-        color: [
-          'red',
-          'yellow',
-          'blue'
-        ]
-      }
-    }
 
-    const options = {
-      legend: {position: 'bottom'},
-      responsive: true
-    };
-    const style = {
-      height: `10px`,
-      position: 'relative'
-    }
+
 
 
     const authService = computed(() => {
       return Service(true)
     })
     const products = ref(null)
-    const unseenProducts = ref(0)
+    const orders = ref(null)
+    const global = inject('global')
+
+
+
+
+
     const getProducts = () => {
       authService.value.receive('seller/product', {}, (s, d) => {
         if (s == 200)
@@ -265,6 +253,15 @@ export default {
     }
     onMounted(() => {
 
+      authService.value.receive('seller/order', {}, (s, d) => {
+        if (s == 200) {
+          orders.value = d.data
+        }
+
+      }, (s, e) => {
+        console.log("this is error", e)
+      })
+
 
       // getOrders()
       getProducts()
@@ -272,7 +269,7 @@ export default {
 
 
     })
-    return {data, options, callSupport, style, model, items, products, unseenProducts}
+    return {products,orders,global}
   }
 }
 </script>

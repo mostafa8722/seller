@@ -543,7 +543,7 @@ const routes = [
   {
     path: '/seller/comments',
     name: 'Golpino Seller comments',
-    component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Comments/CommentsList')
+    component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Comments/Comments')
   },
 
   // BASE

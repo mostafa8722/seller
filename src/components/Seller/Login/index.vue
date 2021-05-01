@@ -47,6 +47,13 @@ export default {
         CustomInput
     },
     setup(props,context){
+
+      onMounted(() => {
+        if (global.user.value.isLoggedIn) {
+          context.root.$router.push('/seller/dashboard')
+        }
+      })
+
         // component
         const global = inject('global')
         const authStep = ref(1)
@@ -234,7 +241,7 @@ export default {
         }
         
         return {mobile,password,sellerLogin,rePassword,name,code,resendCode,forgotPassword,authStep,goToRegister}
-    }
+    },
 }
 </script>
 <style scoped>
