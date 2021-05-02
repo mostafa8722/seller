@@ -4,6 +4,45 @@
       <div class="">
 
 
+        <table>
+          <thead>
+          <tr>
+            <th @click="sort_table('people', 0, asc1); asc1 *= -1; asc2 = 1; asc3 = 1;">Name</th>
+            <th @click="sort_table('people', 1, asc2); asc2 *= -1; asc3 = 1; asc1 = 1;">Surname</th>
+            <th @click="sort_table('people', 2, asc3); ">Age</th>
+          </tr>
+          </thead>
+          <tbody id="people">
+          <tr>
+            <td>Raja</td>
+            <td>Dey</td>
+            <td>18</td>
+          </tr>
+          <tr>
+            <td>Mamata</td>
+            <td>Sharma</td>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td>Avijit</td>
+            <td>Sharma</td>
+            <td>21</td>
+          </tr>
+          <tr>
+            <td>Sharanya</td>
+            <td>Dutta</td>
+            <td>26</td>
+          </tr>
+          <tr>
+            <td>Nabin</td>
+            <td>Roy</td>
+            <td>27</td>
+          </tr>
+          </tbody>
+        </table>
+
+
+
         <v-row>
           <v-col :cols="2">
             <v-btn elevation="0" style="background-color: white" @click="openTab('عمومی')">عمومی</v-btn>
@@ -22,9 +61,6 @@
         <div id="عمومی" class="w3-container city">
           <div class="general-settings" v-if="activeMenu == 0">
 
-            <div>
-              <h3>اطلاعات فروشگاه</h3>
-            </div>
             <p>{{ descs.fields[0].name }}</p>
             <v-row>
               <v-col>
@@ -51,7 +87,7 @@
                 <div class="col-3">
                   <p>لوگو</p>
                 </div>
-                <div class="col-4" v-if="!logoImage.deactive">
+                <div class="col-4" >
                   <input type="file" accept="image" @change="(e)=>getImage(e,1)">
                 </div>
                 <div class="col-5 seller-logo-locker">
@@ -62,7 +98,7 @@
                 <div class="col-3">
                   <p>بنر</p>
                 </div>
-                <div class="col-4" v-if="!logoImage.deactive">
+                <div class="col-4" >
                   <input type="file" accept="image" @change="(e)=>getImage(e,2)">
                 </div>
                 <div class="col-5 seller-logo-locker">
@@ -73,7 +109,7 @@
                 <div class="col-3">
                   <p>جواز</p>
                 </div>
-                <div class="col-4" v-if="!logoImage.deactive">
+                <div class="col-4" >
                   <input type="file" accept="image" @change="(e)=>getImage(e,3)">
                 </div>
                 <div class="col-5 seller-logo-locker">
@@ -308,6 +344,46 @@ export default {
     AddressModal
   },
   setup() {
+    var people
+    window.onload = function () {
+      people = document.getElementById("people");
+    }
+    //
+    var asc1 = 1
+    var asc2= 2
+    var asc3 = 3
+
+    const sort_table = (tbody, col, asc) => {
+      var rows = document.getElementById(tbody).rows,
+          rlen = rows.length,
+          arr = new Array(),
+          i, j, cells, clen;
+      // fill the array with values from the table
+      for (i = 0; i < rlen; i++) {
+        cells = rows[i].cells;
+        clen = cells.length;
+        arr[i] = new Array();
+        for (j = 0; j < clen; j++) {
+          arr[i][j] = cells[j].innerHTML;
+        }
+      }
+      // sort the array by the specified column number (col) and order (asc)
+      arr.sort(function (a, b) {
+        return (a[col] == b[col]) ? 0 : ((a[col] > b[col]) ? asc : -1 * asc);
+      });
+      // replace existing rows with new rows created from the sorted array
+      for (i = 0; i < rlen; i++) {
+        rows[i].innerHTML = "<td>" + arr[i].join("</td><td>") + "</td>";
+      }
+
+      asc3 *= -1; asc1 = 1; asc2 = 1;
+    }
+
+
+
+
+
+
     onMounted(() => {
       getBanks()
       getFinancials()
@@ -490,8 +566,9 @@ export default {
       authService.value.receive('seller/base', {}, (s, d) => {
         if (s == 200) {
           if (d.data.specification != null && d.data.desc != null) {
-            descs.value.fields[0].value.value = d.data.specification
-            descs.value.fields[1].value.value = d.data.desc
+            descs.value.fields[1].value.value = d.data.specification
+            descs.value.fields[0].value.value = d.data.name
+            console.log(d.data)
           }
           if (d.data.status != 4) {
             this.verified = false
@@ -901,6 +978,7 @@ export default {
 
 
     return {
+      sort_table,
       openTab,
       descs,
       hasAddress,
@@ -941,11 +1019,12 @@ export default {
   methods: {
 
     submit() {
-      this.submitValue('descs');
-      this.submitValue('workTime');
-      this.submitValue('ppTime');
-      this.submitValue('sendCost');
-      this.submitValue('serviceRange');
+      // this.submitValue('descs');
+      // this.submitValue('workTime');
+      // this.submitValue('ppTime');
+      // this.submitValue('sendCost');
+      // this.submitValue('serviceRange');
+      this.submitValue('logoImage');
       // this.submitValue('shopAddress')
     },
     changeServiceRange() {
@@ -1104,5 +1183,22 @@ export default {
 
 .workDayText {
   margin-top: 10%;
+}
+
+table {
+  border-collapse: collapse;
+  border: none;
+}
+th,
+td {
+  border: 1px solid black;
+  padding: 4px 16px;
+  font-family: Times New Roman;
+  font-size: 24px;
+  text-align: left;
+}
+th {
+  background-color: #C8C8C8;
+  cursor: pointer;
 }
 </style>
