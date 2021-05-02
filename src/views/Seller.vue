@@ -9,16 +9,37 @@
     <!--            <seller-header v-if="global.user.value.isLoggedIn"></seller-header>-->
     <!--            <router-view></router-view>-->
     <!--        </div>-->
-
+    <div class="col-5 seller-logo-locker">
+    </div>
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
-      <side-bar></side-bar>
+      <side-bar @chosen="closeNav"></side-bar>
     </div>
 
     <!--      :class="(!global.user.value.isLoggedIn ? 'full-width' : 'mini-title main')"-->
     <div id="main">
-      <span style="font-size:30px;cursor:pointer" @click="openNav" v-if="!IsSideBarOpened">&#9776; </span>
-      <seller-header v-if="global.user.value.isLoggedIn"></seller-header>
+      <!--      <seller-header v-if="global.user.value.isLoggedIn" :the-image="theImage"></seller-header>-->
+
+      <div class="panel-header">
+        <div class="">
+           <span style="font-size:20px;cursor:pointer" @click="openNav"
+                 v-if="!IsSideBarOpened && global.user.value.isLoggedIn">&#9776; پروفایل فروشگاه </span>
+          <div v-if="global.user.value.isLoggedIn" class="info d-flex align-items-center" style="float:left;">
+            <!--                <div class="mini-title notif">-->
+            <!--                    <icon-image address="/assets/site/images/seller-icons/bell.svg" classes="big"></icon-image>-->
+            <!--                    <span class="notif-number d-flex align-items-centerc justify-content-center">-->
+            <!--                        <p class="mini-title p-0 m-0">1</p>-->
+            <!--                    </span>-->
+            <!--                </div>-->
+            <div class="user-locker mini-title mr-2 ml-2">
+              <img style="width: 25px;height: 25px;" v-if="theImage.logo != null" :src="theImage.logo" alt="image">
+            </div>
+            <p class="mini-title user-title p-0 m-0">
+              {{ (global.user.value.name != "") ? global.user.value.name : 'نام فروشگاه' }}
+            </p>
+          </div>
+        </div>
+      </div>
       <router-view></router-view>
     </div>
 
@@ -29,6 +50,8 @@
 import SideBar from '../components/Seller/SideBar'
 import IconImage from '../components/Common/icon'
 import SellerHeader from '../components/Seller/Header'
+import {computed, inject, onMounted, ref} from "@vue/composition-api";
+import Service from "../utils/seller-service";
 
 export default {
   components: {
@@ -44,7 +67,6 @@ export default {
   inject: ['global'],
   methods: {
     myEventHandler(e) {
-      console.log('tttttt');
       document.getElementById("mySidenav").style.height = "0px";
       document.getElementById("main").style.marginTop = "0px";
 
@@ -93,6 +115,72 @@ export default {
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
   },
+  setup() {
+    const global = inject('global')
+    const authService = computed(() => {
+      return Service(true)
+    })
+    const theImage = ref({logo: null, banner: null, licence: null})
+    const getImage = (e, k) => {
+      switch (k) {
+        case 1:
+          logoImage.value.logo = e.target.files[0]
+          theImage.value.logo = URL.createObjectURL(e.target.files[0])
+          fData.value.append('logo', logoImage.value.logo)
+          break;
+        case 2:
+          logoImage.value.banner = e.target.files[0]
+          theImage.value.banner = URL.createObjectURL(e.target.files[0])
+          fData.value.append('banner', logoImage.value.banner)
+          break;
+        case 3:
+          logoImage.value.licence = e.target.files[0]
+          theImage.value.licence = URL.createObjectURL(e.target.files[0])
+          fData.value.append('licence', logoImage.value.licence)
+          break;
+        default:
+          break;
+      }
+    }
+    onMounted(() => {
+      authService.value.receive('seller/base', {}, (s, d) => {
+        if (s == 200) {
+
+          console.log(d.data)
+          global.user.value.sellerId = d.data.id
+
+          // if (d.data.specification != null && d.data.desc != null) {
+          //   descs.value.fields[0].value.value = d.data.specification
+          //   descs.value.fields[1].value.value = d.data.desc
+          // }
+          if (d.data.status != 4) {
+            this.verified = false
+          }
+        }
+      }, (s, e) => {
+      })
+
+
+      authService.value.receive('seller/base/image', {}, (s, d) => {
+        if (s == 200) {
+          if (d.data != [] && d.data != null) {
+            theImage.value = {logo: d.data.logo, banner: d.data.banner, licence: d.data.licence}
+          }
+        }
+      }, (s, e) => {
+      })
+
+
+    })
+
+
+    return {
+      getImage,
+      theImage,
+    }
+
+  },
+
 }
 </script>
 <style>
@@ -282,4 +370,47 @@ button:hover {
   border: 3px solid transparent;
 }
 
+</style>
+<style scoped>
+.panel-header {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 1px 10px 0px rgba(127, 127, 127, 0.15);
+  padding: 15px 18px 15px 18px;
+  font-size: 0.85rem;
+  font-weight: lighter;
+  height: 60px;
+}
+
+.notif {
+  position: relative;
+}
+
+.notif span {
+  width: 14px;
+  height: 14px;
+  background-color: #000;
+  border-radius: 50%;
+  position: absolute;
+  right: -4px;
+  top: -7px;
+  color: #fff;
+}
+
+.notif span p {
+  font-size: 0.7rem;
+  font-weight: lighter;
+}
+
+.user-locker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #772CE8;
+}
+
+.user-image {
+  width: 100%;
+}
 </style>

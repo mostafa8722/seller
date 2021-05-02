@@ -42,7 +42,7 @@ export default {
         })
 
         onMounted(()=>{
-            authService.value.receive('admin/order/' + theOrderId.value , {} , (s,d)=>{
+            authService.value.receive('seller/order/' + theOrderId.value , {} , (s,d)=>{
                 if(s == 200){
                     items.value = d.data
                 }

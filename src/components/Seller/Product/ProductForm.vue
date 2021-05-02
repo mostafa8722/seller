@@ -56,26 +56,29 @@
                             v-bind:theModel.sync="product.name" classes="block full-width"></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" label="قیمت" container="full-width" v-bind:theModel.sync="product.price"
+              <custom-input kind="text" label="موجودی" container="full-width" v-bind:theModel.sync="product.remaining"
                             classes="block full-width"></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="dropDown" :selectItems="categories" label="دسته بندی" container="full-width"
-                            v-bind:theModel.sync="product.category_id" classes="block full-width"
-                            placeholder="دسته بندی را انتخاب کنید"></custom-input>
+              <custom-input kind="text" label="قیمت(تومان)" container="full-width" v-bind:theModel.sync="product.price"
+                            classes="block full-width"></custom-input>
             </div>
+
             <!--                    <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="dropDown" :selectItems="subCategories" label="زیر دسته" container="full-width" v-bind:theModel.sync="product.subCat" classes="block full-width" placeholder="دسته بندی را انتخاب کنید"></custom-input></div>-->
             <div class="col-lg-6 col-md-12 mt-3">
               <custom-input kind="text" label="درصد تخفیف" container="full-width"
                             v-bind:theModel.sync="product.discount" classes="block full-width"></custom-input>
             </div>
-            <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" label="موجودی" container="full-width" v-bind:theModel.sync="product.remaining"
-                            classes="block full-width"></custom-input>
-            </div>
+
             <!-- <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="text" placeholder="کد تخفیف را وارد کنید" label="کد تخفیف" container="full-width" v-bind:theModel.sync="model" classes="block full-width"></custom-input></div> -->
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="tag" :suggestions="tags" @addTag="addTag" label="برچسب ها" container="full-width"
+              <custom-input kind="dropDown" :selectItems="categories" label="" container="full-width"
+                            v-bind:theModel.sync="product.category_id" classes="block full-width"
+                            placeholder="دسته بندی "></custom-input>
+            </div>
+            <div class="col-lg-6 col-md-12 mt-3">
+
+              <custom-input kind="tag" :suggestions="tags" @addTag="addTag" placeholder="برچسب ها" container="full-width" label=""
                             v-bind:theModel.sync="product.tag_id" classes="block full-width">
                 <my-tag v-for="(tag,i) in product.tag_id" :theTag="tag" @closeTag="()=>removeTag(tag.id)"
                         classes="productTag" :key="i"></my-tag>
@@ -122,10 +125,21 @@
             <!-- <div class="col-12 mt-3"><custom-input kind="tick" label="افزودن به گل های زیر قیمت بازار" value="under" v-bind:theModel.sync="tick"></custom-input><icon-image address="/assets/site/images/seller-icons/question.svg" classes="big ml-1"></icon-image></div> -->
             <input type="file" id="getExtraImage" class="hiddenInput" @change="(e)=>addExtraImage(e)" name="extraImg"
                    accept="image/*">
-            <div class="col">
-              <button class="purple-btn mt-3" @click="(e)=>submitProductSingle(e)">ثبت محصول</button>
-              <button v-if="!edit" class="purple-btn mt-3" @click="(e)=>submitProduct(e)">ثبت و افزودن محصول جدید</button>
-              <button class="white-btn mt-3 mr-3">انصراف</button>
+            <div>
+              <v-row>
+                <v-col>
+                  <button class="purple-btn mt-3" @click="(e)=>submitProductSingle(e)">ثبت محصول</button>
+
+                </v-col>
+                <v-col>
+                  <button v-if="!edit" class="purple-btn mt-3" @click="(e)=>submitProduct(e)" style="width: 200px">ثبت و افزودن محصول جدید</button>
+
+                </v-col>
+                <v-col>
+                  <button class="white-btn mt-3 mr-3">انصراف</button>
+
+                </v-col>
+              </v-row>
             </div>
 
           </div>
@@ -1016,6 +1030,6 @@ export default {
 </style>
 <style>
 .tagManager > input{
-  background-color: rebeccapurple!important;
+  background-color: white!important;
 }
 </style>

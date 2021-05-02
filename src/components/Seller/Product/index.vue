@@ -1,31 +1,31 @@
 <template>
   <div class="container products-page pt-4" @resize="console.log('test')">
     <div class="d-flex justify-content-between">
-      <h2 class="mini-title">محصولات</h2>
+
+    </div>
+    <div class="d-flex justify-content-end">
       <router-link :to="{name:'Golpino Seller Product Form'}">
         <custom-button classes="add-button" icon="/assets/site/images/seller-icons/white-plus.svg"
                        label="افزودن محصول"></custom-button>
       </router-link>
     </div>
+    <v-row style="margin-text-outline: 20px;">
 
-    <v-row>
-      <v-col cols="3">
-        <v-text-field v-model="searchTerm" placeholder="جستجوی محصولات"/>
+      <v-col>
+        تعداد محصولات موجود: {{ products.length }}
       </v-col>
       <v-col>
-        تعداد محصولات موجود: {{  products.length }}
-      </v-col>
-      <v-col>
-        تعداد محصولات ناموجود: {{  products.filter(item => item.remain === 0 ).length }}
+        تعداد محصولات ناموجود: {{ products.filter(item => item.remain === 0).length }}
       </v-col>
     </v-row>
-
+    <v-row>
+      <v-col cols="8">
+        <v-text-field v-model="searchTerm" placeholder="جستجوی محصولات"/>
+      </v-col>
+    </v-row>
     <div class="products mt-2">
       <div class="product-tools d-flex justify-content-between">
         <div class="mini-title">
-
-
-
 
 
           <!--                <custom-input placeholder="جستجوی محصول" icon="/assets/site/images/seller-icons/search.svg" kind="text" v-bind:theModel.sync="model"></custom-input>                -->
@@ -169,7 +169,7 @@ export default {
 }
 
 @media only screen and (min-width: 800px) {
-  .mobilePro{
+  .mobilePro {
     display: none;
   }
 

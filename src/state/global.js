@@ -40,7 +40,8 @@ const user = ref({
   seller:{
     name:'',
     desc:''
-  }
+  },
+    sellerId:null
 })
 
 const setUserSeller = (n,d) => {

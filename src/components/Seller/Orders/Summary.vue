@@ -1,7 +1,6 @@
 <template>
   <div >
     <div >
-      <h3 class="tNormal">سفارشات</h3>
       <v-simple-table class=" desktopPro">
         <template v-slot:default>
           <thead>

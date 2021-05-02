@@ -9,7 +9,7 @@
     <td class="small-cell">{{theOrder.time}}</td>
     <td class="small-cell"><Etiquette :status="parseInt(theOrder.status)"></Etiquette></td>
     <td class="large-cell"><button @click="reviseOrder" class="purple-btn ml-2">ثبت وضعیت</button><custom-input placeholder="انتخاب وضعیت" inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="half-width" v-bind:theModel.sync="status" :selectItems="stati" classes="no-border light-facade"></custom-input></td>
-    <td class="small-cell"><router-link :to="{name:'Golpino Admin Order Page' , params:{id:theOrder.id}}"><button class="purple-btn ml-2">مشاهده سفارش</button></router-link></td>
+    <td class="small-cell"><router-link :to="{name:'Golpino Seller Order Page' , params:{id:theOrder.id}}"><button class="purple-btn ml-2">مشاهده سفارش</button></router-link></td>
   </tr>
 </template>
 <script>

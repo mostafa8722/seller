@@ -14,12 +14,11 @@
 <!--                    </span>-->
 <!--                </div>-->
                 <div class="user-locker mini-title mr-2 ml-2">
-                    <img src="/assets/site/images/popular.png" class="user-image" alt="icon">
+                  <img style="width: 25px;height: 25px;" v-if="theImage.logo != null" :src="theImage.logo" alt="image">
                 </div>
                 <p class="mini-title user-title p-0 m-0">
                     {{(global.user.value.name != "") ? global.user.value.name : 'نام فروشگاه'}}
                 </p>
-                <icon-image address="/assets/site/images/seller-icons/expand.svg" classes="small ml-2"></icon-image>
             </div>
         </div>
     </div>
@@ -30,6 +29,7 @@ export default {
     components:{
         iconImage
     },
+  props:[ 'theImage'],
     inject:['global']
 }
 </script>

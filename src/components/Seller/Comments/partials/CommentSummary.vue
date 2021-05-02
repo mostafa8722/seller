@@ -1,23 +1,14 @@
 <template>
 
     <td>
-
-      <v-row>
-        <v-col>
-          <button @click="()=>verifyMe(true)" class="green-btn ml-1">تآیید</button>
+      <div>
+        <v-col :cols="12">
+          <v-textarea hide-details solo :value="replyText" placeholder="متن پاسخ" />
         </v-col>
-        <v-col>
-          <button @click="()=>verifyMe(false)" class="red-btn ml-1">رد</button>
+        <v-col :cols="12">
+          <button style="float: left;margin-bottom: 10px;" @click="()=>reply" class="green-btn ml-1">ارسال </button>
         </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-textarea :value="replyText" placeholder="متن پاسخ" />
-        </v-col>
-        <v-col>
-          <button @click="()=>reply" class="gray-btn ml-1">ارسال پاسخ</button>
-        </v-col>
-      </v-row>
+      </div>
 
 
 

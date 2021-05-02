@@ -1,12 +1,12 @@
 const routes = [
 
+  // {
+  //   path: '/',
+  //   name: 'Home',
+  //   component: () => import(/* webpackChunkName: "about" */ '../components/Main/Home/Home.vue')
+  // },
   {
-    path: '/seller',
-    name: 'Home',
-    component: () => import(/* webpackChunkName: "about" */ '../components/Main/Home/Home.vue')
-  },
-  {
-    path: '/',
+    path: '/golpino-for-vendor',
     name: 'Golpino Seller Admin',
     component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Login/index.vue')
   },
@@ -102,15 +102,26 @@ const routes = [
     name: 'Golpino Seller Financials',
     component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Financial/Payments.vue')
   },
+
+  {
+    path: '/seller/orders/:id',
+    name: 'Golpino Seller Order Page',
+    component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Orders/AnOrder')
+  },
   {
     path: '/seller/orders',
     name: 'Golpino Seller Orders',
-    component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Orders/Summary.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Orders/Summary')
   },
   {
     path: '/seller/comments',
     name: 'Golpino Seller comments',
     component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Comments/Comments')
+  },
+  {
+    path: '/shop/:id',
+    name: 'Shop',
+    component: () => import('../components/Main/Shop/Shop.vue')
   },
 
 
