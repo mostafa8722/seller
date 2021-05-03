@@ -51,7 +51,7 @@ export default {
                     this.$cookies.set("Golpino_seller",'')
                     this.global.toggleLogin(false)
                     this.global.setUserType('wanderer')
-                    this.$router.push('/golpino-for-vendor')
+                    this.$router.push('/')
                     this.global.user.value.isLoggedIn = false
                 },(s,e)=>{
                     if(!s){

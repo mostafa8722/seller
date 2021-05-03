@@ -18,6 +18,7 @@
             <v-btn elevation="0" style="background-color: white" @click="openTab('ساعات کاری')">ساعات کاری</v-btn>
           </v-col>
         </v-row>
+
         <div id="عمومی" class="w3-container city">
           <div class="general-settings" v-if="activeMenu == 0">
 
@@ -41,47 +42,80 @@
                 <v-text-field dense filled v-model="sellerAddress"/>
               </v-col>
             </v-row>
-            <custom-field :deactive="logoImage.deactive" @edit="()=>submitValue('logoImage')"
-                          @activate="()=>activateModel('logoImage')" theField="لوگو">
-              <div class="row pt-3 pb-3 mt-1">
-                <div class="col-3">
-                  <p>لوگو</p>
-                </div>
-                <div class="col-4">
-                  <input type="file" accept="image" @change="(e)=>getImage(e,1)">
-                </div>
-                <div class="col-5 seller-logo-locker">
-                  <img v-if="theImage.logo != null" :src="theImage.logo" alt="image">
-                </div>
+            <v-row>
+              <v-col>
+                <custom-field type-label="انتخاب لوکیشن" :modal="!hasAddress" :deactive="shopAddress.deactive"
+                              @edit="()=>submitValue('shopAddress')"
+                              @activate="()=>activateModel('shopAddress')" theField="آدرس مغازه">
+                  <custom-input key="z7"
+                                :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'"
+                                :deactive="shopAddress.deactive" kind="text" container="full-width"
+                                v-bind:theModel.sync="shopAddress.fields[0].value"></custom-input>
+                </custom-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col>
+                <custom-input key="z6" label="محدوده خدمت رسانی"
+                              kind="dropDown" container="full-width"
+                              :selectItems="serviceRanges"
+                              v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>
+              </v-col>
+            </v-row>
+            <!--            <custom-field :deactive="logoImage.deactive" @edit="()=>submitValue('logoImage')"-->
+            <!--                          @activate="()=>activateModel('logoImage')" theField="لوگو">-->
+            <div class="row pt-3 pb-3 mt-1">
+              <div class="col-3">
+                <p>لوگو</p>
               </div>
-              <div class="row pt-3 pb-3 mt-1">
-                <div class="col-3">
-                  <p>بنر</p>
-                </div>
-                <div class="col-4">
-                  <input type="file" accept="image" @change="(e)=>getImage(e,2)">
-                </div>
-                <div class="col-5 seller-logo-locker">
-                  <img v-if="theImage.banner != null" :src="theImage.banner" alt="image">
-                </div>
+              <div class="col-4">
+                <input type="file" accept="image" @change="(e)=>getImage(e,1)">
               </div>
-              <div class="row pt-3 pb-3 mt-1">
-                <div class="col-3">
-                  <p>جواز</p>
-                </div>
-                <div class="col-4">
-                  <input type="file" accept="image" @change="(e)=>getImage(e,3)">
-                </div>
-                <div class="col-5 seller-logo-locker">
-                  <img v-if="theImage.licence != null" :src="theImage.licence" alt="image">
-                </div>
+              <div class="col-5 seller-logo-locker">
+                <img v-if="theImage.logo != null" :src="theImage.logo" alt="image">
               </div>
-            </custom-field>
-            <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitGeneral">ثبت تغییرات فروشگاه</v-btn>
+            </div>
+            <div class="row pt-3 pb-3 mt-1">
+              <div class="col-3">
+                <p>بنر</p>
+              </div>
+              <div class="col-4">
+                <input type="file" accept="image" @change="(e)=>getImage(e,2)">
+              </div>
+              <div class="col-5 seller-logo-locker">
+                <img v-if="theImage.banner != null" :src="theImage.banner" alt="image">
+              </div>
+            </div>
+            <div class="row pt-3 pb-3 mt-1">
+              <div class="col-3">
+                <p>جواز</p>
+              </div>
+              <div class="col-4">
+                <input type="file" accept="image" @change="(e)=>getImage(e,3)">
+              </div>
+              <div class="col-5 seller-logo-locker">
+                <img v-if="theImage.licence != null" :src="theImage.licence" alt="image">
+              </div>
+            </div>
+            <!--            </custom-field>-->
+            <address-modal :districts="districts" @addressComplete="setAddress"></address-modal>
+
+            <!--            <custom-field type-label="انتخاب محدوده خدمت رسانی" :deactive="serviceRange.deactive" @edit="()=>submitValue('serviceRange')"-->
+            <!--                          @activate="()=>activateModel('serviceRange')" theField="محدوده ی خدمات رسانی">-->
+            <!--              <custom-input key="z6" :classes="serviceRange.deactive ? 'deactive block half-width' : 'block half-width'"-->
+            <!--                            :deactive="serviceRange.deactive" kind="dropDown" container="full-width"-->
+            <!--                            :selectItems="serviceRanges"-->
+            <!--                            v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>-->
+            <!--            </custom-field>-->
+
+
+            <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitGeneral">ثبت تغییرات
+              فروشگاه
+            </v-btn>
 
           </div>
         </div>
-
         <div id="مالی" class="w3-container city" style="display:none">
           <!--          <div class="financial-settings" v-if="activeMenu == 5">-->
           <div class="financial-settings">
@@ -111,7 +145,6 @@
             <button class="purple-btn mt-4 full-width" @click="submitFinancials">ثبت اطلاعات حساب</button>
           </div>
         </div>
-
         <div id="شرایط ارسال" class="w3-container city" style="display:none">
 
           <p>زمان آماده سازی (دقیقه)</p>
@@ -201,7 +234,9 @@
               <v-text-field v-model="sendCosts.value[5]" filled/>
             </v-col>
           </v-row>
-          <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitPostingGroup">ثبت تغییرات شرایط ارسال</v-btn>
+          <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitPostingGroup">ثبت تغییرات
+            شرایط ارسال
+          </v-btn>
 
 
         </div>
@@ -226,19 +261,19 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="workTimesCheckBox1" type="checkbox"></v-col>
+            <v-col cols="1"><input id="workTimesCheckBox0" type="checkbox"></v-col>
             <v-col cols="3">
               <div>شنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="workTimes.value[0].open" filled/>
+              <v-text-field v-model="workTimes.value[0].open_at" filled/>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="workTimes.value[0].close" filled/>
+              <v-text-field v-model="workTimes.value[0].close_at" filled/>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="workTimesCheckBox2" type="checkbox"></v-col>
+            <v-col cols="1"><input id="workTimesCheckBox1" type="checkbox"></v-col>
             <v-col cols="3">
               <div>یکشنبه</div>
             </v-col>
@@ -309,7 +344,9 @@
               <v-text-field filled/>
             </v-col>
           </v-row>
-          <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitWorkDaysAndHours">ثبت تغییرات ساعات کاری</v-btn>
+          <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitWorkDaysAndHours">ثبت
+            تغییرات ساعات کاری
+          </v-btn>
 
         </div>
 
@@ -386,24 +423,6 @@
           <!--            </custom-field>-->
 
 
-          <!--                        <custom-field :deactive="serviceRange.deactive" @edit="()=>submitValue('serviceRange')"-->
-          <!--                                      @activate="()=>activateModel('serviceRange')" theField="محدوده ی خدمات رسانی">-->
-          <!--                          <custom-input key="z6" :classes="serviceRange.deactive ? 'deactive block half-width' : 'block half-width'"-->
-          <!--                                        :deactive="serviceRange.deactive" kind="dropDown" container="full-width"-->
-          <!--                                        :selectItems="serviceRanges"-->
-          <!--                                        v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>-->
-          <!--                        </custom-field>-->
-          <!--            <custom-field :modal="!hasAddress" :deactive="shopAddress.deactive" @edit="()=>submitValue('shopAddress')"-->
-          <!--                          @activate="()=>activateModel('shopAddress')" theField="آدرس مغازه">-->
-          <!--              <custom-input key="z7" :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'"-->
-          <!--                            :deactive="shopAddress.deactive" kind="text" container="full-width"-->
-          <!--                            v-bind:theModel.sync="shopAddress.fields[0].value"></custom-input>-->
-          <!--            </custom-field>-->
-
-
-
-
-
           <!--          <div class="notif-settings" v-if="activeMenu == 1">-->
           <!--            <h3>تنظیمات اعلان ها</h3>-->
           <!--            <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>-->
@@ -422,7 +441,7 @@
         </div>
       </div>
     </div>
-    <address-modal :districts="districts" @addressComplete="setAddress"></address-modal>
+
   </div>
 </template>
 <script>
@@ -597,16 +616,14 @@ export default {
       , {id: 7, text: "جمعه", value: 7}]
     const sellerWorkTime = ref(null)
     const districts = ref(null)
-    const workTimes = ref({value: [
-        {open:null,close:null},
-        {open:null,close:null},
-        {open:null,close:null},
-        {open:null,close:null},
-        {open:null,close:null},
-        {open:null,close:null}
-      ], valid: true})
-    const sendCosts =ref({value: [null,null,null,null,null,null], valid: true})
-    const sellerAddress =ref(null)
+    const workTimes = ref({
+      value: [], valid: true
+    })
+    const workTimesIds = ref({
+      value: [], valid: true
+    })
+    const sendCosts = ref({value: [null, null, null, null, null, null], valid: true})
+    const sellerAddress = ref(null)
 
 
     const activateMenu = (id) => {
@@ -640,33 +657,20 @@ export default {
 
     const getSellerInfos = () => {
       // GET LOGO PICS
-      authService.value.receive('seller/base/worktime', {}, (s, d) => {
-        if (s == 200) {
-          console.log(d.data)
-        }
-      }, (s, e) => {
-      })
+
       authService.value.receive('seller/base/sendcost', {}, (s, d) => {
         if (s == 200) {
           console.log(d.data)
-          for (s=0;s<d.data.length;s++){
+          for (s = 0; s < d.data.length; s++) {
             sendCosts.value.value[s] = d.data[s].cost
-            document.getElementById('sendCostCheckBox'+(s+1)).checked=true
+            document.getElementById('sendCostCheckBox' + (s + 1)).checked = true
           }
 
 
-
-        console.log(sendCosts)
+          console.log(sendCosts)
         }
       }, (s, e) => {
       })
-
-
-
-
-
-
-
 
 
       authService.value.receive('seller/base', {}, (s, d) => {
@@ -691,18 +695,22 @@ export default {
       }, (s, e) => {
       })
       //WORKTIME
+
+
+      var wId = []
       authService.value.receive('seller/base/worktime', {}, (s, d) => {
         if (s == 200) {
-          if (d.data != [] && d.data != null) {
-            workTime.value.edit = true
-            // workTime.value.fields[0].value.value = d.data[0].open_at
-            // workTime.value.fields[1].value.value = d.data[0].close_at
-            // workTime.value.id = d.data[0].id
-            sellerWorkTime.value = d.data
-          }
+          workTimes.value = d.data
+          d.data.map((w) => {
+            wId.push(w.id)
+          })
+          workTimesIds.value = wId
+
         }
       }, (s, e) => {
       })
+
+
       // PREPARATION TIME
       authService.value.receive('seller/base/prepare', {}, (s, d) => {
         if (s == 200) {
@@ -914,11 +922,11 @@ export default {
           workTime.value.fields[1].value.message = ''
           f.append('open_at', workTime.value.fields[0].value.value)
           f.append('close_at', workTime.value.fields[1].value.value)
-            console.log(workTime.value.id)
+          console.log(workTime.value.id)
           // authService.value.transmit('seller/base/worktime' + '/' + workTime.value.id, f, successfulOp, failedOp)
           break;
         case 'ppTime':
-          if (preparationTime.value.fields[0].value.value!==null && preparationTime.value.fields[0].value.value!=='') {
+          if (preparationTime.value.fields[0].value.value !== null && preparationTime.value.fields[0].value.value !== '') {
             currentForm.value = 'ppTime'
             activateModel('ppTime')
             preparationTime.value.fields[0].value.valid = true
@@ -956,15 +964,15 @@ export default {
           activateModel('descs')
 
 
-            if (descs.value.fields[1].value.value) {
-              f.append('specification', descs.value.fields[1].value.value)
-            } else {
-              f.append('specification', '...')
-            }
+          if (descs.value.fields[1].value.value) {
+            f.append('specification', descs.value.fields[1].value.value)
+          } else {
+            f.append('specification', '...')
+          }
 
 
           f.append('desc', descs.value.fields[0].value.value)
-            console.log(descs.value.fields[1].value.value)
+          console.log(descs.value.fields[1].value.value)
           authService.value.transmit('seller/register/adddesc', f, successfulOp, failedOp)
         case 'شماره کارت':
 
@@ -1095,17 +1103,22 @@ export default {
     }
 
     const submitWorkDaysAndHours = () => {
-      let f = new FormData()
+      for (let i = 0; i < 2; i++) {
+        if (document.getElementById('workTimesCheckBox' + i).checked) {
 
-      f.append('open_at', '9:00')
-      f.append('close_at', '12:00')
-      authService.value.transmit('seller/base/worktime/' + 2 , f, (s, d) => {
-        if (s == 200)
-          global.alertToggle('اطلاعات با موفقیت افزوده شد!')
-      }, (s, e) => {
-        if (!s)
-          global.alertToggle('عملیات ناموفق')
-      })
+          let f = new FormData()
+          f.append('open_at', '10:00')
+          f.append('close_at', '12:00')
+          authService.value.transmit('seller/base/worktime/' + workTimesIds.value[i], f, (s, d) => {
+            if (s == 200)
+              global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+          }, (s, e) => {
+            if (!s)
+              global.alertToggle('عملیات ناموفق')
+          })
+
+        }
+      }
 
 
       // for (let s=1;s<7;s++) {
@@ -1127,18 +1140,18 @@ export default {
       // }
 
 
-      }
+    }
 
 
-    const submitPosting=() => {
+    const submitPosting = () => {
 
-      for (let s=1;s<7;s++) {
-        if (document.getElementById('sendCostCheckBox'+s).checked) {
+      for (let s = 1; s < 7; s++) {
+        if (document.getElementById('sendCostCheckBox' + s).checked) {
           let f = new FormData()
 
           f.append('distance_id', s)
-          f.append('cost', parseInt(sendCosts.value.value[s-1]))
-          authService.value.transmit('seller/base/sendcost'  , f, (s, d) => {
+          f.append('cost', parseInt(sendCosts.value.value[s - 1]))
+          authService.value.transmit('seller/base/sendcost', f, (s, d) => {
             if (s == 200)
               global.alertToggle('اطلاعات با موفقیت افزوده شد!')
           }, (s, e) => {
@@ -1150,7 +1163,7 @@ export default {
 
           f.append('distance_id', s)
           f.append('cost', 0)
-          authService.value.transmit('seller/base/sendcost'  , f, (s, d) => {
+          authService.value.transmit('seller/base/sendcost', f, (s, d) => {
             if (s == 200)
               global.alertToggle('اطلاعات با موفقیت افزوده شد!')
           }, (s, e) => {
@@ -1162,16 +1175,15 @@ export default {
       }
 
 
-
     }
-    const addAddress = ()=>{
+    const addAddress = () => {
 
 
       if (!hasAddress) {
         let f = new FormData()
 
         f.append('address', sellerAddress.value)
-        authService.value.transmit('seller/address'  , f, (s, d) => {
+        authService.value.transmit('seller/address', f, (s, d) => {
           if (s == 200)
             global.alertToggle('اطلاعات با موفقیت افزوده شد!')
         }, (s, e) => {
@@ -1181,7 +1193,6 @@ export default {
       }
 
     }
-
 
 
     return {
@@ -1243,9 +1254,10 @@ export default {
       this.submitValue('descs');
       this.submitValue('logoImage');
       this.submitValue('shopAddress');
+      this.submitValue('serviceRange')
       this.addAddress();
     },
-    submitPostingGroup(){
+    submitPostingGroup() {
       this.submitValue('ppTime');
       this.submitPosting();
     }
@@ -1265,14 +1277,14 @@ export default {
   data: () => ({
     workDays: [],
     changedPPTime: null,
-    workTimes:[
-      {open:0,close:0},
-      {open:0,close:0},
-      {open:0,close:0},
-      {open:0,close:0},
-      {open:0,close:0},
-      {open:0,close:0},
-      {open:0,close:0}
+    workTimes: [
+      {open: 0, close: 0},
+      {open: 0, close: 0},
+      {open: 0, close: 0},
+      {open: 0, close: 0},
+      {open: 0, close: 0},
+      {open: 0, close: 0},
+      {open: 0, close: 0}
     ]
   }),
   created() {

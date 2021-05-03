@@ -479,6 +479,7 @@ label{
     text-overflow: ellipsis;
     max-width: 90%;
     padding-bottom: 0px;
+  margin-right: 10px!important;
 }
 
 .select-option:hover{

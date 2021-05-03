@@ -2,7 +2,6 @@
   <div v-if="kind=='dropDown'" class="shownInput" :class="container" >
 <label>{{label}}</label>
     <select class="hiddenInput" :name="name" ref="theInput" v-model="myModel.value">
-
       <option v-for="(option,i) in selectItems" :value="option.value" :key="i">{{ option.text }}</option>
     </select>
     <p class="label"  :class="labelClass"></p>
@@ -11,11 +10,15 @@
 <!--                style="width: 15px;height: 15px;margin-top: 20px;margin-right: 15px;cursor: pointer"></image-icon>-->
     <div class="select-facade mt-2" :class="classes + (!myModel.valid ? ' invalid ' : '')"
          @click="(e)=>selectToggle(e)" >
-      <p class="mini-title select-value" :class="inputClass">{{ selectValue }}</p>
 
+      <image-icon v-if="!deactive" address="/assets/site/images/seller-icons/expand.svg"
+                  style="width: 15px;height: 15px;cursor: pointer;margin-left: 20px"></image-icon>
+      <p class="mini-title select-value" :class="inputClass">{{ selectValue }}</p>
       <div class="select-options" :class="(selectShow ? 'select-show' : 'select-hide')">
+
         <div class="select-option option-text" :id="'selector' + id + i" v-for="(option,i) in selectItems" :key="i"
              @click="()=>changeSelect(option)">
+
           <p class="mini-title">{{ option.text }}</p>
 
 
@@ -432,7 +435,7 @@ label {
   position: relative;
   min-width: 80px;
   font-weight: lighter;
-  background-color: #fff;
+  background-color:rgba(0, 0, 0, 0.06)!important;
 }
 
 .select-facade:hover {

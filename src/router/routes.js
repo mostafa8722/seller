@@ -6,7 +6,7 @@ const routes = [
   //   component: () => import(/* webpackChunkName: "about" */ '../components/Main/Home/Home.vue')
   // },
   {
-    path: '/golpino-for-vendor',
+    path: '/',
     name: 'Golpino Seller Admin',
     component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Login/index.vue')
   },

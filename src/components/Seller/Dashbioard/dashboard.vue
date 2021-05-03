@@ -58,7 +58,7 @@
             <path fill="currentColor"
                   d="M17,13H13V17H11V13H7V11H11V7H13V11H17M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z"/>
           </svg>
-          <a style="color: white;font-size: 10px" :href="`/shop/` +global.user.value.sellerId">
+          <a style="color: white;font-size: 10px" :href="`/seller/product`">
             محصول اضافه کنید
           </a>
         </v-btn>
@@ -85,7 +85,7 @@
             </tr>
             <tr>
               <td>...</td>
-              <td>...</td>
+              <td>{{lastWeekOrders.length}}</td>
               <td>...</td>
             </tr>
 
@@ -323,6 +323,9 @@ export default {
       return Service(true)
     })
     const products = ref(null)
+    const todayOrders = ref(null)
+    const lastWeekOrders = ref(null)
+    const lastMonthOrders = ref(null)
     const orders = ref(null)
     const global = inject('global')
 
@@ -335,10 +338,37 @@ export default {
       })
     }
     onMounted(() => {
+      var date1 = new Date("06/30/2019");
+      var today = new Date();
+      var Difference_In_Time = today.getTime() - date1.getTime();
+      var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      console.log(Difference_In_Days)
 
       authService.value.receive('seller/order', {}, (s, d) => {
         if (s == 200) {
           orders.value = d.data
+
+          lastWeekOrders.value =[]
+          var moment = require('jalali-moment');
+          orders.value.map((p) => {
+            p.time2 = moment(p.time.toString().substr(0, 10), 'YYYY-MM-DD').format('MM/DD/YYYY')
+            var orderTime = new Date(p.time2)
+            var today = new Date();
+            var Difference_In_Time = today.getTime() - orderTime.getTime();
+            var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+            console.log(today)
+            console.log(orderTime)
+            console.log(Difference_In_Days)
+
+            if (Difference_In_Days < 7 ) {
+              lastWeekOrders.value.push(p)
+            }
+            if (Difference_In_Days > 7 && Difference_In_Days <30) {
+              lastMonthOrders.value.push(p)
+            }
+
+          })
+
         }
 
       }, (s, e) => {
@@ -361,7 +391,7 @@ export default {
 
 
     })
-    return {products, orders, global}
+    return {products, orders, global,lastWeekOrders}
   },
   data() {
     return {

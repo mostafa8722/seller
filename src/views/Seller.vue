@@ -46,7 +46,7 @@
       </div>
       <router-view></router-view>
     </div>
-    <div class="navbar">
+    <div class="navbar" v-if="global.user.value.isLoggedIn">
       <a href="#news"></a>
       <a href="/seller/dashboard">
         <svg style="width:24px;height:24px" viewBox="0 0 24 24">

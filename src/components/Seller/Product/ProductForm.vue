@@ -72,7 +72,7 @@
 
             <!-- <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="text" placeholder="کد تخفیف را وارد کنید" label="کد تخفیف" container="full-width" v-bind:theModel.sync="model" classes="block full-width"></custom-input></div> -->
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="dropDown" :selectItems="categories" label="" container="full-width"
+              <custom-input kind="dropDown" :selectItems="categories" label="دسته بندی(*)" container="full-width"
                             v-bind:theModel.sync="product.category_id" classes="block full-width"
                             placeholder="دسته بندی(*) "></custom-input>
             </div>
