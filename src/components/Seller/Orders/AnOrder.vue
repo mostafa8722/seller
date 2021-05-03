@@ -2,24 +2,13 @@
     <div class="container p-5">
         <div class="container">
             <h3 class="tNormal mb-5">خلاصه سفارش</h3>
-            <table>
-                <tr>
-                    <th>تصویر محصول</th>
-                    <th>نام محصول</th>
-                    <th>تعداد</th>
-                    <th>قیمت</th>
-                    <th>آدرس</th>
-                    <th>شماره تلفن</th>
-                </tr>
-                <order-item v-for="(item,i) in items.product" :key="i" :theItem="item"></order-item>
-            </table>
             <div class="mt-3">
-                <p>توضیحات سفارش</p>
-                <p class="tLighter">{{items.desc}}</p>
-                <p>آدرس سفارش</p>
-                <p class="tLighter">{{items.user_address}}</p>
-                <p>شماره تلفن</p>
-                <p class="tLighter">{{items.user_phone}}</p>
+<!--                <p>توضیحات سفارش</p>-->
+<!--                <p class="tLighter">{{items.desc}}</p>-->
+<!--                <p>آدرس سفارش</p>-->
+<!--                <p class="tLighter">{{items.user_address}}</p>-->
+<!--                <p>شماره تلفن</p>-->
+<!--                <p class="tLighter">{{items.user_phone}}</p>-->
             </div>
         </div>
     </div>
@@ -27,7 +16,7 @@
 <script>
 import { computed, onMounted, ref} from "@vue/composition-api"
 import OrderItem from './partials/OrderItem'
-import Service from '../../../utils/admin-service'
+import Service from '../../../utils/seller-service'
 export default {
     components:{
         OrderItem
@@ -42,6 +31,7 @@ export default {
         })
 
         onMounted(()=>{
+
             authService.value.receive('seller/order/' + theOrderId.value , {} , (s,d)=>{
                 if(s == 200){
                     items.value = d.data

@@ -1,17 +1,23 @@
 <template>
   <div class="productCard container"  v-if="browserSize===`mobile`">
-    <v-card  style="height: 100%; margin: 5px">
+    <v-card elevation="2"  style="height: 100%; margin: 5px;padding: 25px">
 
       <v-row>
-        <v-col>
+        <v-col cols="6">
           آدرس:
           {{theOrder.address}}
         </v-col>
-        <v-col>
+        <v-col cols="6">
+          <router-link style="float: left" :to="{name:'Golpino Seller Order Page' , params:{id:theOrder.id}}"><button class="purple-btn ml-2">مشاهده سفارش</button></router-link>
+        </v-col>
+
+
+      </v-row>
+      <v-row>
+        <v-col >
           شماره موبایل:
           {{theOrder.user_mobile}}
         </v-col>
-
       </v-row>
       <v-row>
         <v-col>
@@ -33,16 +39,13 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col :cols="3">
+        <v-col style="align-self: flex-end;" :cols="3">
           <Etiquette :status="parseInt(theOrder.status)"></Etiquette>
         </v-col>
         <v-col>
-          <button @click="reviseOrder" class="purple-btn ml-2">ثبت وضعیت</button><custom-input placeholder="انتخاب وضعیت" inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="half-width" v-bind:theModel.sync="status" :selectItems="stati" classes="no-border light-facade"></custom-input>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <router-link style="float: left" :to="{name:'Golpino Admin Order Page' , params:{id:theOrder.id}}"><button class="purple-btn ml-2">مشاهده سفارش</button></router-link>
+          <custom-input placeholder="انتخاب وضعیت" inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="half-width" v-bind:theModel.sync="status" :selectItems="stati" classes="no-border light-facade"></custom-input>
+          <v-btn outlined  @click="reviseOrder" >ثبت وضعیت</v-btn>
+
         </v-col>
       </v-row>
 

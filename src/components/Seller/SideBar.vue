@@ -1,18 +1,18 @@
 <template>
     <div class="side-bar">
         <div class="emblem mini-title">
-            <icon-image address="/assets/site/images/seller-icons/golpino.svg" classes="golpino"></icon-image>
+            <icon-image style="width: 150px;height: 50px"  address="/assets/site/images/seller-icons/golpino.svg" classes="golpino"></icon-image>
         </div>
         <nav  class="side-nav mt-2 pr-1 pl-1">
 <!--            <p class="pl-3">منوهای اصلی</p>-->
-            <menu-item :to="{name:'Golpino Seller Dashboard'}" icon="/assets/site/images/seller-icons/home.svg" @activated="handleMenu" :active="activeItem" id="1" title="داشبورد"></menu-item>
-            <menu-item v-if="verified" :to="{name:'Golpino Seller Products'}" icon="/assets/site/images/seller-icons/shop.svg" @activated="handleMenu" :active="activeItem" id="2" title="محصولات"></menu-item>
-            <menu-item :to="{name:'Golpino Seller Orders'}" icon="/assets/site/images/seller-icons/layers.svg" @activated="handleMenu" :active="activeItem" id="3" title="سفارشات"></menu-item>
+<!--            <menu-item :to="{name:'Golpino Seller Dashboard'}" icon="/assets/site/images/seller-icons/home.svg" @activated="handleMenu" :active="activeItem" id="1" title="داشبورد"></menu-item>-->
+<!--            <menu-item v-if="verified" :to="{name:'Golpino Seller Products'}" icon="/assets/site/images/seller-icons/shop.svg" @activated="handleMenu" :active="activeItem" id="2" title="محصولات"></menu-item>-->
+<!--            <menu-item :to="{name:'Golpino Seller Orders'}" icon="/assets/site/images/seller-icons/layers.svg" @activated="handleMenu" :active="activeItem" id="3" title="سفارشات"></menu-item>-->
 <!--            <p class="pl-3 mt-3">جزئیات بیشتر</p>-->
-            <menu-item :to="{name:'Golpino Seller comments'}" icon="/assets/site/images/seller-icons/letter.svg" @activated="handleMenu" :active="activeItem" id="4" title="نظریات مشتریان"></menu-item>
+            <menu-item :to="{name:'Golpino Seller comments'}" icon="/assets/site/images/seller-icons/letter.svg" @activated="handleMenu" :active="activeItem" id="4" title="نظرات مشتریان"></menu-item>
 <!--            <menu-item to="/dashboard" icon="/assets/site/images/seller-icons/guide.svg" @activated="handleMenu" :active="activeItem" id="5" title="راهنما"></menu-item>-->
 <!--            <menu-item :to="{name:'Golpino Seller Financials'}" icon="/assets/site/images/seller-icons/dollar.svg" @activated="handleMenu" :active="activeItem" id="6" title="مالی"></menu-item>-->
-            <menu-item :to="{name:'Golpino Seller Settings'}" icon="/assets/site/images/seller-icons/cog.svg" @activated="handleMenu" :active="activeItem" id="7" title="تنظیمات"></menu-item>
+            <menu-item :to="{name:'Golpino Seller Settings'}" icon="/assets/site/images/seller-icons/cog.svg" @activated="handleMenu" :active="activeItem" id="7" title="تنظیمات فروشگاه"></menu-item>
             <menu-item icon="/assets/site/images/seller-icons/cog.svg" @activated="handleMenu" :active="activeItem" id="8" title="خروج"></menu-item>
         </nav>
     </div>    

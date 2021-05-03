@@ -11,7 +11,7 @@
     <!-- <router-view v-if="path != 'seller'"/> -->
     <!-- <seller-page v-else></seller-page> -->
     <seller-view></seller-view>
-    <Footer></Footer>
+
     <div v-if="drop" class="blackDrop" @click="hideDrop">
     </div>
   </div>

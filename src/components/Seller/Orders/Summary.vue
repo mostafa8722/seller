@@ -77,6 +77,14 @@ export default {
       authService.value.receive('seller/order', {}, (s, d) => {
         if (s == 200) {
           orders.value = d.data
+          var moment = require('jalali-moment');
+          orders.value.map((p) => {
+            p.time = moment(p.time.toString().substr(0, 10), 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD')
+          })
+          // var moment = require('jalali-moment');
+          // orders.value.map((p) => {
+          //   p.created_at = moment(p.created_at.toString().substr(0, 10), 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD')
+          // })
           global.state.value.seenOrders = orders.value.length
         }
 

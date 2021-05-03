@@ -1,38 +1,59 @@
 <template>
-    <div class="container pt-3">
-        <h1>مالی</h1>
-        <div class="container payments mt-2 p-4">
-            <div class="d-flex justify-content-between">
-                <h2>تراکنش های مالی</h2>
-                <custom-input placeholder="جستجو" icon="/assets/site/images/seller-icons/search.svg" kind="text" v-bind:theModel.sync="model"></custom-input>
-            </div>
-            <table>
-                <tr>
-                    <th>شماره فاکتور<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="small"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="small"></icon-image></th>
-                    <th>نام مشتری<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="small"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="small"></icon-image></th>
-                    <th>مجموع<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="small"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="small"></icon-image></th>
-                    <th>سود شرکت<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="small"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="small"></icon-image></th>
-                    <th>خالص دریافتی<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="small"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="small"></icon-image></th>
-                    <th>تاریخ تسویه<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="small"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="small"></icon-image></th>
-                    <th>وضعیت<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="small"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="small"></icon-image></th>
-                    <th>اقدامات<icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="small"></icon-image><icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="small"></icon-image></th>
-                </tr>
-                <payment></payment>
-                <payment></payment>
-                <payment></payment>
-                <payment></payment>
-            </table>
-            <div class="table-nav mt-4">
-                <div class="pages">
-                    <button class="nav-btn prev">قبلی</button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="nav-btn next">بعدی</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <v-row style="margin-top: 10px;">
+      <v-col :cols="12" :sm="12" :md="6" :lg="6" >
+        <v-card style="padding: 20px;">
+          <v-row>
+            <v-col>
+              فروش محصولات
+            </v-col>
+            <v-col>
+
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              هزینه ارسال
+            </v-col>
+            <v-col>
+
+            </v-col>
+          </v-row>
+          <hr>
+          <v-row>
+            <v-col>
+              جمع مبالغ واریزی
+            </v-col>
+            <v-col>
+
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+      <v-col :cols="12" :sm="12" :md="6" :lg="6">
+        <v-card style="padding: 20px;">
+          <v-row>
+            <v-col>
+              مبلغ تسویه نشده (طلب شما از گلپینو)
+            </v-col>
+            <v-col>
+
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              مشاهده سفارشات تسویه نشده
+            </v-col>
+
+          </v-row>
+          <hr>
+          <v-row>
+            <v-col>
+              فرایند تسویه حساب شما چگونه است ؟
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
 </template>
 <script>
 import payment from "./partials/payment"

@@ -9,7 +9,7 @@
                        label="افزودن محصول"></custom-button>
       </router-link>
     </div>
-    <v-row style="margin-text-outline: 20px;">
+    <v-row style="margin-top: 20px;">
 
       <v-col>
         تعداد محصولات موجود: {{ products.length }}
@@ -19,10 +19,11 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="8">
+      <v-col :cols="10" :sm="6" :md="6" :lg="6">
         <v-text-field v-model="searchTerm" placeholder="جستجوی محصولات"/>
       </v-col>
     </v-row>
+
     <div class="products mt-2">
       <div class="product-tools d-flex justify-content-between">
         <div class="mini-title">
@@ -103,6 +104,7 @@ import ProductItem from './partials/productItem'
 import Service from "../../../utils/seller-service"
 import ProductItemMobileView from "./partials/productItemMobileView";
 
+
 export default {
 
   data: () => ({
@@ -134,6 +136,14 @@ export default {
       authService.value.receive('seller/product', {}, (s, d) => {
         if (s == 200)
           products.value = d.data
+          var moment = require('jalali-moment');
+          products.value.map((p) => {
+            p.created_at = moment(p.created_at.toString().substr(0, 10), 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD')
+          })
+
+
+
+
       }, (s, e) => {
       })
     }

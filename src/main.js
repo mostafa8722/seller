@@ -11,6 +11,9 @@ import AnimateCSS from 'animate.css'
 import VueHead from 'vue-head'
 import VueMeta from 'vue-meta'
 import vuetify from '@/plugins/vuetify'
+Vue.use(require('vue-jalali-moment'));
+// import ToggleSwitch from 'vuejs-toggle-switch'
+// Vue.use(ToggleSwitch)
 Vue.use(VueMeta)
 
 Vue.use(AnimateCSS)

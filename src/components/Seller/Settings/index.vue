@@ -3,47 +3,7 @@
     <div class="container mt-3 settings">
       <div class="">
 
-
-        <table>
-          <thead>
-          <tr>
-            <th @click="sort_table('people', 0, asc1); asc1 *= -1; asc2 = 1; asc3 = 1;">Name</th>
-            <th @click="sort_table('people', 1, asc2); asc2 *= -1; asc3 = 1; asc1 = 1;">Surname</th>
-            <th @click="sort_table('people', 2, asc3); ">Age</th>
-          </tr>
-          </thead>
-          <tbody id="people">
-          <tr>
-            <td>Raja</td>
-            <td>Dey</td>
-            <td>18</td>
-          </tr>
-          <tr>
-            <td>Mamata</td>
-            <td>Sharma</td>
-            <td>20</td>
-          </tr>
-          <tr>
-            <td>Avijit</td>
-            <td>Sharma</td>
-            <td>21</td>
-          </tr>
-          <tr>
-            <td>Sharanya</td>
-            <td>Dutta</td>
-            <td>26</td>
-          </tr>
-          <tr>
-            <td>Nabin</td>
-            <td>Roy</td>
-            <td>27</td>
-          </tr>
-          </tbody>
-        </table>
-
-
-
-        <v-row>
+        <v-row style="margin-bottom: 20px">
           <v-col :cols="2">
             <v-btn elevation="0" style="background-color: white" @click="openTab('عمومی')">عمومی</v-btn>
 
@@ -87,7 +47,7 @@
                 <div class="col-3">
                   <p>لوگو</p>
                 </div>
-                <div class="col-4" >
+                <div class="col-4">
                   <input type="file" accept="image" @change="(e)=>getImage(e,1)">
                 </div>
                 <div class="col-5 seller-logo-locker">
@@ -98,7 +58,7 @@
                 <div class="col-3">
                   <p>بنر</p>
                 </div>
-                <div class="col-4" >
+                <div class="col-4">
                   <input type="file" accept="image" @change="(e)=>getImage(e,2)">
                 </div>
                 <div class="col-5 seller-logo-locker">
@@ -109,7 +69,7 @@
                 <div class="col-3">
                   <p>جواز</p>
                 </div>
-                <div class="col-4" >
+                <div class="col-4">
                   <input type="file" accept="image" @change="(e)=>getImage(e,3)">
                 </div>
                 <div class="col-5 seller-logo-locker">
@@ -123,8 +83,8 @@
         </div>
 
         <div id="مالی" class="w3-container city" style="display:none">
-          <div class="financial-settings" v-if="activeMenu == 5">
-            <h3>اطلاعات حساب</h3>
+<!--          <div class="financial-settings" v-if="activeMenu == 5">-->
+            <div class="financial-settings">
             <p>اطلاعات حساب بانکی خود را وارد کنید</p>
             <div class="bank-tabs">
               <div class="mini-title half-width bank-tab bank-tab-active" @click="()=>bankTabHandler(1)" id="bankTab1">
@@ -156,59 +116,189 @@
 
           <p>زمان آماده سازی (دقیقه)</p>
           <v-row>
-            <v-col>
-              <v-text-field dense filled v-model="preparationTime.fields[0].value.value" @change="changeField"/>
+            <v-col cols="6">
+              <v-text-field dense filled v-model="preparationTime.fields[0].value.value" />
             </v-col>
           </v-row>
 
           <br><br>
-          <custom-field v-if="distances != null" :deactive="sendCost.deactive" @edit="()=>submitValue('sendCost')"
-                        @activate="()=>activateModel('sendCost')" theField="هزینه ی ارسال">
-            <div class="row p-2">
-              <div class="col-6">
-                <custom-input key="z4" :initial="true" label="مسافت (متر)"
-                              :classes="sendCost.deactive ? 'deactive full-width' : 'full-width'"
-                              :deactive="sendCost.deactive" kind="dropDown" container="full-width"
-                              :selectItems="distances" v-bind:theModel.sync="sendCost.fields[0].value"></custom-input>
+          <v-row>
+            <v-col cols="3">
+              <div>
+                مسافت (متر)
               </div>
-              <div class="col-6">
-                <custom-input key="z5" label="هزینه (تومان)"
-                              :classes="sendCost.deactive ? 'deactive full-width' : 'full-width'"
-                              :deactive="sendCost.deactive" kind="text" container="full-width"
-                              v-bind:theModel.sync="sendCost.fields[1].value"></custom-input>
+            </v-col>
+            <v-col cols="3">
+              <div>
+                هزینه (تومان)
               </div>
-            </div>
-          </custom-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="3">
+              <div>
+                از 0 تا 2000
+              </div>
+            </v-col>
+              <v-col cols="3">
+                <v-text-field filled/>
+              </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="3">
+              <div>
+                از 2000 تا 4000
+              </div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="3">
+              <div>
+                از 4000 تا 6000
+              </div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="3">
+              <div>
+                از 6000 تا 8000
+              </div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="3">
+              <div>
+                از 8000 تا 10000
+              </div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="3">
+              <div>
+                از 10000 تا 100000
+              </div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
         </div>
         <div id="ساعات کاری" class="w3-container city" style="display:none">
 
-          <custom-field style="    margin-bottom: 20px;" :deactive="workTime.deactive"
-                        @edit="()=>submitValue('workTime')"
-                        @activate="()=>activateModel('workTime')" theField="ساعت کاری (ساعت:دقیقه)">
-            <div class="row p-2">
-
-              <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                <custom-input style="width: 100%" labelClass="tLighter" key='z2'
-                              :deactive="workTime.deactive" kind="dropDown" :selectItems="days"
-                              container=" mt-1" v-bind:theModel.sync="theWorkDay"
-                              label="روز"></custom-input>
+          <v-row>
+            <v-col cols="1"/>
+            <v-col cols="3">
+              <div>
+                روز
               </div>
-
-              <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                <custom-input style="width: 100%" labelClass="tLighter" key='z1'
-                              :deactive="workTime.deactive" kind="text" container="mt-1 ml-1"
-                              v-bind:theModel.sync="workTime.fields[0].value"
-                              :label="workTime.fields[0].name"></custom-input>
+            </v-col>
+            <v-col cols="3">
+              <div>
+                از ساعت
               </div>
-              <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                <custom-input style="width: 100%" labelClass="tLighter" key='z2'
-                              :deactive="workTime.deactive" kind="text" container=" mt-1 ml-1"
-                              v-bind:theModel.sync="workTime.fields[1].value"
-                              :label="workTime.fields[1].name"></custom-input>
+            </v-col>
+            <v-col cols="3">
+              <div>
+                تا ساعت
               </div>
-
-            </div>
-          </custom-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="3">
+              <div>شنبه</div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="3">
+              <div>یکشنبه</div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="3">
+              <div>دوشنبه</div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="3">
+              <div>سه شنبه</div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="3">
+              <div>چهارشنبه</div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="3">
+              <div>پنج شنبه</div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="3">
+              <div>جمعه</div>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+            <v-col cols="3">
+              <v-text-field filled/>
+            </v-col>
+          </v-row>
         </div>
 
 
@@ -251,70 +341,70 @@
         <div class=" main-section pt-3">
 
 
-            <!--                   <h3>اطلاعات فروشگاه</h3>-->
+          <!--                   <h3>اطلاعات فروشگاه</h3>-->
 
-            <!-- <div class="section-divider">
-                <p>اطلاعات شخصی</p>
-            </div>
-            <custom-field :deactive="model.deactive" @edit="()=>activateModel(i)" @activate="()=>activateModel(i)" v-for="(model,i) in basicModels.fields" :key="i" :theField="model.name">
-                <custom-input :classes="model.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="model.deactive" kind="text" container="full-width" v-bind:theModel.sync="model.value"></custom-input>
-            </custom-field> -->
+          <!-- <div class="section-divider">
+              <p>اطلاعات شخصی</p>
+          </div>
+          <custom-field :deactive="model.deactive" @edit="()=>activateModel(i)" @activate="()=>activateModel(i)" v-for="(model,i) in basicModels.fields" :key="i" :theField="model.name">
+              <custom-input :classes="model.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="model.deactive" kind="text" container="full-width" v-bind:theModel.sync="model.value"></custom-input>
+          </custom-field> -->
 
-            <!--            <p>اطلاعات اولیه همچون آدرس و ساعات کاری را وارد کنید</p>-->
-
-
-            <!--            <custom-field :deactive="descs.deactive" @edit="()=>submitValue('descs')"-->
-            <!--                          @activate="()=>activateModel('descs')" theField="توضیحات فروشگاه">-->
-            <!--              <div class="row p-2">-->
-            <!--                <div class="col-4">-->
-            <!--                  <custom-input labelClass="tLighter mini-title" key='z12'-->
-            <!--                                :classes="descs.deactive ? 'deactive full-width' : ' full-width'"-->
-            <!--                                :deactive="descs.deactive" kind="text" container="full-width mt-1 ml-1"-->
-            <!--                                v-bind:theModel.sync="descs.fields[0].value"-->
-            <!--                                :label="descs.fields[0].name"></custom-input>-->
-            <!--                </div>-->
-            <!--                <div class="col-8">-->
-            <!--                  <custom-input labelClass="tLighter mini-title" key='z22'-->
-            <!--                                :classes="descs.deactive ? 'deactive full-width' : ' full-width'"-->
-            <!--                                :deactive="descs.deactive" kind="area" rows="2" container="full-width mt-1 ml-1"-->
-            <!--                                v-bind:theModel.sync="descs.fields[1].value"-->
-            <!--                                :label="descs.fields[1].name"></custom-input>-->
-            <!--                </div>-->
-            <!--              </div>-->
-            <!--            </custom-field>-->
+          <!--            <p>اطلاعات اولیه همچون آدرس و ساعات کاری را وارد کنید</p>-->
 
 
-            <!--                        <custom-field :deactive="serviceRange.deactive" @edit="()=>submitValue('serviceRange')"-->
-            <!--                                      @activate="()=>activateModel('serviceRange')" theField="محدوده ی خدمات رسانی">-->
-            <!--                          <custom-input key="z6" :classes="serviceRange.deactive ? 'deactive block half-width' : 'block half-width'"-->
-            <!--                                        :deactive="serviceRange.deactive" kind="dropDown" container="full-width"-->
-            <!--                                        :selectItems="serviceRanges"-->
-            <!--                                        v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>-->
-            <!--                        </custom-field>-->
-            <!--            <custom-field :modal="!hasAddress" :deactive="shopAddress.deactive" @edit="()=>submitValue('shopAddress')"-->
-            <!--                          @activate="()=>activateModel('shopAddress')" theField="آدرس مغازه">-->
-            <!--              <custom-input key="z7" :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'"-->
-            <!--                            :deactive="shopAddress.deactive" kind="text" container="full-width"-->
-            <!--                            v-bind:theModel.sync="shopAddress.fields[0].value"></custom-input>-->
-            <!--            </custom-field>-->
+          <!--            <custom-field :deactive="descs.deactive" @edit="()=>submitValue('descs')"-->
+          <!--                          @activate="()=>activateModel('descs')" theField="توضیحات فروشگاه">-->
+          <!--              <div class="row p-2">-->
+          <!--                <div class="col-4">-->
+          <!--                  <custom-input labelClass="tLighter mini-title" key='z12'-->
+          <!--                                :classes="descs.deactive ? 'deactive full-width' : ' full-width'"-->
+          <!--                                :deactive="descs.deactive" kind="text" container="full-width mt-1 ml-1"-->
+          <!--                                v-bind:theModel.sync="descs.fields[0].value"-->
+          <!--                                :label="descs.fields[0].name"></custom-input>-->
+          <!--                </div>-->
+          <!--                <div class="col-8">-->
+          <!--                  <custom-input labelClass="tLighter mini-title" key='z22'-->
+          <!--                                :classes="descs.deactive ? 'deactive full-width' : ' full-width'"-->
+          <!--                                :deactive="descs.deactive" kind="area" rows="2" container="full-width mt-1 ml-1"-->
+          <!--                                v-bind:theModel.sync="descs.fields[1].value"-->
+          <!--                                :label="descs.fields[1].name"></custom-input>-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--            </custom-field>-->
+
+
+          <!--                        <custom-field :deactive="serviceRange.deactive" @edit="()=>submitValue('serviceRange')"-->
+          <!--                                      @activate="()=>activateModel('serviceRange')" theField="محدوده ی خدمات رسانی">-->
+          <!--                          <custom-input key="z6" :classes="serviceRange.deactive ? 'deactive block half-width' : 'block half-width'"-->
+          <!--                                        :deactive="serviceRange.deactive" kind="dropDown" container="full-width"-->
+          <!--                                        :selectItems="serviceRanges"-->
+          <!--                                        v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>-->
+          <!--                        </custom-field>-->
+          <!--            <custom-field :modal="!hasAddress" :deactive="shopAddress.deactive" @edit="()=>submitValue('shopAddress')"-->
+          <!--                          @activate="()=>activateModel('shopAddress')" theField="آدرس مغازه">-->
+          <!--              <custom-input key="z7" :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'"-->
+          <!--                            :deactive="shopAddress.deactive" kind="text" container="full-width"-->
+          <!--                            v-bind:theModel.sync="shopAddress.fields[0].value"></custom-input>-->
+          <!--            </custom-field>-->
 
 
           <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submit">ثبت تغییرات</v-btn>
 
 
-<!--          <div class="notif-settings" v-if="activeMenu == 1">-->
-<!--            <h3>تنظیمات اعلان ها</h3>-->
-<!--            <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>-->
-<!--            <h4 class="mt-4">هشدارهای امنیتی</h4>-->
-<!--            <custom-input container="mt-3 full-width" v-for="(model , i) in notifModels" :key="'n' + i"-->
-<!--                          :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value"-->
-<!--                          :label="model.label"></custom-input>-->
-<!--            <h4 class="mt-4">اخبارها</h4>-->
-<!--            <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>-->
-<!--            <custom-input container="mt-3 full-width" v-for="(model , i) in newsModels" :key="'u' + i"-->
-<!--                          :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value"-->
-<!--                          :label="model.label"></custom-input>-->
-<!--          </div>-->
+          <!--          <div class="notif-settings" v-if="activeMenu == 1">-->
+          <!--            <h3>تنظیمات اعلان ها</h3>-->
+          <!--            <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>-->
+          <!--            <h4 class="mt-4">هشدارهای امنیتی</h4>-->
+          <!--            <custom-input container="mt-3 full-width" v-for="(model , i) in notifModels" :key="'n' + i"-->
+          <!--                          :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value"-->
+          <!--                          :label="model.label"></custom-input>-->
+          <!--            <h4 class="mt-4">اخبارها</h4>-->
+          <!--            <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>-->
+          <!--            <custom-input container="mt-3 full-width" v-for="(model , i) in newsModels" :key="'u' + i"-->
+          <!--                          :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value"-->
+          <!--                          :label="model.label"></custom-input>-->
+          <!--          </div>-->
 
 
         </div>
@@ -344,43 +434,41 @@ export default {
     AddressModal
   },
   setup() {
-    var people
-    window.onload = function () {
-      people = document.getElementById("people");
-    }
+    // function sortNumber(a, b) {
+    //   return a - b;
+    // }
+    // function sortNumberVal(a, b) {
+    //   return sortNumber(a.value, b.value);
+    // }
+    // const sortTableFunction = (table, columnIndex) => {
+    //   var values =[]
+    //   var table= document.getElementsByTagName('tbody')
+    //   var rows = document.getElementsByTagName('tr')
+    //   var sel2 = "td:nth-child(" + (columnIndex + 1) + ")"
+    //   for (let index = 0; index < rows.length; index++) {
+    //     var node = rows[index].querySelector(sel2);
+    //     var val = node.innerText;
+    //     values.push({ value: val, row: rows[index] });
     //
-    var asc1 = 1
-    var asc2= 2
-    var asc3 = 3
-
-    const sort_table = (tbody, col, asc) => {
-      var rows = document.getElementById(tbody).rows,
-          rlen = rows.length,
-          arr = new Array(),
-          i, j, cells, clen;
-      // fill the array with values from the table
-      for (i = 0; i < rlen; i++) {
-        cells = rows[i].cells;
-        clen = cells.length;
-        arr[i] = new Array();
-        for (j = 0; j < clen; j++) {
-          arr[i][j] = cells[j].innerHTML;
-        }
-      }
-      // sort the array by the specified column number (col) and order (asc)
-      arr.sort(function (a, b) {
-        return (a[col] == b[col]) ? 0 : ((a[col] > b[col]) ? asc : -1 * asc);
-      });
-      // replace existing rows with new rows created from the sorted array
-      for (i = 0; i < rlen; i++) {
-        rows[i].innerHTML = "<td>" + arr[i].join("</td><td>") + "</td>";
-      }
-
-      asc3 *= -1; asc1 = 1; asc2 = 1;
-    }
-
-
-
+    //   }
+    //   values.sort(sortNumberVal);
+    //   for (var idx = 0; idx < values.length; idx++) {
+    //
+    //     table.appendChild(values[idx].row);
+    //   }
+    // }
+    // var tables = document.querySelectorAll("table.sortable");
+    //
+    // var table = tables[0];
+    // var thead = document.getElementsByTagName('thead')
+    // var headers = document.getElementsByTagName('th')
+    // console.log(table)
+    // console.log(thead)
+    // console.log(headers)
+    // for (let j = 0; j < headers.length; j++) {
+    //   headers[j].innerHTML = "<a href='#'>" + headers[j].innerText
+    //       + "</a>";
+    // }
 
 
 
@@ -469,7 +557,11 @@ export default {
       label: "درباره ی بروز رسانی های جدید به من اطلاع دهید",
       value: {value: false, valid: true},
       name: 'update'
-    }, {label: "درباره ی نکات استفاده از حساب به من ایمیل بزنید", value: {value: false, valid: true}, name: 'guide'},])
+    }, {
+      label: "درباره ی نکات استفاده از حساب به من ایمیل بزنید",
+      value: {value: false, valid: true},
+      name: 'guide'
+    },])
     const financialModels = ref([{name: "بانک", value: {value: null, valid: true}, deactive: true}, {
       name: "شماره حساب",
       value: {value: null, valid: true},
@@ -509,7 +601,7 @@ export default {
     const descs = ref({
       deactive: true,
       edit: false,
-      fields: [{name: 'نام فروشنده', value: {value: null, valid: true}}, {
+      fields: [{name: 'نام فروشنده', value: {value: global.user.value.name, valid: true}}, {
         name: 'توضیحات فروشگاه',
         value: {value: (global.user.value.seller.desc == '' ? null : global.user.value.seller.desc), valid: true}
       }]
@@ -978,7 +1070,6 @@ export default {
 
 
     return {
-      sort_table,
       openTab,
       descs,
       hasAddress,
@@ -1015,7 +1106,8 @@ export default {
       newsModels,
       financialModels
     }
-  },
+  }
+  ,
   methods: {
 
     submit() {
@@ -1026,17 +1118,20 @@ export default {
       // this.submitValue('serviceRange');
       this.submitValue('logoImage');
       // this.submitValue('shopAddress')
-    },
+    }
+    ,
     changeServiceRange() {
       console.log($('#saturday').val())
-    },
+    }
+    ,
     setWorkDay() {
       // workTime.value.fields[0].value.value = sellerWorkTime.value[n.value.value - 1].open_at
       // workTime.value.fields[1].value.value = sellerWorkTime.value[n.value.value - 1].close_at
       // workTime.value.id = sellerWorkTime.value[n.value.value - 1].id
     }
 
-  },
+  }
+  ,
   data: () => ({
     workDays: [],
     changedPPTime: null
@@ -1189,6 +1284,7 @@ table {
   border-collapse: collapse;
   border: none;
 }
+
 th,
 td {
   border: 1px solid black;
@@ -1197,6 +1293,7 @@ td {
   font-size: 24px;
   text-align: left;
 }
+
 th {
   background-color: #C8C8C8;
   cursor: pointer;
