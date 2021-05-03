@@ -178,6 +178,7 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[0]" filled/>
             </v-col>
+           <v-col> <v-btn @click="submitPosting(0)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox1" type="checkbox"></v-col>
@@ -189,50 +190,55 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[1]" filled/>
             </v-col>
+            <v-col><v-btn @click="submitPosting(1)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="sendCostCheckBox2" type="checkbox"></v-col>
+            <v-col cols="1"><input id="sendCostCheckBox5" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 4000 تا 6000
               </div>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="sendCosts.value[2]" filled/>
+              <v-text-field v-model="sendCosts.value[5]" filled/>
             </v-col>
+           <v-col> <v-btn @click="submitPosting(5)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="sendCostCheckBox3" type="checkbox"></v-col>
+            <v-col cols="1"><input id="sendCostCheckBox6" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 6000 تا 8000
               </div>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="sendCosts.value[3]" filled/>
+              <v-text-field v-model="sendCosts.value[6]" filled/>
             </v-col>
+           <v-col> <v-btn @click="submitPosting(6)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="sendCostCheckBox4" type="checkbox"></v-col>
+            <v-col cols="1"><input id="sendCostCheckBox7" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 8000 تا 10000
               </div>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="sendCosts.value[4]" filled/>
+              <v-text-field v-model="sendCosts.value[7]" filled/>
             </v-col>
+            <v-col><v-btn @click="submitPosting(7)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="sendCostCheckBox5" type="checkbox"></v-col>
+            <v-col cols="1"><input id="sendCostCheckBox8" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 10000 تا 100000
               </div>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="sendCosts.value[5]" filled/>
+              <v-text-field v-model="sendCosts.value[8]" filled/>
             </v-col>
+            <v-col><v-btn @click="submitPosting(8)">ثبت</v-btn></v-col>
           </v-row>
           <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitPostingGroup">ثبت تغییرات
             شرایط ارسال
@@ -1169,14 +1175,14 @@ export default {
     }
 
 
-    const submitPosting = () => {
+    const submitPosting = (i) => {
 
-      for (let s = 0; s < 6; s++) {
-        if (document.getElementById('sendCostCheckBox' + s).checked) {
+
+        if (document.getElementById('sendCostCheckBox' + i).checked) {
           let f = new FormData()
 
-          f.append('distance_id', s+1)
-          f.append('cost', parseInt(sendCosts.value.value[s]))
+          f.append('distance_id', i+1)
+          f.append('cost', parseInt(sendCosts.value.value[i]))
           authService.value.transmit('seller/base/sendcost', f, (s, d) => {
             if (s == 200)
               global.alertToggle('اطلاعات با موفقیت افزوده شد!')
@@ -1199,10 +1205,11 @@ export default {
         //   })
         //
         // }
-      }
+
 
 
     }
+
     const addAddress = () => {
 
 
