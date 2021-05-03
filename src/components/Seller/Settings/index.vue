@@ -37,11 +37,11 @@
             </v-row>
 
             <p>آدرس مغازه</p>
-            <v-row>
-              <v-col>
-                <v-text-field dense filled v-model="sellerAddress"/>
-              </v-col>
-            </v-row>
+<!--            <v-row>-->
+<!--              <v-col>-->
+<!--                <v-text-field dense filled v-model="sellerAddress"/>-->
+<!--              </v-col>-->
+<!--            </v-row>-->
             <v-row>
               <v-col>
                 <custom-field type-label="انتخاب لوکیشن" :modal="!hasAddress" :deactive="shopAddress.deactive"
@@ -169,7 +169,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="sendCostCheckBox1" type="checkbox"></v-col>
+            <v-col cols="1"><input id="sendCostCheckBox0" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 0 تا 2000
@@ -180,7 +180,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="sendCostCheckBox2" type="checkbox"></v-col>
+            <v-col cols="1"><input id="sendCostCheckBox1" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 2000 تا 4000
@@ -191,7 +191,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="sendCostCheckBox3" type="checkbox"></v-col>
+            <v-col cols="1"><input id="sendCostCheckBox2" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 4000 تا 6000
@@ -202,7 +202,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="sendCostCheckBox4" type="checkbox"></v-col>
+            <v-col cols="1"><input id="sendCostCheckBox3" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 6000 تا 8000
@@ -213,7 +213,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="sendCostCheckBox5" type="checkbox"></v-col>
+            <v-col cols="1"><input id="sendCostCheckBox4" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 8000 تا 10000
@@ -224,7 +224,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="sendCostCheckBox6" type="checkbox"></v-col>
+            <v-col cols="1"><input id="sendCostCheckBox5" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 10000 تا 100000
@@ -266,10 +266,10 @@
               <div>شنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="workTimes.value[0].open_at" filled/>
+              <v-text-field v-model="workTimes[0].open_at" filled/>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="workTimes.value[0].close_at" filled/>
+              <v-text-field v-model="workTimes[0].close_at" filled/>
             </v-col>
           </v-row>
           <v-row>
@@ -278,70 +278,70 @@
               <div>یکشنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[1].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[1].close_at"/>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="checkbox3" type="checkbox"></v-col>
+            <v-col cols="1"><input id="workTimesCheckBox2" type="checkbox"></v-col>
             <v-col cols="3">
               <div>دوشنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[2].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[2].close_at"/>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="checkbox4" type="checkbox"></v-col>
+            <v-col cols="1"><input id="workTimesCheckBox3"  type="checkbox"></v-col>
             <v-col cols="3">
               <div>سه شنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[3].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[3].close_at"/>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="checkbox5" type="checkbox"></v-col>
+            <v-col cols="1"><input id="workTimesCheckBox4" type="checkbox"></v-col>
             <v-col cols="3">
               <div>چهارشنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[4].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[4].close_at"/>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="checkbox6" type="checkbox"></v-col>
+            <v-col cols="1"><input id="workTimesCheckBox5" type="checkbox"></v-col>
             <v-col cols="3">
               <div>پنج شنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[5].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[5].close_at"/>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="checkbox7" type="checkbox"></v-col>
+            <v-col cols="1"><input id="workTimesCheckBox6" type="checkbox"></v-col>
             <v-col cols="3">
               <div>جمعه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[6].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field filled v-model="workTimes[6].close_at"/>
             </v-col>
           </v-row>
           <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitWorkDaysAndHours">ثبت
@@ -639,20 +639,20 @@ export default {
     })
 
     watch(() => sendCost.fields[0].value.value, (n, o) => {
-      let x = false
-      if (n != o) {
-        if (sellerSendCosts.value != null && sellerSendCosts.value != []) {
-          sellerSendCosts.value.map((sc) => {
-            if (n.value == sc.distance_id) {
-              sendCost.fields[1].value.value = sc.cost
-              x = true
-            }
-          })
-        }
-      }
-      if (!x) {
-        sendCost.fields[1].value.value = 'نا معلوم'
-      }
+      // let x = false
+      // if (n != o) {
+      //   if (sellerSendCosts.value != null && sellerSendCosts.value != []) {
+      //     sellerSendCosts.value.map((sc) => {
+      //       if (n.value == sc.distance_id) {
+      //         sendCost.fields[1].value.value = sc.cost
+      //         x = true
+      //       }
+      //     })
+      //   }
+      // }
+      // if (!x) {
+      //   sendCost.fields[1].value.value = 'نا معلوم'
+      // }
     })
 
     const getSellerInfos = () => {
@@ -663,7 +663,9 @@ export default {
           console.log(d.data)
           for (s = 0; s < d.data.length; s++) {
             sendCosts.value.value[s] = d.data[s].cost
-            document.getElementById('sendCostCheckBox' + (s + 1)).checked = true
+            if (sendCosts.value.value[s] !== 0){
+              document.getElementById('sendCostCheckBox' + (s)).checked = true
+            }
           }
 
 
@@ -700,12 +702,22 @@ export default {
       var wId = []
       authService.value.receive('seller/base/worktime', {}, (s, d) => {
         if (s == 200) {
+
           workTimes.value = d.data
+          workTimes.value.map((w) => {
+            if (w.open_at === '9:00'){
+              w.open_at = '09:00'
+            }
+          })
           d.data.map((w) => {
             wId.push(w.id)
           })
           workTimesIds.value = wId
-
+          for (let s = 0; s < d.data.length; s++) {
+            if (workTimes.value[s].open_at !=='00::00') {
+              document.getElementById('workTimesCheckBox' + s).checked = true
+            }
+          }
         }
       }, (s, e) => {
       })
@@ -744,17 +756,17 @@ export default {
       }, (s, e) => {
       })
       // GET SEND COSTs
-      authService.value.receive('seller/base/sendcost', {}, (s, d) => {
-        if (s == 200) {
-          if (d.data != null) {
-            if (d.data.length > 0) {
-              sellerSendCosts.value = d.data
-              sendCost.fields[1].value = {value: sellerSendCosts.value[0].cost, valid: true}
-            }
-          }
-        }
-      }, (s, e) => {
-      })
+      // authService.value.receive('seller/base/sendcost', {}, (s, d) => {
+      //   if (s == 200) {
+      //     if (d.data != null) {
+      //       if (d.data.length > 0) {
+      //         sellerSendCosts.value = d.data
+      //         sendCost.fields[1].value = {value: sellerSendCosts.value[0].cost, valid: true}
+      //       }
+      //     }
+      //   }
+      // }, (s, e) => {
+      // })
       // SERVICE RANGES
       authService.value.receive('seller/base/servicerange', {}, (s, d) => {
         if (s == 200) {
@@ -771,9 +783,11 @@ export default {
       // get
       authService.value.receive('seller/base/sellerservicerange', {}, (s, d) => {
         if (s == 200) {
+
           if (d.data != []) {
             serviceRanges.value.map((ser) => {
               if (d.data.service_range_id == ser.id) {
+                console.log(ser)
                 serviceRange.value = {
                   deactive: true,
                   edit: false,
@@ -947,7 +961,7 @@ export default {
           authService.value.transmit('seller/base/sendcost', f, successfulOp, failedOp)
           break;
         case 'serviceRange':
-          activateModel('serviceRange')
+          // activateModel('serviceRange')
           currentForm.value = 'servicerange'
           authService.value.transmit('seller/base/servicerange/' + serviceRange.value.fields[0].value.value.value, {}, successfulOp, failedOp)
           break;
@@ -1103,12 +1117,12 @@ export default {
     }
 
     const submitWorkDaysAndHours = () => {
-      for (let i = 0; i < 2; i++) {
+      for (let i = 0; i < 7; i++) {
         if (document.getElementById('workTimesCheckBox' + i).checked) {
 
           let f = new FormData()
-          f.append('open_at', '10:00')
-          f.append('close_at', '12:00')
+          f.append('open_at', workTimes.value[i].open_at)
+          f.append('close_at', workTimes.value[i].close_at)
           authService.value.transmit('seller/base/worktime/' + workTimesIds.value[i], f, (s, d) => {
             if (s == 200)
               global.alertToggle('اطلاعات با موفقیت افزوده شد!')
@@ -1118,6 +1132,18 @@ export default {
           })
 
         }
+        // else{
+        //   let f = new FormData()
+        //   f.append('open_at', '00:00')
+        //   f.append('close_at', '00:01')
+        //   authService.value.transmit('seller/base/worktime/' + workTimesIds.value[i], f, (s, d) => {
+        //     if (s == 200)
+        //       global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+        //   }, (s, e) => {
+        //     if (!s)
+        //       global.alertToggle('عملیات ناموفق')
+        //   })
+        // }
       }
 
 
@@ -1145,12 +1171,12 @@ export default {
 
     const submitPosting = () => {
 
-      for (let s = 1; s < 7; s++) {
+      for (let s = 0; s < 6; s++) {
         if (document.getElementById('sendCostCheckBox' + s).checked) {
           let f = new FormData()
 
-          f.append('distance_id', s)
-          f.append('cost', parseInt(sendCosts.value.value[s - 1]))
+          f.append('distance_id', s+1)
+          f.append('cost', parseInt(sendCosts.value.value[s]))
           authService.value.transmit('seller/base/sendcost', f, (s, d) => {
             if (s == 200)
               global.alertToggle('اطلاعات با موفقیت افزوده شد!')
@@ -1158,20 +1184,21 @@ export default {
             if (!s)
               global.alertToggle('عملیات ناموفق')
           })
-        } else {
-          let f = new FormData()
-
-          f.append('distance_id', s)
-          f.append('cost', 0)
-          authService.value.transmit('seller/base/sendcost', f, (s, d) => {
-            if (s == 200)
-              global.alertToggle('اطلاعات با موفقیت افزوده شد!')
-          }, (s, e) => {
-            if (!s)
-              global.alertToggle('عملیات ناموفق')
-          })
-
         }
+        // else {
+        //   let f = new FormData()
+        //
+        //   f.append('distance_id', s)
+        //   f.append('cost', 0)
+        //   authService.value.transmit('seller/base/sendcost', f, (s, d) => {
+        //     if (s == 200)
+        //       global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+        //   }, (s, e) => {
+        //     if (!s)
+        //       global.alertToggle('عملیات ناموفق')
+        //   })
+        //
+        // }
       }
 
 
@@ -1196,6 +1223,7 @@ export default {
 
 
     return {
+      workTimesIds,
       addAddress,
       sellerAddress,
       sendCosts,
@@ -1253,7 +1281,7 @@ export default {
     submitGeneral() {
       this.submitValue('descs');
       this.submitValue('logoImage');
-      this.submitValue('shopAddress');
+      // this.submitValue('shopAddress');
       this.submitValue('serviceRange')
       this.addAddress();
     },
