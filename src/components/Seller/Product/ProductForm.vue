@@ -56,17 +56,17 @@
                             v-bind:theModel.sync="product.name" classes="block full-width"></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" label="موجودی" container="full-width" v-bind:theModel.sync="product.remaining"
+              <custom-input kind="text" label="موجودی(*)" container="full-width" v-bind:theModel.sync="product.remaining"
                             classes="block full-width"></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" label="قیمت(تومان)" container="full-width" v-bind:theModel.sync="product.price"
+              <custom-input kind="text" label="قیمت(تومان)(*)" container="full-width" v-bind:theModel.sync="product.price"
                             classes="block full-width"></custom-input>
             </div>
 
             <!--                    <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="dropDown" :selectItems="subCategories" label="زیر دسته" container="full-width" v-bind:theModel.sync="product.subCat" classes="block full-width" placeholder="دسته بندی را انتخاب کنید"></custom-input></div>-->
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" label="درصد تخفیف" container="full-width"
+              <custom-input kind="text" label="درصد تخفیف(*)" container="full-width"
                             v-bind:theModel.sync="product.discount" classes="block full-width"></custom-input>
             </div>
 
@@ -74,11 +74,12 @@
             <div class="col-lg-6 col-md-12 mt-3">
               <custom-input kind="dropDown" :selectItems="categories" label="" container="full-width"
                             v-bind:theModel.sync="product.category_id" classes="block full-width"
-                            placeholder="دسته بندی "></custom-input>
+                            placeholder="دسته بندی(*) "></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
 
-              <custom-input kind="tag" :suggestions="tags" @addTag="addTag" placeholder="برچسب ها" container="full-width" label=""
+              <custom-input kind="tag" :suggestions="tags" @addTag="addTag" placeholder="برچسب ها"
+                            container="full-width" label=""
                             v-bind:theModel.sync="product.tag_id" classes="block full-width">
                 <my-tag v-for="(tag,i) in product.tag_id" :theTag="tag" @closeTag="()=>removeTag(tag.id)"
                         classes="productTag" :key="i"></my-tag>
@@ -132,7 +133,9 @@
 
                 </v-col>
                 <v-col>
-                  <button v-if="!edit" class="purple-btn mt-3" @click="(e)=>submitProduct(e)" style="width: 200px">ثبت و افزودن محصول جدید</button>
+                  <button v-if="!edit" class="purple-btn mt-3" @click="(e)=>submitProduct(e)" style="width: 200px">ثبت و
+                    افزودن محصول جدید
+                  </button>
 
                 </v-col>
                 <v-col>
@@ -189,7 +192,7 @@ export default {
       category_id: {value: null, valid: true},
       discount: {value: null, valid: true},
       desc: {value: null, valid: true},
-      image: {value: null, valid: true},
+      image: {},
       tag_id: [],
       attr_id: {value: [], valid: true},
       subCat: {value: 'none', valid: true},
@@ -311,6 +314,19 @@ export default {
                 productToEdit.value.discount = d.data.product.discount
                 productToEdit.value.desc = d.data.product.desc
                 productToEdit.value.attributes = d.data.attribute
+                productToEdit.value.attributes.map((a) => {
+                  categories.value.map((c) => {
+
+                    console.log('c', c)
+                    for (let d = 0; d < c.at.length; d++) {
+                      console.log('d', d)
+                    }
+
+
+                  })
+                })
+
+
                 productToEdit.value.category_id = d.data.category.id
 
 
@@ -596,9 +612,9 @@ export default {
           }
         })
         console.log(z)
-        if (z.lenght===1) {
+        if (z.lenght === 1) {
 
-          f.append('attribute_id',z[0].amount)
+          f.append('attribute_id', z[0].amount)
 
           // z.map((v, i) => {
           //   f.append('attribute_id[' + i + ']', v.amount)
@@ -620,7 +636,6 @@ export default {
         }
         if (!product.image.value)
           f.append('image', product.image)
-
 
 
         console.log(f.get('attribute_id'))
@@ -653,11 +668,9 @@ export default {
         }
 
 
-
         f.append('name', product.name.value)
         f.append('price', parseInt(product.price.value))
         f.append('remain', parseInt(product.remaining.value))
-
 
 
         if (product.category_id.value != null) {
@@ -732,9 +745,9 @@ export default {
           }
         })
         console.log(z)
-        if (z.lenght===1) {
+        if (z.lenght === 1) {
 
-          f.append('attribute_id',z[0].amount)
+          f.append('attribute_id', z[0].amount)
 
           // z.map((v, i) => {
           //   f.append('attribute_id[' + i + ']', v.amount)
@@ -758,7 +771,6 @@ export default {
           f.append('image', product.image)
 
 
-
         console.log(f.get('attribute_id'))
         authService.value.transmit('seller/product/' + context.root.$route.params.id, f, () => {
           alert("تغییرات ثبت شد")
@@ -769,18 +781,20 @@ export default {
       } else {
 
         var z = []
-        product.category_id.value.at.map((y) => {
-          if (document.getElementById(y.name).checked) {
-            var x = document.getElementsByName(y.name)
+        if (product.category_id.value){
+          product.category_id.value.at.map((y) => {
+            if (document.getElementById(y.name).checked) {
+              var x = document.getElementsByName(y.name)
 
-            console.log(x)
-            for (let i = 0; i < x.length; i++) {
-              if (document.getElementsByName(y.name)[i].checked) {
-                z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
+              console.log(x)
+              for (let i = 0; i < x.length; i++) {
+                if (document.getElementsByName(y.name)[i].checked) {
+                  z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
+                }
               }
             }
-          }
-        })
+          })
+        }
 
         if (z !== null) {
           z.map((v, i) => {
@@ -789,11 +803,9 @@ export default {
         }
 
 
-
         f.append('name', product.name.value)
         f.append('price', parseInt(product.price.value))
         f.append('remain', parseInt(product.remaining.value))
-
 
 
         if (product.category_id.value != null) {
@@ -822,6 +834,12 @@ export default {
 
 
         }, (s, er) => {
+          if (product.image !== {}) {
+            alert("لطفا عکس را آپلود کنید")
+          }
+
+
+
           console.log({er})
           if (!s) {
             er.response.data.error.invalid_params.map((err) => {
@@ -1029,7 +1047,7 @@ export default {
 
 </style>
 <style>
-.tagManager > input{
-  background-color: white!important;
+.tagManager > input {
+  background-color: white !important;
 }
 </style>

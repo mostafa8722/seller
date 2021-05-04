@@ -38,7 +38,7 @@
             <p>آدرس مغازه</p>
             <v-row>
               <v-col>
-                <v-text-field dense filled :value="shopAddress.fields[0].value.value"/>
+                <v-text-field dense filled v-model="sellerAddress"/>
               </v-col>
             </v-row>
             <custom-field :deactive="logoImage.deactive" @edit="()=>submitValue('logoImage')"
@@ -77,14 +77,14 @@
                 </div>
               </div>
             </custom-field>
-
+            <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitGeneral">ثبت تغییرات فروشگاه</v-btn>
 
           </div>
         </div>
 
         <div id="مالی" class="w3-container city" style="display:none">
-<!--          <div class="financial-settings" v-if="activeMenu == 5">-->
-            <div class="financial-settings">
+          <!--          <div class="financial-settings" v-if="activeMenu == 5">-->
+          <div class="financial-settings">
             <p>اطلاعات حساب بانکی خود را وارد کنید</p>
             <div class="bank-tabs">
               <div class="mini-title half-width bank-tab bank-tab-active" @click="()=>bankTabHandler(1)" id="bankTab1">
@@ -117,12 +117,13 @@
           <p>زمان آماده سازی (دقیقه)</p>
           <v-row>
             <v-col cols="6">
-              <v-text-field dense filled v-model="preparationTime.fields[0].value.value" />
+              <v-text-field dense filled v-model="preparationTime.fields[0].value.value"/>
             </v-col>
           </v-row>
 
           <br><br>
           <v-row>
+            <v-col cols="1"/>
             <v-col cols="3">
               <div>
                 مسافت (متر)
@@ -135,65 +136,74 @@
             </v-col>
           </v-row>
           <v-row>
+            <v-col cols="1"><input id="sendCostCheckBox1" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 0 تا 2000
               </div>
             </v-col>
-              <v-col cols="3">
-                <v-text-field filled/>
-              </v-col>
+            <v-col cols="3">
+              <v-text-field v-model="sendCosts.value[0]" filled/>
+            </v-col>
           </v-row>
           <v-row>
+            <v-col cols="1"><input id="sendCostCheckBox2" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 2000 تا 4000
               </div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field v-model="sendCosts.value[1]" filled/>
             </v-col>
           </v-row>
           <v-row>
+            <v-col cols="1"><input id="sendCostCheckBox3" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 4000 تا 6000
               </div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field v-model="sendCosts.value[2]" filled/>
             </v-col>
           </v-row>
           <v-row>
+            <v-col cols="1"><input id="sendCostCheckBox4" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 6000 تا 8000
               </div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field v-model="sendCosts.value[3]" filled/>
             </v-col>
           </v-row>
           <v-row>
+            <v-col cols="1"><input id="sendCostCheckBox5" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 8000 تا 10000
               </div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field v-model="sendCosts.value[4]" filled/>
             </v-col>
           </v-row>
           <v-row>
+            <v-col cols="1"><input id="sendCostCheckBox6" type="checkbox"></v-col>
             <v-col cols="3">
               <div>
                 از 10000 تا 100000
               </div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field v-model="sendCosts.value[5]" filled/>
             </v-col>
           </v-row>
+          <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitPostingGroup">ثبت تغییرات شرایط ارسال</v-btn>
+
+
         </div>
         <div id="ساعات کاری" class="w3-container city" style="display:none">
 
@@ -216,19 +226,19 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="1"><input id="workTimesCheckBox1" type="checkbox"></v-col>
             <v-col cols="3">
               <div>شنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field v-model="workTimes.value[0].open" filled/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled/>
+              <v-text-field v-model="workTimes.value[0].close" filled/>
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="1"><input id="workTimesCheckBox2" type="checkbox"></v-col>
             <v-col cols="3">
               <div>یکشنبه</div>
             </v-col>
@@ -240,7 +250,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="1"><input id="checkbox3" type="checkbox"></v-col>
             <v-col cols="3">
               <div>دوشنبه</div>
             </v-col>
@@ -252,7 +262,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="1"><input id="checkbox4" type="checkbox"></v-col>
             <v-col cols="3">
               <div>سه شنبه</div>
             </v-col>
@@ -264,7 +274,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="1"><input id="checkbox5" type="checkbox"></v-col>
             <v-col cols="3">
               <div>چهارشنبه</div>
             </v-col>
@@ -276,7 +286,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="1"><input id="checkbox6" type="checkbox"></v-col>
             <v-col cols="3">
               <div>پنج شنبه</div>
             </v-col>
@@ -288,7 +298,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input type="checkbox"></v-col>
+            <v-col cols="1"><input id="checkbox7" type="checkbox"></v-col>
             <v-col cols="3">
               <div>جمعه</div>
             </v-col>
@@ -299,6 +309,8 @@
               <v-text-field filled/>
             </v-col>
           </v-row>
+          <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitWorkDaysAndHours">ثبت تغییرات ساعات کاری</v-btn>
+
         </div>
 
 
@@ -389,7 +401,7 @@
           <!--            </custom-field>-->
 
 
-          <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submit">ثبت تغییرات</v-btn>
+
 
 
           <!--          <div class="notif-settings" v-if="activeMenu == 1">-->
@@ -434,44 +446,6 @@ export default {
     AddressModal
   },
   setup() {
-    // function sortNumber(a, b) {
-    //   return a - b;
-    // }
-    // function sortNumberVal(a, b) {
-    //   return sortNumber(a.value, b.value);
-    // }
-    // const sortTableFunction = (table, columnIndex) => {
-    //   var values =[]
-    //   var table= document.getElementsByTagName('tbody')
-    //   var rows = document.getElementsByTagName('tr')
-    //   var sel2 = "td:nth-child(" + (columnIndex + 1) + ")"
-    //   for (let index = 0; index < rows.length; index++) {
-    //     var node = rows[index].querySelector(sel2);
-    //     var val = node.innerText;
-    //     values.push({ value: val, row: rows[index] });
-    //
-    //   }
-    //   values.sort(sortNumberVal);
-    //   for (var idx = 0; idx < values.length; idx++) {
-    //
-    //     table.appendChild(values[idx].row);
-    //   }
-    // }
-    // var tables = document.querySelectorAll("table.sortable");
-    //
-    // var table = tables[0];
-    // var thead = document.getElementsByTagName('thead')
-    // var headers = document.getElementsByTagName('th')
-    // console.log(table)
-    // console.log(thead)
-    // console.log(headers)
-    // for (let j = 0; j < headers.length; j++) {
-    //   headers[j].innerHTML = "<a href='#'>" + headers[j].innerText
-    //       + "</a>";
-    // }
-
-
-
     onMounted(() => {
       getBanks()
       getFinancials()
@@ -623,6 +597,17 @@ export default {
       , {id: 7, text: "جمعه", value: 7}]
     const sellerWorkTime = ref(null)
     const districts = ref(null)
+    const workTimes = ref({value: [
+        {open:null,close:null},
+        {open:null,close:null},
+        {open:null,close:null},
+        {open:null,close:null},
+        {open:null,close:null},
+        {open:null,close:null}
+      ], valid: true})
+    const sendCosts =ref({value: [null,null,null,null,null,null], valid: true})
+    const sellerAddress =ref(null)
+
 
     const activateMenu = (id) => {
       activeMenu.value = id
@@ -655,6 +640,35 @@ export default {
 
     const getSellerInfos = () => {
       // GET LOGO PICS
+      authService.value.receive('seller/base/worktime', {}, (s, d) => {
+        if (s == 200) {
+          console.log(d.data)
+        }
+      }, (s, e) => {
+      })
+      authService.value.receive('seller/base/sendcost', {}, (s, d) => {
+        if (s == 200) {
+          console.log(d.data)
+          for (s=0;s<d.data.length;s++){
+            sendCosts.value.value[s] = d.data[s].cost
+            document.getElementById('sendCostCheckBox'+(s+1)).checked=true
+          }
+
+
+
+        console.log(sendCosts)
+        }
+      }, (s, e) => {
+      })
+
+
+
+
+
+
+
+
+
       authService.value.receive('seller/base', {}, (s, d) => {
         if (s == 200) {
           if (d.data.specification != null && d.data.desc != null) {
@@ -900,16 +914,19 @@ export default {
           workTime.value.fields[1].value.message = ''
           f.append('open_at', workTime.value.fields[0].value.value)
           f.append('close_at', workTime.value.fields[1].value.value)
-          authService.value.transmit('seller/base/worktime' + '/' + workTime.value.id, f, successfulOp, failedOp)
+            console.log(workTime.value.id)
+          // authService.value.transmit('seller/base/worktime' + '/' + workTime.value.id, f, successfulOp, failedOp)
           break;
         case 'ppTime':
-          currentForm.value = 'ppTime'
-          activateModel('ppTime')
-          preparationTime.value.fields[0].value.valid = true
-          preparationTime.value.fields[0].value.message = ''
-          f.append('time', preparationTime.value.fields[0].value.value)
-          console.log('sent')
-          authService.value.transmit('seller/base/prepare', f, successfulOp, failedOp)
+          if (preparationTime.value.fields[0].value.value!==null && preparationTime.value.fields[0].value.value!=='') {
+            currentForm.value = 'ppTime'
+            activateModel('ppTime')
+            preparationTime.value.fields[0].value.valid = true
+            preparationTime.value.fields[0].value.message = ''
+            f.append('time', preparationTime.value.fields[0].value.value)
+            console.log('sent')
+            authService.value.transmit('seller/base/prepare', f, successfulOp, failedOp)
+          }
           break;
         case 'sendCost':
           // activateModel('sendCost')
@@ -937,8 +954,17 @@ export default {
           break;
         case 'descs':
           activateModel('descs')
-          f.append('specification', descs.value.fields[0].value.value)
-          f.append('desc', descs.value.fields[1].value.value)
+
+
+            if (descs.value.fields[1].value.value) {
+              f.append('specification', descs.value.fields[1].value.value)
+            } else {
+              f.append('specification', '...')
+            }
+
+
+          f.append('desc', descs.value.fields[0].value.value)
+            console.log(descs.value.fields[1].value.value)
           authService.value.transmit('seller/register/adddesc', f, successfulOp, failedOp)
         case 'شماره کارت':
 
@@ -1068,8 +1094,103 @@ export default {
       document.getElementById(cityName).style.display = "block";
     }
 
+    const submitWorkDaysAndHours = () => {
+      let f = new FormData()
+
+      f.append('open_at', '9:00')
+      f.append('close_at', '12:00')
+      authService.value.transmit('seller/base/worktime/' + 2 , f, (s, d) => {
+        if (s == 200)
+          global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+      }, (s, e) => {
+        if (!s)
+          global.alertToggle('عملیات ناموفق')
+      })
+
+
+      // for (let s=1;s<7;s++) {
+      //   if (document.getElementById('workTimesCheckBox'+1).checked) {
+      //     let f = new FormData()
+      //
+      //     f.append('open_at', workTimes.value.value[s-1].open)
+      //     f.append('close_at', workTimes.value.value[s-1].close)
+      //     console.log(f.get('open_at'))
+      //     console.log(f.get('close_at'))
+      //     authService.value.transmit('seller/base/worktime/' + 1 , f, (s, d) => {
+      //       if (s == 200)
+      //         global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+      //     }, (s, e) => {
+      //       if (!s)
+      //         global.alertToggle('عملیات ناموفق')
+      //     })
+      //   }
+      // }
+
+
+      }
+
+
+    const submitPosting=() => {
+
+      for (let s=1;s<7;s++) {
+        if (document.getElementById('sendCostCheckBox'+s).checked) {
+          let f = new FormData()
+
+          f.append('distance_id', s)
+          f.append('cost', parseInt(sendCosts.value.value[s-1]))
+          authService.value.transmit('seller/base/sendcost'  , f, (s, d) => {
+            if (s == 200)
+              global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+          }, (s, e) => {
+            if (!s)
+              global.alertToggle('عملیات ناموفق')
+          })
+        } else {
+          let f = new FormData()
+
+          f.append('distance_id', s)
+          f.append('cost', 0)
+          authService.value.transmit('seller/base/sendcost'  , f, (s, d) => {
+            if (s == 200)
+              global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+          }, (s, e) => {
+            if (!s)
+              global.alertToggle('عملیات ناموفق')
+          })
+
+        }
+      }
+
+
+
+    }
+    const addAddress = ()=>{
+
+
+      if (!hasAddress) {
+        let f = new FormData()
+
+        f.append('address', sellerAddress.value)
+        authService.value.transmit('seller/address'  , f, (s, d) => {
+          if (s == 200)
+            global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+        }, (s, e) => {
+          if (!s)
+            global.alertToggle('عملیات ناموفق')
+        })
+      }
+
+    }
+
+
 
     return {
+      addAddress,
+      sellerAddress,
+      sendCosts,
+      submitPosting,
+      workTimes,
+      submitWorkDaysAndHours,
       openTab,
       descs,
       hasAddress,
@@ -1111,13 +1232,22 @@ export default {
   methods: {
 
     submit() {
-      // this.submitValue('descs');
+
+      // this.submitWorkDaysAndHours();
       // this.submitValue('workTime');
       // this.submitValue('ppTime');
       // this.submitValue('sendCost');
       // this.submitValue('serviceRange');
+    },
+    submitGeneral() {
+      this.submitValue('descs');
       this.submitValue('logoImage');
-      // this.submitValue('shopAddress')
+      this.submitValue('shopAddress');
+      this.addAddress();
+    },
+    submitPostingGroup(){
+      this.submitValue('ppTime');
+      this.submitPosting();
     }
     ,
     changeServiceRange() {
@@ -1134,7 +1264,16 @@ export default {
   ,
   data: () => ({
     workDays: [],
-    changedPPTime: null
+    changedPPTime: null,
+    workTimes:[
+      {open:0,close:0},
+      {open:0,close:0},
+      {open:0,close:0},
+      {open:0,close:0},
+      {open:0,close:0},
+      {open:0,close:0},
+      {open:0,close:0}
+    ]
   }),
   created() {
     this.activateModel('workTime');

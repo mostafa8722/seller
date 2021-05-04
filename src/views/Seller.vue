@@ -14,7 +14,7 @@
 
 
     <!--      :class="(!global.user.value.isLoggedIn ? 'full-width' : 'mini-title main')"-->
-    <div id="main" class="main">
+    <div style="height: 3000px" id="main" class="main">
 
 
       <seller-header v-if="global.user.value.isLoggedIn"></seller-header>
