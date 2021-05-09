@@ -1,9 +1,10 @@
 <template>
   <div class="container products-page pt-4" @resize="console.log('test')">
+    <p class="mt-3" style="font-weight: bold">محصولات</p>
     <div class="d-flex justify-content-between">
 
     </div>
-    <div class="d-flex justify-content-end">
+    <div style="overflow: hidden!important;position: fixed!important;bottom: 100px!important;width: fit-content!important;z-index: 200!important;left: 20px!important;border-radius: 30px!important;">
       <router-link :to="{name:'Golpino Seller Product Form'}">
         <custom-button classes="add-button" icon="/assets/site/images/seller-icons/white-plus.svg"
                        label="افزودن محصول"></custom-button>
@@ -31,15 +32,15 @@
 
           <!--                <custom-input placeholder="جستجوی محصول" icon="/assets/site/images/seller-icons/search.svg" kind="text" v-bind:theModel.sync="model"></custom-input>                -->
         </div>
-        <div class="mini-title">
-          <p class="mini-title">
-            نمایش 1 تا 10 از 100 محصول
-          </p>
-          <custom-button classes="list-nav-button" icon="/assets/site/images/seller-icons/right-arrow.svg"
-                         iconSize="mid"></custom-button>
-          <custom-button classes="list-nav-button" icon="/assets/site/images/seller-icons/left-arrow.svg"
-                         iconSize="mid"></custom-button>
-        </div>
+<!--        <div class="mini-title">-->
+<!--          <p class="mini-title">-->
+<!--            نمایش 1 تا 10 از 100 محصول-->
+<!--          </p>-->
+<!--          <custom-button classes="list-nav-button" icon="/assets/site/images/seller-icons/right-arrow.svg"-->
+<!--                         iconSize="mid"></custom-button>-->
+<!--          <custom-button classes="list-nav-button" icon="/assets/site/images/seller-icons/left-arrow.svg"-->
+<!--                         iconSize="mid"></custom-button>-->
+<!--        </div>-->
       </div>
       <div class="products-table mt-2 desktopPro">
         <table>
@@ -77,14 +78,13 @@
               <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>
             </th>
           </tr>
-          <product-item browser-size="desktop" @deleteMe="deleteProduct" v-for="(p,i) in products.filter(product => {
+          <product-item browser-size="desktop"  v-for="(p,i) in products.filter(product => {
         return product.name.toLowerCase().includes(this.searchTerm);
       })" :key="i" :theProduct="p"></product-item>
         </table>
-
       </div>
       <div class="mobilePro">
-        <product-item-mobile-view browser-size="mobile" @deleteMe="deleteProduct" v-for="(p,i) in products.filter(product => {
+        <product-item-mobile-view browser-size="mobile"  v-for="(p,i) in products.filter(product => {
         return product.name.toLowerCase().includes(this.searchTerm);
       })" :key="i"
                                   :theProduct="p"/>
@@ -229,5 +229,19 @@ table {
   border-spacing: 20px 10px;
   width: 100%;
   font-size: 0.75rem;
+}
+
+
+th {
+  /* background-color: #c8c8c8; */
+  cursor: pointer;
+}
+
+td, th {
+  border: none!important;
+  font-family: inherit!important;
+  font-size: 12px!important;
+  text-align: center!important;
+  background-color: white!important;
 }
 </style>

@@ -1,22 +1,22 @@
 <template>
   <div class="menu-section pb-4">
-    <v-snackbar top color="#AB47BC"
-        v-model="snackbar"
-                timeout="1000"
-    >
-      شما یک سفارش جدید دارید
+<!--    <v-snackbar top color="#AB47BC"-->
+<!--        v-model="snackbar"-->
+<!--                timeout="1000"-->
+<!--    >-->
+<!--      شما یک سفارش جدید دارید-->
 
-      <template v-slot:action="{ attrs }">
-        <v-btn
-            color="pink"
-            text
-            v-bind="attrs"
-            @click="snackbar = false"
-        >
-          مشاهده
-        </v-btn>
-      </template>
-    </v-snackbar>
+<!--      <template v-slot:action="{ attrs }">-->
+<!--        <v-btn-->
+<!--            color="pink"-->
+<!--            text-->
+<!--            v-bind="attrs"-->
+<!--            @click="snackbar = false"-->
+<!--        >-->
+<!--          مشاهده-->
+<!--        </v-btn>-->
+<!--      </template>-->
+<!--    </v-snackbar>-->
     <v-row>
       <!--      <v-col :cols="12" :md="6" :lg="6" :sm="12">-->
       <!--        <v-card>-->
@@ -84,9 +84,9 @@
               <th>یک ماه اخیر</th>
             </tr>
             <tr>
-              <td>...</td>
+              <td>{{ todayOrders }}</td>
               <td>{{lastWeekOrders.length}}</td>
-              <td>...</td>
+              <td> {{ lastMonthOrders }}</td>
             </tr>
 
           </table>
@@ -360,11 +360,14 @@ export default {
             console.log(orderTime)
             console.log(Difference_In_Days)
 
-            if (Difference_In_Days < 7 ) {
+            if (1<Difference_In_Days < 7 ) {
               lastWeekOrders.value.push(p)
             }
             if (Difference_In_Days > 7 && Difference_In_Days <30) {
               lastMonthOrders.value.push(p)
+            }
+            if (Difference_In_Days < 1 ) {
+              todayOrders.value.push(p)
             }
 
           })
@@ -391,7 +394,7 @@ export default {
 
 
     })
-    return {products, orders, global,lastWeekOrders}
+    return {products, orders, global,lastWeekOrders ,lastMonthOrders,todayOrders}
   },
   data() {
     return {

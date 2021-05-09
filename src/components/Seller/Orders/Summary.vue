@@ -1,5 +1,6 @@
 <template>
   <div >
+    <p class="mt-3" style="font-weight: bold">سفارشات</p>
     <div >
       <v-simple-table class=" desktopPro">
         <template v-slot:default>
@@ -34,7 +35,7 @@
           </tbody>
         </template>
       </v-simple-table>
-      <div class="mobilePro">
+      <div class="mobilePro" >
         <order-summary-mobile-view browser-size="mobile" @reviseOrder="reviseOrder" v-for="(order,i) in orders" :key="i" :theOrder="order"/>
       </div>
     </div>
@@ -62,6 +63,49 @@ export default {
     const theService = computed(()=>{
       return Service(false)
     })
+
+
+    const modifyOrders = () => {
+      var moment = require('jalali-moment');
+      orders.value.map((p) => {
+        p.time = moment(p.time.toString().substr(0, 10), 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD')
+      })
+
+      global.state.value.seenOrders = orders.value.length
+
+    }
+    const getOrders = async () => {
+      authService.value.receive('seller/order', {}, (s, d) => {
+        if (s == 200) {
+          orders.value = d.data
+
+
+
+
+
+        }
+
+      }, (s, e) => {
+        console.log("this is error", e)
+      })
+    }
+
+
+    const getOrder =() => {
+      console.log('id','test')
+      authService.value.receive('seller/order/' + 1687, {}, (s, d) =>  {
+        if (s == 200) {
+
+          console.log(d.data)
+
+
+        }
+
+      }, (s, e) => {
+        console.log("this is error", e)
+      })
+    }
+
     const reviseOrder = (order)=>{
       let f = new FormData
       f.append('status',order.status)
@@ -74,36 +118,25 @@ export default {
           })
     }
     onMounted(() => {
-      authService.value.receive('seller/order', {}, (s, d) => {
-        if (s == 200) {
-          orders.value = d.data
-          var moment = require('jalali-moment');
-          orders.value.map((p) => {
-            p.time = moment(p.time.toString().substr(0, 10), 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD')
-          })
-          // var moment = require('jalali-moment');
-          // orders.value.map((p) => {
-          //   p.created_at = moment(p.created_at.toString().substr(0, 10), 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD')
-          // })
-          global.state.value.seenOrders = orders.value.length
-        }
 
-      }, (s, e) => {
-        console.log("this is error", e)
-      })
     })
 
 
 
 
 
-    return {orders,reviseOrder,global}
+    return {orders,reviseOrder,global,getOrders,modifyOrders,getOrder}
   },
   components:{
     OrderSummaryMobileView,
     Etiquette,
     AnOrder
   },
+  mounted() {
+    this.getOrders();
+    // this.modifyOrders();
+    this.getOrder()
+  }
 
 
 }

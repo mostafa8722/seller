@@ -1,6 +1,5 @@
 <template>
   <div v-if="kind=='dropDown'" class="shownInput" :class="container" >
-<label>{{label}}</label>
     <select class="hiddenInput" :name="name" ref="theInput" v-model="myModel.value">
       <option v-for="(option,i) in selectItems" :value="option.value" :key="i">{{ option.text }}</option>
     </select>
@@ -8,12 +7,12 @@
 
 <!--    <image-icon v-if="!deactive" address="/assets/site/images/seller-icons/expand.svg"-->
 <!--                style="width: 15px;height: 15px;margin-top: 20px;margin-right: 15px;cursor: pointer"></image-icon>-->
-    <div class="select-facade mt-2" :class="classes + (!myModel.valid ? ' invalid ' : '')"
+    <div style="height: 35px" class="select-facade mt-2" :class="classes + (!myModel.valid ? ' invalid ' : '')"
          @click="(e)=>selectToggle(e)" >
 
       <image-icon v-if="!deactive" address="/assets/site/images/seller-icons/expand.svg"
-                  style="width: 15px;height: 15px;cursor: pointer;margin-left: 20px"></image-icon>
-      <p class="mini-title select-value" :class="inputClass">{{ selectValue }}</p>
+                  style="width: 15px;height: 15px;cursor: pointer;margin-left: 20px;margin-bottom: 12px;color: rgba(127, 127, 127, 0.7);"></image-icon>
+      <p style="color: rgba(127, 127, 127, 0.7);" class="mini-title select-value" :class="inputClass">{{ selectValue }}</p>
       <div class="select-options" :class="(selectShow ? 'select-show' : 'select-hide')">
 
         <div class="select-option option-text" :id="'selector' + id + i" v-for="(option,i) in selectItems" :key="i"
@@ -43,7 +42,8 @@
     <p v-if="!myModel.valid" class="error-message">{{ (myModel.message ? myModel.message : '') }}</p>
   </div>
   <div v-else-if="kind=='tag'" :class="'shownInput text-input ' + container">
-    <label :for="id"></label>
+
+<!--    <label :for="id"></label>-->
 
     <div :class="'tagManager row m-0 ' + extraClasses">
 <!--      <input autocomplete="off" :id="id" type="text"-->
@@ -51,13 +51,13 @@
 <!--             @input="(e)=>suggest(e)" v-model="myModel.id" :placeholder="placeholder">-->
 
       <image-icon v-if="!deactive" address="/assets/site/images/seller-icons/expand.svg"
-                  style="width: 15px;height: 15px;margin-top: 20px;margin-right: 15px;cursor: pointer"></image-icon>
-      <input autocomplete="off" :id="id" type="text"
+                  style="width: 15px;height: 15px;margin-top: 10px;margin-right: 10px;cursor: pointer"></image-icon>
+      <input :placeholder="placeholder" autocomplete="off" :id="id" type="text"
              style="cursor:pointer;"
-             :class="'hidden-text col-5 ' " @focus="(e)=>suggestAll(e)"
-             @input="(e)=>suggest(e)" v-model="myModel.id" :placeholder="placeholder">
+             :class="'hidden-text col-3 ' " @focus="(e)=>suggestAll(e)"
+             @input="(e)=>suggest(e)" v-model="myModel.id" >
 
-      <div class="tags col-5">
+      <div class="tags col-8" style="padding: 0">
         <slot></slot>
       </div>
       <div v-if="possibles.length>0" class="suggestions col-5 p-0">
@@ -435,7 +435,6 @@ label {
   position: relative;
   min-width: 80px;
   font-weight: lighter;
-  background-color:rgba(0, 0, 0, 0.06)!important;
 }
 
 .select-facade:hover {
@@ -570,6 +569,9 @@ label {
   border-radius: 6px;
   padding: 1px;
   position: relative;
+  height: 35px;
+  margin-top: 10px;
+  top: 7px;
 }
 
 .searchInputResult {

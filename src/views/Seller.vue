@@ -17,7 +17,7 @@
     <div style="height: 3000px" id="main" class="main">
 
 
-      <seller-header v-if="global.user.value.isLoggedIn"></seller-header>
+
       <!--      <seller-header v-if="global.user.value.isLoggedIn" :the-image="theImage"></seller-header>-->
 
       <div class="panel-header" v-if="global.user.value.isLoggedIn">
@@ -37,7 +37,7 @@
                      alt="image">
               </div>
             </v-col>
-            <v-col cols="4" style="align-self: center;font-weight: bold;font-size: 20px;}">
+            <v-col cols="7" style="align-self: center;font-weight: bold;font-size: 20px;}">
               {{ (global.user.value.name != "") ? global.user.value.name : 'نام فروشگاه' }}
             </v-col>
           </v-row>
@@ -436,7 +436,7 @@ button:hover {
 .main {
   width: 100% !important;
   margin: 0px;
-  background-color: white !important;
+  background-color: #F5F5F5 !important;
   position: initial !important;
   /* top: 0px; */
   /* right: 15vw; */

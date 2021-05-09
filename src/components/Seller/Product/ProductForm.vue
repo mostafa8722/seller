@@ -1,6 +1,6 @@
 <template>
   <div class="container addProduct">
-    <p class="mt-3">محصولات > اضافه کردن محصول</p>
+    <p class="mt-3" style="font-weight: bold">محصولات > اضافه کردن محصول</p>
     <div class="product-form mt-2 p-4">
       <div class="container">
         <p>عکس محصول</p>
@@ -18,7 +18,7 @@
             </div>
           </div>
         </div>
-        <div class="big-upload mt-1 pb-4" v-if="mainImage == ''">
+        <div class="big-upload mt-1 pb-4 " v-if="mainImage == ''">
           <div class="upload-locker">
             <img src="/assets/site/images/seller-icons/upload.svg" alt="image">
           </div>
@@ -52,29 +52,31 @@
         <form action="">
           <div class="row">
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" label="نام محصول" :initialEdit="editProduct.name" container="full-width"
+              <custom-input kind="text" placeholder="نام محصول" :initialEdit="editProduct.name" container="full-width"
                             v-bind:theModel.sync="product.name" classes="block full-width"></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" label="موجودی(*)" container="full-width" v-bind:theModel.sync="product.remaining"
+              <custom-input kind="text" placeholder="موجودی(*)" container="full-width"
+                            v-bind:theModel.sync="product.remaining"
                             classes="block full-width"></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" label="قیمت(تومان)(*)" container="full-width" v-bind:theModel.sync="product.price"
+              <custom-input kind="text" placeholder="قیمت(تومان)(*)" container="full-width"
+                            v-bind:theModel.sync="product.price"
                             classes="block full-width"></custom-input>
             </div>
 
             <!--                    <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="dropDown" :selectItems="subCategories" label="زیر دسته" container="full-width" v-bind:theModel.sync="product.subCat" classes="block full-width" placeholder="دسته بندی را انتخاب کنید"></custom-input></div>-->
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" label="درصد تخفیف(*)" container="full-width"
+              <custom-input kind="text" placeholder="درصد تخفیف(*)" container="full-width"
                             v-bind:theModel.sync="product.discount" classes="block full-width"></custom-input>
             </div>
 
             <!-- <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="text" placeholder="کد تخفیف را وارد کنید" label="کد تخفیف" container="full-width" v-bind:theModel.sync="model" classes="block full-width"></custom-input></div> -->
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="dropDown" :selectItems="categories" label="دسته بندی(*)" container="full-width"
+              <custom-input kind="dropDown" :selectItems="categories" placeholder="دسته بندی(*)" container="full-width"
                             v-bind:theModel.sync="product.category_id" classes="block full-width"
-                            placeholder="دسته بندی(*) "></custom-input>
+              ></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
 
@@ -84,13 +86,13 @@
                 <my-tag v-for="(tag,i) in product.tag_id" :theTag="tag" @closeTag="()=>removeTag(tag.id)"
                         classes="productTag" :key="i"></my-tag>
               </custom-input>
-              <div class="suggestions">
-                <p class="mini-title">برچسب های پیشنهادی :</p>
-                <p class="mini-title suggestion" v-for="(t,i) in suggestedTags" @click="()=>addTag(t)" :key="i">
-                  {{ t.text }}
-                  {{ i >= suggestedTags.length - 1 ? "" : " - " }}
-                </p>
-              </div>
+<!--              <div class="suggestions">-->
+<!--                <p class="mini-title">برچسب های پیشنهادی :</p>-->
+<!--                <p class="mini-title suggestion" v-for="(t,i) in suggestedTags" @click="()=>addTag(t)" :key="i">-->
+<!--                  {{ t.text }}-->
+<!--                  {{ i >= suggestedTags.length - 1 ? "" : " - " }}-->
+<!--                </p>-->
+<!--              </div>-->
             </div>
             <div class="col-12 mt-3 attrs">
               <div class="d-flex justify-content-between">
@@ -115,6 +117,12 @@
 
                 </v-row>
               </div>
+              <div v-if="edit">
+                <v-row><v-col v-for="a in productToEdit.attributes" :key="a.id" ><div style="width: 50%;
+    margin: auto;
+    text-align: center;
+    border: 2px solid #682AD5;" > {{a.name}}</div></v-col></v-row>
+              </div>
 
 
             </div>
@@ -128,17 +136,17 @@
                    accept="image/*">
             <div>
               <v-row>
-                <v-col>
+                <v-col cols="3">
                   <button class="purple-btn mt-3" @click="(e)=>submitProductSingle(e)">ثبت محصول</button>
 
                 </v-col>
-                <v-col>
+                <v-col cols="6">
                   <button v-if="!edit" class="purple-btn mt-3" @click="(e)=>submitProduct(e)" style="width: 200px">ثبت و
                     افزودن محصول جدید
                   </button>
 
                 </v-col>
-                <v-col>
+                <v-col cols="3">
                   <button class="white-btn mt-3 mr-3">انصراف</button>
 
                 </v-col>
@@ -305,6 +313,8 @@ export default {
         }, (s, e) => {
 
         })
+
+
         authService.value.receive('seller/product/' + context.root.$route.params.id, {}, (s, d) => {
               if (s == 200) {
                 productToEdit.value = {}
@@ -314,28 +324,13 @@ export default {
                 productToEdit.value.discount = d.data.product.discount
                 productToEdit.value.desc = d.data.product.desc
                 productToEdit.value.attributes = d.data.attribute
-                productToEdit.value.attributes.map((a) => {
-                  categories.value.map((c) => {
-
-                    console.log('c', c)
-                    for (let d = 0; d < c.at.length; d++) {
-                      console.log('d', d)
-                    }
-
-
-                  })
-                })
-
-
                 productToEdit.value.category_id = d.data.category.id
-
-
                 categories.value.map((c) => {
                   if (c.value == d.data.category.id) {
                     productToEdit.value.attrs = c
+                    console.log('m',productToEdit.value.attrs.at)
                   }
                 })
-
                 product.name = {value: d.data.product.name, valid: true}
                 product.category_id = {
                   value: {
@@ -348,6 +343,15 @@ export default {
                 product.attributes = {value: d.data.attribute, valid: true}
                 product.price = {value: d.data.product.price, valid: true}
                 product.remaining = {value: d.data.product.remain, valid: true}
+                // for (let z = 0; z < productToEdit.value.attributes.length; z++) {
+                //   console.log('m',productToEdit.value.attrs.at)
+                //   productToEdit.value.attrs.at.map((a) => {
+                //     if (a.id === productToEdit.value.attributes[z].parent_id) {
+                //       productToEdit.value.attributes[z].parentText = a.name
+                //
+                //     }
+                //   })
+                // }
 
 
               }
@@ -781,7 +785,7 @@ export default {
       } else {
 
         var z = []
-        if (product.category_id.value){
+        if (product.category_id.value) {
           product.category_id.value.at.map((y) => {
             if (document.getElementById(y.name).checked) {
               var x = document.getElementsByName(y.name)
@@ -834,10 +838,9 @@ export default {
 
 
         }, (s, er) => {
-          if (product.image !== {}) {
+          if (product.image === {}) {
             alert("لطفا عکس را آپلود کنید")
           }
-
 
 
           console.log({er})
@@ -974,9 +977,22 @@ export default {
   font-size: 1rem;
 }
 
-.big-upload {
-  text-align: center;
-  border: 2px dashed #772CE8;
+
+
+@media only screen and (min-width: 600px){
+  .big-upload {
+    text-align: center;
+    border: 2px dashed #772CE8;
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 600px){
+  .big-upload {
+    text-align: center;
+    border: 2px dashed #772CE8;
+    font-size: 2.5vw;
+  }
 }
 
 .showcase-image {

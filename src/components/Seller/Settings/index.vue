@@ -4,22 +4,22 @@
       <div class="">
 
         <v-row style="margin-bottom: 20px">
-          <v-col :cols="2">
-            <v-btn elevation="0" style="background-color: white" @click="openTab('عمومی')">عمومی</v-btn>
+          <v-col :cols="3">
+            <v-btn elevation="0" style="background-color: #F5F5F5" @click="openTab('1')" id="1btn">عمومی</v-btn>
 
           </v-col>
-          <v-col :cols="2">
-            <v-btn elevation="0" style="background-color: white" @click="openTab('مالی')">مالی</v-btn>
+          <v-col :cols="3">
+            <v-btn elevation="0" style="background-color: #F5F5F5" @click="openTab('2')" id="2btn">مالی</v-btn>
           </v-col>
-          <v-col :cols="2">
-            <v-btn elevation="0" style="background-color: white" @click="openTab('شرایط ارسال')">شرایط ارسال</v-btn>
+          <v-col :cols="3">
+            <v-btn elevation="0" style="background-color: #F5F5F5" @click="openTab('3')" id="3btn">شرایط ارسال</v-btn>
           </v-col>
-          <v-col :cols="2">
-            <v-btn elevation="0" style="background-color: white" @click="openTab('ساعات کاری')">ساعات کاری</v-btn>
+          <v-col :cols="3">
+            <v-btn elevation="0" style="background-color: #F5F5F5" @click="openTab('4')" id="4btn">ساعات کاری</v-btn>
           </v-col>
         </v-row>
 
-        <div id="عمومی" class="w3-container city">
+        <div id="1" class="w3-container city">
           <div class="general-settings" v-if="activeMenu == 0">
 
             <p>{{ descs.fields[0].name }}</p>
@@ -57,9 +57,10 @@
 
             <v-row>
               <v-col>
-                <custom-input key="z6" label="محدوده خدمت رسانی"
+                <custom-input key="z6" placeholder="محدوده خدمت رسانی"
                               kind="dropDown" container="full-width"
                               :selectItems="serviceRanges"
+                              classes="select-facade2"
                               v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>
               </v-col>
             </v-row>
@@ -72,7 +73,7 @@
               <div class="col-4">
                 <input type="file" accept="image" @change="(e)=>getImage(e,1)">
               </div>
-              <div class="col-5 seller-logo-locker">
+              <div class="col-5 seller-logo-locker" style="    text-align-last: center;">
                 <img v-if="theImage.logo != null" :src="theImage.logo" alt="image">
               </div>
             </div>
@@ -83,7 +84,7 @@
               <div class="col-4">
                 <input type="file" accept="image" @change="(e)=>getImage(e,2)">
               </div>
-              <div class="col-5 seller-logo-locker">
+              <div class="col-5 seller-logo-locker"  style="    text-align-last: center;">
                 <img v-if="theImage.banner != null" :src="theImage.banner" alt="image">
               </div>
             </div>
@@ -94,7 +95,7 @@
               <div class="col-4">
                 <input type="file" accept="image" @change="(e)=>getImage(e,3)">
               </div>
-              <div class="col-5 seller-logo-locker">
+              <div class="col-5 seller-logo-locker"  style="    text-align-last: center;">
                 <img v-if="theImage.licence != null" :src="theImage.licence" alt="image">
               </div>
             </div>
@@ -110,13 +111,13 @@
             <!--            </custom-field>-->
 
 
-            <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitGeneral">ثبت تغییرات
-              فروشگاه
+            <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left;background: #682AD5;color: white;" @click="submitGeneral">ذخیره
+
             </v-btn>
 
           </div>
         </div>
-        <div id="مالی" class="w3-container city" style="display:none">
+        <div id="2" class="w3-container city" style="display:none">
           <!--          <div class="financial-settings" v-if="activeMenu == 5">-->
           <div class="financial-settings">
             <p>اطلاعات حساب بانکی خود را وارد کنید</p>
@@ -145,7 +146,7 @@
             <button class="purple-btn mt-4 full-width" @click="submitFinancials">ثبت اطلاعات حساب</button>
           </div>
         </div>
-        <div id="شرایط ارسال" class="w3-container city" style="display:none">
+        <div id="3" class="w3-container city" style="display:none">
 
           <p>زمان آماده سازی (دقیقه)</p>
           <v-row>
@@ -153,7 +154,6 @@
               <v-text-field dense filled v-model="preparationTime.fields[0].value.value"/>
             </v-col>
           </v-row>
-
           <br><br>
           <v-row>
             <v-col cols="1"/>
@@ -178,7 +178,7 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[0]" filled/>
             </v-col>
-           <v-col> <v-btn @click="submitPosting(0)">ثبت</v-btn></v-col>
+           <v-col> <v-btn style="background: #682AD5;color: white;" @click="submitPosting(0)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox1" type="checkbox"></v-col>
@@ -190,7 +190,7 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[1]" filled/>
             </v-col>
-            <v-col><v-btn @click="submitPosting(1)">ثبت</v-btn></v-col>
+            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitPosting(1)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox5" type="checkbox"></v-col>
@@ -202,7 +202,7 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[5]" filled/>
             </v-col>
-           <v-col> <v-btn @click="submitPosting(5)">ثبت</v-btn></v-col>
+           <v-col> <v-btn style="background: #682AD5;color: white;" @click="submitPosting(5)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox6" type="checkbox"></v-col>
@@ -214,7 +214,7 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[6]" filled/>
             </v-col>
-           <v-col> <v-btn @click="submitPosting(6)">ثبت</v-btn></v-col>
+           <v-col> <v-btn style="background: #682AD5;color: white;" @click="submitPosting(6)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox7" type="checkbox"></v-col>
@@ -226,7 +226,7 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[7]" filled/>
             </v-col>
-            <v-col><v-btn @click="submitPosting(7)">ثبت</v-btn></v-col>
+            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitPosting(7)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox8" type="checkbox"></v-col>
@@ -238,15 +238,10 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[8]" filled/>
             </v-col>
-            <v-col><v-btn @click="submitPosting(8)">ثبت</v-btn></v-col>
+            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitPosting(8)">ثبت</v-btn></v-col>
           </v-row>
-          <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitPostingGroup">ثبت تغییرات
-            شرایط ارسال
-          </v-btn>
-
-
         </div>
-        <div id="ساعات کاری" class="w3-container city" style="display:none">
+        <div id="4" class="w3-container city" style="display:none">
 
           <v-row>
             <v-col cols="1"/>
@@ -268,7 +263,7 @@
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox0" type="checkbox"></v-col>
-            <v-col cols="3">
+            <v-col cols="2">
               <div>شنبه</div>
             </v-col>
             <v-col cols="3">
@@ -277,10 +272,11 @@
             <v-col cols="3">
               <v-text-field v-model="workTimes[0].close_at" filled/>
             </v-col>
+            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(0)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox1" type="checkbox"></v-col>
-            <v-col cols="3">
+            <v-col cols="2">
               <div>یکشنبه</div>
             </v-col>
             <v-col cols="3">
@@ -289,10 +285,11 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[1].close_at"/>
             </v-col>
+            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(1)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox2" type="checkbox"></v-col>
-            <v-col cols="3">
+            <v-col cols="2">
               <div>دوشنبه</div>
             </v-col>
             <v-col cols="3">
@@ -301,10 +298,11 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[2].close_at"/>
             </v-col>
+            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(2)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox3"  type="checkbox"></v-col>
-            <v-col cols="3">
+            <v-col cols="2">
               <div>سه شنبه</div>
             </v-col>
             <v-col cols="3">
@@ -313,10 +311,11 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[3].close_at"/>
             </v-col>
+            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(3)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox4" type="checkbox"></v-col>
-            <v-col cols="3">
+            <v-col cols="2">
               <div>چهارشنبه</div>
             </v-col>
             <v-col cols="3">
@@ -325,10 +324,11 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[4].close_at"/>
             </v-col>
+            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(4)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox5" type="checkbox"></v-col>
-            <v-col cols="3">
+            <v-col cols="2">
               <div>پنج شنبه</div>
             </v-col>
             <v-col cols="3">
@@ -337,10 +337,11 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[5].close_at"/>
             </v-col>
+            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(5)">ثبت</v-btn></v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox6" type="checkbox"></v-col>
-            <v-col cols="3">
+            <v-col cols="2">
               <div>جمعه</div>
             </v-col>
             <v-col cols="3">
@@ -349,10 +350,8 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[6].close_at"/>
             </v-col>
+            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(6)">ثبت</v-btn></v-col>
           </v-row>
-          <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left" @click="submitWorkDaysAndHours">ثبت
-            تغییرات ساعات کاری
-          </v-btn>
 
         </div>
 
@@ -475,6 +474,7 @@ export default {
       getBanks()
       getFinancials()
       getSellerInfos()
+      document.getElementById('1btn').style.borderBottom = '3px solid #682AD5'
     })
 
     const authService = computed(() => {
@@ -628,7 +628,7 @@ export default {
     const workTimesIds = ref({
       value: [], valid: true
     })
-    const sendCosts = ref({value: [null, null, null, null, null, null], valid: true})
+    const sendCosts = ref({value: [null, null, null, null, null, null,null,null,null,null,null], valid: true})
     const sellerAddress = ref(null)
 
 
@@ -666,13 +666,17 @@ export default {
 
       authService.value.receive('seller/base/sendcost', {}, (s, d) => {
         if (s == 200) {
-          console.log(d.data)
-          for (s = 0; s < d.data.length; s++) {
-            sendCosts.value.value[s] = d.data[s].cost
-            if (sendCosts.value.value[s] !== 0){
-              document.getElementById('sendCostCheckBox' + (s)).checked = true
+
+          for (s=0;s<d.data.length;s++) {
+            sendCosts.value.value[(d.data[s].distance_id) -1 ] = d.data[s].cost
+
+            if (sendCosts.value.value[(d.data[s].distance_id) -1 ] !== 0){
+              document.getElementById('sendCostCheckBox' + ((d.data[s].distance_id) -1)).checked = true
             }
+
           }
+
+
 
 
           console.log(sendCosts)
@@ -1113,17 +1117,23 @@ export default {
       }
     }
 
-    const openTab = (cityName) => {
+    const openTab = (tagName) => {
       var i;
       var x = document.getElementsByClassName("city");
       for (i = 0; i < x.length; i++) {
         x[i].style.display = "none";
       }
-      document.getElementById(cityName).style.display = "block";
+      document.getElementById(tagName).style.display = "block";
+      for (let x=1;x<5;x++) {
+        if (document.getElementById(x).style.display === 'block') {
+          document.getElementById(x+ 'btn').style.borderBottom = '3px solid #682AD5'
+        } else {
+          document.getElementById(x+ 'btn').style.borderBottom = 'none'
+        }
+      }
     }
 
-    const submitWorkDaysAndHours = () => {
-      for (let i = 0; i < 7; i++) {
+    const submitWorkDaysAndHours = (i) => {
         if (document.getElementById('workTimesCheckBox' + i).checked) {
 
           let f = new FormData()
@@ -1150,7 +1160,7 @@ export default {
         //       global.alertToggle('عملیات ناموفق')
         //   })
         // }
-      }
+
 
 
       // for (let s=1;s<7;s++) {
@@ -1331,6 +1341,15 @@ export default {
 }
 </script>
 <style>
+.select-facade2 {
+  border: 1px solid rgba(127, 127, 127, 0.4);
+  border-radius: 5px;
+  padding: 4px 10px 4px 10px;
+  position: relative;
+  min-width: 80px;
+  font-weight: lighter;
+  background-color:rgba(0, 0, 0, 0.06)!important;
+}
 .general-settings {
   width: 100%;
 }
@@ -1363,7 +1382,7 @@ export default {
 }
 
 .settings {
-  background-color: #fff;
+  background-color: #F5F5F5;
   font-size: 0.85rem;
   font-weight: lighter;
   position: relative;

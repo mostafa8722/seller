@@ -1,5 +1,5 @@
 <template>
-  <div class="productCard container"  v-if="browserSize===`mobile`">
+  <div class="productCard container"  v-if="browserSize===`mobile`" style="background-color: #F5F5F5">
     <v-card elevation="2"  style="height: 100%; margin: 5px;padding: 25px">
 
       <v-row>
