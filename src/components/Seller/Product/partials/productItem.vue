@@ -17,18 +17,17 @@
     <td>
       <v-row>
         <v-col>
-          <image-icon address="/assets/site/images/seller-icons/red-trash.svg" :clickable="true" @iconClicked="deleteMe"
-                      classes="mid mr-3">
-          </image-icon>
-        </v-col>
-        <v-col>
           <image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true" @iconClicked="editMe"
                       classes="mid mr-3">
           </image-icon>
         </v-col>
-        <div>
-          <switches text-enabled="موجود" text-disabled="ناموجود" theme="bulma" color="default" v-model="enabled"></switches>
-        </div>
+        <v-col>
+          <span v-if="enabled" style="color: limegreen">موجود</span>
+          <span v-else style="color: red">ناموجود</span>
+        </v-col>
+        <v-col @click="changeRemain" cols="2">
+          <switches theme="bulma" color="default" v-model="enabled"></switches>
+        </v-col>
       </v-row>
 
 
@@ -40,6 +39,7 @@
 <script>
 import ImageIcon from '../../../Common/icon'
 import Switches from 'vue-switches';
+import Service from "../../../../utils/seller-service";
 var moment = require('jalali-moment');
 
 export default {
@@ -49,6 +49,21 @@ export default {
     Switches
   },
   methods: {
+    changeRemain() {
+
+
+      let f = new FormData()
+      if (this.enabled) {
+        f.append('remain', 0)
+      }
+      this.authService.transmit('seller/product/' + this.theProduct.id, f, () => {
+        alert("تغییرات ثبت شد")
+      }, (s, er) => {
+        console.log({er})
+      })
+
+
+    },
     deleteMe: function () {
       this.$emit('deleteMe', this.theProduct.id)
     },
@@ -87,6 +102,16 @@ export default {
   mounted() {
     var moment = require('jalali-moment');
     console.log(moment('1989-01-24', 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD'))
+    if (this.theProduct.remain > 0) {
+      this.enabled = true
+    } else {
+      this.enabled = false
+    }
+  },
+  computed: {
+    authService() {
+      return Service(true)
+    }
   }
 }
 </script>

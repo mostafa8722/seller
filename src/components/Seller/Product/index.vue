@@ -185,6 +185,7 @@ export default {
 
   .desktopPro {
     /*display: none;*/
+    width: 96%;
   }
 
   .products {

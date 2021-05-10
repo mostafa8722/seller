@@ -27,7 +27,7 @@
                 <td style="white-space: normal">{{item.user}}</td>
                 <td style="white-space: normal">{{item.message}}</td>
                 <td style="white-space: normal">{{item.date}}</td>
-                <comment-summary @reply="sendReply"  :the-comment="item"></comment-summary>
+                <comment-summary @replyComment="sendReply"  :the-comment="item"></comment-summary>
               </tr>
               </tbody>
             </template>
@@ -49,7 +49,7 @@
             </v-row>
             <v-row>
               <v-col>
-                <comment-summary @reply="sendReply"  :the-comment="item"></comment-summary>
+                <comment-summary @replyComment="sendReply"  :the-comment="item"></comment-summary>
               </v-col>
             </v-row>
           </v-card>
@@ -81,7 +81,7 @@ export default {
     },
     setup(){
         const theService = computed(()=>{
-            return Service(false)
+            return Service(true)
         })
       const authService = computed(() => {
         return Service(true)
@@ -100,8 +100,10 @@ export default {
         })
 
       const sendReply = (t) => {
+          console.log(t)
         let f = new FormData()
         f.append('message',t.text)
+        console.log(f.get('message'))
         theService.value.transmit('seller/order/comment/reply/'+t.id,f,(s,d)=>{
           global.alertToggle('موفقیت آمیز بود!')
         },(s,e)=>{
@@ -116,6 +118,11 @@ export default {
     // verifyMe:function(v){
     //   this.$emit('verifyMe',{id:this.theComment.id,verify:v})
     // }
+  },
+  data(){
+      return{
+
+      }
   }
 }
 </script>

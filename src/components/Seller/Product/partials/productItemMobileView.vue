@@ -25,7 +25,10 @@
             (theProduct.price - theProduct.price * theProduct.discount / 100).toFixed(2)
           }}تومان</span>
         <span style="text-decoration: line-through;" >{{ theProduct.price }}تومان</span>
-
+<v-row><image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true"
+                   @iconClicked="editMe"
+                   classes="mid mr-3 actionIcon">
+</image-icon></v-row>
 
 <br>
 <!--        <v-row>-->
