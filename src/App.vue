@@ -256,6 +256,18 @@ button:hover{
     padding-bottom: 8px;
 }
 
+//.purple-btn{
+//  background-color:  #682AD5;
+//  color: #fff;
+//  border:none;
+//  border-radius: 5px;
+//  width: 100px;
+//  font-size: 0.8rem;
+//  font-weight: lighter;
+//  padding-top: 8px;
+//  padding-bottom: 8px;
+//}
+
 .white-btn{
     background-color: #fff;
     border:1px solid #000;

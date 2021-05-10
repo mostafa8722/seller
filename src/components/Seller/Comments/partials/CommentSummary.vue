@@ -1,18 +1,16 @@
 <template>
 
-    <td>
+
       <div>
         <v-col :cols="12">
-          <v-textarea hide-details solo :value="replyText" placeholder="متن پاسخ" />
+          <v-textarea style="background-color: #D1C4E9!important;" filled hide-details  :value="replyText" placeholder="متن پاسخ" />
         </v-col>
         <v-col :cols="12">
-          <button style="float: left;margin-bottom: 10px;" @click="()=>reply" class="green-btn ml-1">ارسال </button>
+          <button style="float: left;margin-bottom: 10px" @click="()=>reply" class="purple-btn ml-1">ارسال </button>
         </v-col>
       </div>
 
 
-
-    </td>
 
 </template>
 <script>

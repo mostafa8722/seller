@@ -5,7 +5,7 @@
 
 
 
-          <v-simple-table>
+          <v-simple-table class="desktopView">
             <template v-slot:default>
               <thead>
               <tr>
@@ -31,8 +31,28 @@
               </tr>
               </tbody>
             </template>
-          </v-simple-table>
+          </v-simple-table  >
 
+
+          <v-card class="mobileView"  v-for="item in comments"
+                   :key="item.name">
+            <v-row>
+              <v-col>
+                <p style="font-weight: initial;">{{item.user}}</p>
+                <p>{{item.date}}</p>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                {{item.message}}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <comment-summary @reply="sendReply"  :the-comment="item"></comment-summary>
+              </v-col>
+            </v-row>
+          </v-card>
 
 
 <!--            <table class="mt-2">-->
@@ -100,8 +120,31 @@ export default {
 }
 </script>
 <style scoped>
+
+
+@media only screen and (min-width: 800px){
+  .desktopView{
+
+  }
+
+  .mobileView{
+    display: none;
+  }
+}
+@media only screen and (max-width: 800px){
+  .desktopView{
+    display: none;
+  }
+
+  .mobileView{
+    margin-top: 25px;
+    padding: 10px;
+  }
+}
+
+
 .summary{
-    background-color: #fff;
+    background-color: inherit;
     font-size: 0.9rem;
     font-weight: lighter;
     min-height: 50vh;

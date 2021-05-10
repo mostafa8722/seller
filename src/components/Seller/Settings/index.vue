@@ -46,7 +46,7 @@
               <v-col>
                 <custom-field type-label="انتخاب لوکیشن" :modal="!hasAddress" :deactive="shopAddress.deactive"
                               @edit="()=>submitValue('shopAddress')"
-                              @activate="()=>activateModel('shopAddress')" theField="آدرس مغازه">
+                               theField="آدرس مغازه">
                   <custom-input key="z7"
                                 :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'"
                                 :deactive="shopAddress.deactive" kind="text" container="full-width"
