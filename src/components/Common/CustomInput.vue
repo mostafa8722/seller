@@ -70,10 +70,10 @@
   </div>
   <div v-else-if="kind=='searchInput'" :class="'shownInput text-input ' + container">
     <label v-if="label != ''" :for="id" :class="labelClass">{{ label }}</label>
-    <div :class="'tagManager row m-0 ' + extraClasses">
+    <div :class="'tagManager row m-0 ' + extraClasses" style="border: none!important;background-color: rgba(0,0,0,0.06)!important;border-radius: 5px!important;">
       <input autocomplete="off" :id="id" type="text"
              :class="'hidden-text full-width ' + classes + (!myModel.valid ? ' invalid ' : '')"
-             @focus="(e)=>suggestAll(e)" @input="(e)=>suggest(e)" v-model="myModel.id" :placeholder="placeholder">
+             @focus="(e)=>suggestAll(e)" @input="(e)=>suggest(e)" v-model="myModel.id" :placeholder="placeholder" style="border-radius: 5px!important;border: 1px solid!important;padding-right: 30px!important;">
       <div class="searchInputResult">
         <div @click="resetSearch">
           <slot></slot>
@@ -571,7 +571,7 @@ label {
   position: relative;
   height: 35px;
   margin-top: 10px;
-  top: 7px;
+  /*top: 7px;*/
 }
 
 .searchInputResult {

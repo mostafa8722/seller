@@ -86,13 +86,13 @@
                 <my-tag v-for="(tag,i) in product.tag_id" :theTag="tag" @closeTag="()=>removeTag(tag.id)"
                         classes="productTag" :key="i"></my-tag>
               </custom-input>
-<!--              <div class="suggestions">-->
-<!--                <p class="mini-title">برچسب های پیشنهادی :</p>-->
-<!--                <p class="mini-title suggestion" v-for="(t,i) in suggestedTags" @click="()=>addTag(t)" :key="i">-->
-<!--                  {{ t.text }}-->
-<!--                  {{ i >= suggestedTags.length - 1 ? "" : " - " }}-->
-<!--                </p>-->
-<!--              </div>-->
+              <!--              <div class="suggestions">-->
+              <!--                <p class="mini-title">برچسب های پیشنهادی :</p>-->
+              <!--                <p class="mini-title suggestion" v-for="(t,i) in suggestedTags" @click="()=>addTag(t)" :key="i">-->
+              <!--                  {{ t.text }}-->
+              <!--                  {{ i >= suggestedTags.length - 1 ? "" : " - " }}-->
+              <!--                </p>-->
+              <!--              </div>-->
             </div>
             <div class="col-12 mt-3 attrs">
               <div class="d-flex justify-content-between">
@@ -108,20 +108,28 @@
                   </v-col>
                   <v-col>
                     <v-row>
-                      <v-col v-for="b in a.options" :key="b.id">
-                        <input type="radio" :name="a.name" :value="b.name" :id="b.id">
-                        {{ b.name }}
-                      </v-col>
+                      <custom-input :the-model="selectedAttribute" kind="dropDown" :select-items="a.options"/>
+                      <!--                      <v-col v-for="b in a.options" :key="b.id">-->
+                      <!--                        <input type="radio" :name="a.name" :value="b.name" :id="b.id">-->
+                      <!--                        {{ b.name }}-->
+                      <!--                      </v-col>-->
                     </v-row>
                   </v-col>
 
                 </v-row>
               </div>
+
+
               <div v-if="edit">
-                <v-row><v-col v-for="a in productToEdit.attributes" :key="a.id" ><div style="width: 50%;
+                <v-row>
+                  <v-col v-for="a in productToEdit.attributes" :key="a.id">
+                    <div style="width: 50%;
     margin: auto;
     text-align: center;
-    border: 2px solid #682AD5;" > {{a.name}}</div></v-col></v-row>
+    border: 2px solid #682AD5;"> {{ a.name }}
+                    </div>
+                  </v-col>
+                </v-row>
               </div>
 
 
@@ -279,6 +287,11 @@ export default {
                                   c.options = [...c.options, d]
                                 })
 
+                                c.options.map((o) => {
+                                  c.value = c.id
+                                  c.text = c.name
+                                })
+
 
                               }).catch(err => {
                             console.error(err);
@@ -328,7 +341,7 @@ export default {
                 categories.value.map((c) => {
                   if (c.value == d.data.category.id) {
                     productToEdit.value.attrs = c
-                    console.log('m',productToEdit.value.attrs.at)
+                    console.log('m', productToEdit.value.attrs.at)
                   }
                 })
                 product.name = {value: d.data.product.name, valid: true}
@@ -948,6 +961,11 @@ export default {
     authService() {
       return Service(true)
     }
+  },
+  data() {
+    return {
+      selectedAttribute: null
+    }
   }
 }
 </script>
@@ -978,8 +996,7 @@ export default {
 }
 
 
-
-@media only screen and (min-width: 600px){
+@media only screen and (min-width: 600px) {
   .big-upload {
     text-align: center;
     border: 2px dashed #772CE8;
@@ -987,7 +1004,7 @@ export default {
   }
 }
 
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 600px) {
   .big-upload {
     text-align: center;
     border: 2px dashed #772CE8;

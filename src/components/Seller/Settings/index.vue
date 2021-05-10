@@ -37,21 +37,25 @@
             </v-row>
 
             <p>آدرس مغازه</p>
-<!--            <v-row>-->
-<!--              <v-col>-->
-<!--                <v-text-field dense filled v-model="sellerAddress"/>-->
-<!--              </v-col>-->
-<!--            </v-row>-->
+            <!--            <v-row>-->
+            <!--              <v-col>-->
+            <!--                <v-text-field dense filled v-model="sellerAddress"/>-->
+            <!--              </v-col>-->
+            <!--            </v-row>-->
             <v-row>
               <v-col>
-                <custom-field type-label="انتخاب لوکیشن" :modal="!hasAddress" :deactive="shopAddress.deactive"
-                              @edit="()=>submitValue('shopAddress')"
-                               theField="آدرس مغازه">
-                  <custom-input key="z7"
-                                :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'"
-                                :deactive="shopAddress.deactive" kind="text" container="full-width"
-                                v-bind:theModel.sync="shopAddress.fields[0].value"></custom-input>
-                </custom-field>
+                <v-text-field filled disabled v-if="shopAddress.fields[0]"
+                              :value="shopAddress.fields[0].value.value"/>
+
+                <!--                -->
+                <!--                <custom-field type-label="انتخاب لوکیشن" :modal="!hasAddress" :deactive="shopAddress.deactive"-->
+                <!--                              @edit="()=>submitValue('shopAddress')"-->
+                <!--                              theField="آدرس مغازه">-->
+                <!--                  <custom-input key="z7"-->
+                <!--                                :classes="shopAddress.deactive ? 'deactive block full-width' : 'block full-width'"-->
+                <!--                                :deactive="shopAddress.deactive" kind="text" container="full-width"-->
+                <!--                                v-bind:theModel.sync="shopAddress.fields[0].value"></custom-input>-->
+                <!--                </custom-field>-->
               </v-col>
             </v-row>
 
@@ -64,6 +68,59 @@
                               v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>
               </v-col>
             </v-row>
+
+
+            <div id="addressMap">
+              <l-map
+                  ref="map"
+                  v-if="mapOptions.showMap"
+                  :zoom="mapOptions.zoom"
+                  :center="mapOptions.center"
+                  :options="mapOptions.mapOptions"
+                  style="height: 100%;width:100%;"
+                  @update:center="updateCenter"
+                  @update:zoom="zoomUpdate"
+              >
+                <l-tile-layer
+                    :url="mapOptions.url"
+                />
+                <l-marker v-if="setAddress" :lat-lng="markerPosition">
+                  <l-icon
+                      :icon-size="[40,40]"
+                      icon-url="/assets/site/images/seller-icons/target-pin.svg"
+                  />
+                </l-marker>
+              </l-map>
+              <icon-image address="/assets/site/images/seller-icons/loc.svg" v-if="marker"
+                          classes="map-marker huge"></icon-image>
+              <button class="map-control purple-btn" ref="bt" @click="change">انتخاب موقعیت*</button>
+            </div>
+            <div style="margin-top: 20px;">
+              <div class="row full-width">
+                <div class="col-md-6 col-sm-12 col-12 col-lg-6 ">
+                  <custom-input kind="text" container="full-width" classes="full-width gray"
+                                v-bind:theModel.sync="theAddress.name"
+                                placeholder="نام آدرس"></custom-input>
+                </div>
+                <div class="col-md-6 col-sm-12 col-12 col-lg-6 ">
+                  <custom-input kind="searchInput" :suggestions="districts" @addTag="selectDistrict" placeholder="محله"
+                                container="full-width" v-bind:theModel.sync="theAddress.district_id"
+                                classes="block full-width">
+                    <p v-if="theDistrict != null">{{ theDistrict.name }}</p>
+                  </custom-input>
+                </div>
+                <div class="col-12 ">
+                  <custom-input kind="text" container="full-width" classes="full-width  gray"
+                                v-bind:theModel.sync="theAddress.address"
+                                placeholder="متن آدرس*"></custom-input>
+                </div>
+                <div class="col-12 ">
+                  <button class="purple-btn mt-3 full-width" @click="send">ذخیره و ثبت</button>
+                </div>
+              </div>
+            </div>
+
+
             <!--            <custom-field :deactive="logoImage.deactive" @edit="()=>submitValue('logoImage')"-->
             <!--                          @activate="()=>activateModel('logoImage')" theField="لوگو">-->
             <div class="row pt-3 pb-3 mt-1">
@@ -84,7 +141,7 @@
               <div class="col-4">
                 <input type="file" accept="image" @change="(e)=>getImage(e,2)">
               </div>
-              <div class="col-5 seller-logo-locker"  style="    text-align-last: center;">
+              <div class="col-5 seller-logo-locker" style="    text-align-last: center;">
                 <img v-if="theImage.banner != null" :src="theImage.banner" alt="image">
               </div>
             </div>
@@ -95,12 +152,12 @@
               <div class="col-4">
                 <input type="file" accept="image" @change="(e)=>getImage(e,3)">
               </div>
-              <div class="col-5 seller-logo-locker"  style="    text-align-last: center;">
+              <div class="col-5 seller-logo-locker" style="    text-align-last: center;">
                 <img v-if="theImage.licence != null" :src="theImage.licence" alt="image">
               </div>
             </div>
             <!--            </custom-field>-->
-            <address-modal :districts="districts" @addressComplete="setAddress"></address-modal>
+            <!--            <address-modal :districts="districts" @addressComplete="setAddress"></address-modal>-->
 
             <!--            <custom-field type-label="انتخاب محدوده خدمت رسانی" :deactive="serviceRange.deactive" @edit="()=>submitValue('serviceRange')"-->
             <!--                          @activate="()=>activateModel('serviceRange')" theField="محدوده ی خدمات رسانی">-->
@@ -111,7 +168,8 @@
             <!--            </custom-field>-->
 
 
-            <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left;background: #682AD5;color: white;" @click="submitGeneral">ذخیره
+            <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left;background: #682AD5;color: white;"
+                   @click="submitGeneral">ذخیره
 
             </v-btn>
 
@@ -178,7 +236,9 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[0]" filled/>
             </v-col>
-           <v-col> <v-btn style="background: #682AD5;color: white;" @click="submitPosting(0)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitPosting(0)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox1" type="checkbox"></v-col>
@@ -190,7 +250,9 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[1]" filled/>
             </v-col>
-            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitPosting(1)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitPosting(1)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox5" type="checkbox"></v-col>
@@ -202,7 +264,9 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[5]" filled/>
             </v-col>
-           <v-col> <v-btn style="background: #682AD5;color: white;" @click="submitPosting(5)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitPosting(5)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox6" type="checkbox"></v-col>
@@ -214,7 +278,9 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[6]" filled/>
             </v-col>
-           <v-col> <v-btn style="background: #682AD5;color: white;" @click="submitPosting(6)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitPosting(6)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox7" type="checkbox"></v-col>
@@ -226,7 +292,9 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[7]" filled/>
             </v-col>
-            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitPosting(7)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitPosting(7)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="sendCostCheckBox8" type="checkbox"></v-col>
@@ -238,7 +306,9 @@
             <v-col cols="3">
               <v-text-field v-model="sendCosts.value[8]" filled/>
             </v-col>
-            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitPosting(8)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitPosting(8)">ثبت</v-btn>
+            </v-col>
           </v-row>
         </div>
         <div id="4" class="w3-container city" style="display:none">
@@ -272,7 +342,9 @@
             <v-col cols="3">
               <v-text-field v-model="workTimes[0].close_at" filled/>
             </v-col>
-            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(0)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(0)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox1" type="checkbox"></v-col>
@@ -285,7 +357,9 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[1].close_at"/>
             </v-col>
-            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(1)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(1)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox2" type="checkbox"></v-col>
@@ -298,10 +372,12 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[2].close_at"/>
             </v-col>
-            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(2)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(2)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
-            <v-col cols="1"><input id="workTimesCheckBox3"  type="checkbox"></v-col>
+            <v-col cols="1"><input id="workTimesCheckBox3" type="checkbox"></v-col>
             <v-col cols="2">
               <div>سه شنبه</div>
             </v-col>
@@ -311,7 +387,9 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[3].close_at"/>
             </v-col>
-            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(3)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(3)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox4" type="checkbox"></v-col>
@@ -324,7 +402,9 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[4].close_at"/>
             </v-col>
-            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(4)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(4)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox5" type="checkbox"></v-col>
@@ -337,7 +417,9 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[5].close_at"/>
             </v-col>
-            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(5)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(5)">ثبت</v-btn>
+            </v-col>
           </v-row>
           <v-row>
             <v-col cols="1"><input id="workTimesCheckBox6" type="checkbox"></v-col>
@@ -350,7 +432,9 @@
             <v-col cols="3">
               <v-text-field filled v-model="workTimes[6].close_at"/>
             </v-col>
-            <v-col><v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(6)">ثبت</v-btn></v-col>
+            <v-col>
+              <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(6)">ثبت</v-btn>
+            </v-col>
           </v-row>
 
         </div>
@@ -459,15 +543,24 @@ import MenuItem from './partials/RightMenuItem'
 import Service from "../../../utils/seller-service"
 import AddressModal from "../../Common/AddressModal"
 import $ from 'jquery'
+import {latLng} from "leaflet";
+import {LMap, LTileLayer, LMarker, LIcon, LControl} from "vue2-leaflet";
+import IconImage from "../../Common/icon";
+
 
 export default {
   components: {
     RoundedImage,
     ImageIcon,
     CustomField,
-    CustomInput,
     MenuItem,
-    AddressModal
+    AddressModal,
+    IconImage,
+    LMap,
+    LTileLayer,
+    LMarker,
+    LIcon,
+    CustomInput
   },
   setup() {
     onMounted(() => {
@@ -475,6 +568,7 @@ export default {
       getFinancials()
       getSellerInfos()
       document.getElementById('1btn').style.borderBottom = '3px solid #682AD5'
+
     })
 
     const authService = computed(() => {
@@ -488,7 +582,13 @@ export default {
       aBankAccount.value.accountNo.value = n.value.account
       aBankAccount.value.cardNo.value = n.value.card
       aBankAccount.value.shebaNo.value = n.value.sheba
+
     })
+
+    // watch(props, (n, o) => {
+    //   mapOptions.value.center = latLng(n.initial.lat, n.initial.long)
+    //
+    // })
 
     const global = inject('global')
     const basicModels = ref({
@@ -628,7 +728,7 @@ export default {
     const workTimesIds = ref({
       value: [], valid: true
     })
-    const sendCosts = ref({value: [null, null, null, null, null, null,null,null,null,null,null], valid: true})
+    const sendCosts = ref({value: [null, null, null, null, null, null, null, null, null, null, null], valid: true})
     const sellerAddress = ref(null)
 
 
@@ -667,16 +767,14 @@ export default {
       authService.value.receive('seller/base/sendcost', {}, (s, d) => {
         if (s == 200) {
 
-          for (s=0;s<d.data.length;s++) {
-            sendCosts.value.value[(d.data[s].distance_id) -1 ] = d.data[s].cost
+          for (s = 0; s < d.data.length; s++) {
+            sendCosts.value.value[(d.data[s].distance_id) - 1] = d.data[s].cost
 
-            if (sendCosts.value.value[(d.data[s].distance_id) -1 ] !== 0){
-              document.getElementById('sendCostCheckBox' + ((d.data[s].distance_id) -1)).checked = true
+            if (sendCosts.value.value[(d.data[s].distance_id) - 1] !== 0) {
+              document.getElementById('sendCostCheckBox' + ((d.data[s].distance_id) - 1)).checked = true
             }
 
           }
-
-
 
 
           console.log(sendCosts)
@@ -715,7 +813,7 @@ export default {
 
           workTimes.value = d.data
           workTimes.value.map((w) => {
-            if (w.open_at === '9:00'){
+            if (w.open_at === '9:00') {
               w.open_at = '09:00'
             }
           })
@@ -724,7 +822,7 @@ export default {
           })
           workTimesIds.value = wId
           for (let s = 0; s < d.data.length; s++) {
-            if (workTimes.value[s].open_at !=='00::00') {
+            if (workTimes.value[s].open_at !== '00::00') {
               document.getElementById('workTimesCheckBox' + s).checked = true
             }
           }
@@ -828,6 +926,18 @@ export default {
           districts.value.map((di) => {
             di.text = di.name
           })
+
+
+          districts.value.map((dd) => {
+            this.theDistrict = {}
+            this.theDistrict.text = dd.name
+            this.theDistrict.value = dd.id
+            this.theDistrict.name = dd.name
+            this.theDistrict.id = dd.id
+
+          })
+
+
         }
       }, (s, e) => {
       })
@@ -1006,7 +1116,7 @@ export default {
       }
     }
 
-    const setAddress = (address) => {
+    const setAddressFunction = (address) => {
       shopAddress.value.fields[0].value = address.name
       let f = new FormData()
       f.append('long', address.long)
@@ -1124,43 +1234,42 @@ export default {
         x[i].style.display = "none";
       }
       document.getElementById(tagName).style.display = "block";
-      for (let x=1;x<5;x++) {
+      for (let x = 1; x < 5; x++) {
         if (document.getElementById(x).style.display === 'block') {
-          document.getElementById(x+ 'btn').style.borderBottom = '3px solid #682AD5'
+          document.getElementById(x + 'btn').style.borderBottom = '3px solid #682AD5'
         } else {
-          document.getElementById(x+ 'btn').style.borderBottom = 'none'
+          document.getElementById(x + 'btn').style.borderBottom = 'none'
         }
       }
     }
 
     const submitWorkDaysAndHours = (i) => {
-        if (document.getElementById('workTimesCheckBox' + i).checked) {
+      if (document.getElementById('workTimesCheckBox' + i).checked) {
 
-          let f = new FormData()
-          f.append('open_at', workTimes.value[i].open_at)
-          f.append('close_at', workTimes.value[i].close_at)
-          authService.value.transmit('seller/base/worktime/' + workTimesIds.value[i], f, (s, d) => {
-            if (s == 200)
-              global.alertToggle('اطلاعات با موفقیت افزوده شد!')
-          }, (s, e) => {
-            if (!s)
-              global.alertToggle('عملیات ناموفق')
-          })
+        let f = new FormData()
+        f.append('open_at', workTimes.value[i].open_at)
+        f.append('close_at', workTimes.value[i].close_at)
+        authService.value.transmit('seller/base/worktime/' + workTimesIds.value[i], f, (s, d) => {
+          if (s == 200)
+            global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+        }, (s, e) => {
+          if (!s)
+            global.alertToggle('عملیات ناموفق')
+        })
 
-        }
-        // else{
-        //   let f = new FormData()
-        //   f.append('open_at', '00:00')
-        //   f.append('close_at', '00:01')
-        //   authService.value.transmit('seller/base/worktime/' + workTimesIds.value[i], f, (s, d) => {
-        //     if (s == 200)
-        //       global.alertToggle('اطلاعات با موفقیت افزوده شد!')
-        //   }, (s, e) => {
-        //     if (!s)
-        //       global.alertToggle('عملیات ناموفق')
-        //   })
-        // }
-
+      }
+      // else{
+      //   let f = new FormData()
+      //   f.append('open_at', '00:00')
+      //   f.append('close_at', '00:01')
+      //   authService.value.transmit('seller/base/worktime/' + workTimesIds.value[i], f, (s, d) => {
+      //     if (s == 200)
+      //       global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+      //   }, (s, e) => {
+      //     if (!s)
+      //       global.alertToggle('عملیات ناموفق')
+      //   })
+      // }
 
 
       // for (let s=1;s<7;s++) {
@@ -1188,34 +1297,33 @@ export default {
     const submitPosting = (i) => {
 
 
-        if (document.getElementById('sendCostCheckBox' + i).checked) {
-          let f = new FormData()
+      if (document.getElementById('sendCostCheckBox' + i).checked) {
+        let f = new FormData()
 
-          f.append('distance_id', i+1)
-          f.append('cost', parseInt(sendCosts.value.value[i]))
-          authService.value.transmit('seller/base/sendcost', f, (s, d) => {
-            if (s == 200)
-              global.alertToggle('اطلاعات با موفقیت افزوده شد!')
-          }, (s, e) => {
-            if (!s)
-              global.alertToggle('عملیات ناموفق')
-          })
-        }
-        // else {
-        //   let f = new FormData()
-        //
-        //   f.append('distance_id', s)
-        //   f.append('cost', 0)
-        //   authService.value.transmit('seller/base/sendcost', f, (s, d) => {
-        //     if (s == 200)
-        //       global.alertToggle('اطلاعات با موفقیت افزوده شد!')
-        //   }, (s, e) => {
-        //     if (!s)
-        //       global.alertToggle('عملیات ناموفق')
-        //   })
-        //
-        // }
-
+        f.append('distance_id', i + 1)
+        f.append('cost', parseInt(sendCosts.value.value[i]))
+        authService.value.transmit('seller/base/sendcost', f, (s, d) => {
+          if (s == 200)
+            global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+        }, (s, e) => {
+          if (!s)
+            global.alertToggle('عملیات ناموفق')
+        })
+      }
+      // else {
+      //   let f = new FormData()
+      //
+      //   f.append('distance_id', s)
+      //   f.append('cost', 0)
+      //   authService.value.transmit('seller/base/sendcost', f, (s, d) => {
+      //     if (s == 200)
+      //       global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+      //   }, (s, e) => {
+      //     if (!s)
+      //       global.alertToggle('عملیات ناموفق')
+      //   })
+      //
+      // }
 
 
     }
@@ -1239,7 +1347,32 @@ export default {
     }
 
 
+    const props = {initial: null}
+    const mapOptions = ref({
+      zoom: 13,
+      center: (props.initial ? latLng(props.initial.lat, props.initial.long) : latLng(35.76, 51.433611)),
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      golpino: latLng(35.76, 51.433611),
+      currentZoom: 11.5,
+      currentCenter: latLng(35.76, 51.433611),
+      showParagraph: true,
+      mapOptions: {
+        zoomSnap: 0.5
+      },
+      showMap: true
+    })
+
+    const zoomUpdate = (zoom) => {
+      mapOptions.value.currentZoom = zoom;
+    }
+
+    const address = ref({lat: 0, lng: 0})
+
+
     return {
+      address,
+      zoomUpdate,
+      mapOptions,
       workTimesIds,
       addAddress,
       sellerAddress,
@@ -1257,7 +1390,7 @@ export default {
       getImage,
       theImage,
       logoImage,
-      setAddress,
+      setAddressFunction,
       shopAddress,
       serviceRange,
       serviceRanges,
@@ -1286,7 +1419,58 @@ export default {
   }
   ,
   methods: {
-
+    send: function () {
+      this.message = null
+      this.theAddress.address.valid = true
+      this.theAddress.address.message = ""
+      this.theAddress.name.valid = true
+      this.theAddress.name.message = ""
+      if (this.theAddress.lat == null) {
+        this.message = "لطفا ابتدا موقعیت مورد نظر را یافته و سپس بر روی دکمه ی انتخاب موقعیت کلیک کنید!"
+      }
+      if (this.theAddress.address.value == null || this.theAddress.address.value == '') {
+        this.theAddress.address.valid = false
+        this.theAddress.address.message = "لطفا متن آدرس را وارد کنید"
+      }
+      if (this.theDistrict == null || !this.theDistrict.id) {
+        this.theAddress.name.valid = false
+        this.theAddress.name.message = "وارد کردن محله الزامی است"
+      } else if (this.theAddress.lat != null &&
+          (this.theAddress.name.value != null || this.theAddress.name.value != '') &&
+          (this.theAddress.address.value != null || this.theAddress.address.value != '')) {
+        this.theAddress.district_id = this.theDistrict.id
+        // this.$emit('addressComplete', this.theAddress)
+        this.setAddressFunction(this.theAddress)
+        this.theAddress = {
+          name: {value: null, valid: true},
+          district_id: {id: null, value: null, valid: true},
+          lat: null,
+          long: null,
+          address: {value: null, valid: true}
+        }
+        this.theDistrict = null
+      }
+    },
+    selectDistrict: function (d) {
+      console.log({d})
+      this.theDistrict = d
+    },
+    change: function () {
+      this.setAddress = true
+      this.theAddress.lat = this.theCenter.lat
+      this.theAddress.long = this.theCenter.lng
+      this.marker = false
+      this.markerPosition = latLng(this.theAddress.lat, this.theAddress.long)
+    },
+    updateCenter: function (c) {
+      console.log(c)
+      this.$refs.map.mapObject.invalidateSize()
+      if (!this.marker) {
+        this.marker = true
+      }
+      this.theCenter = latLng(c.lat, c.lng)
+      console.log(this.address)
+    },
     submit() {
 
       // this.submitWorkDaysAndHours();
@@ -1320,6 +1504,19 @@ export default {
   }
   ,
   data: () => ({
+    message: null,
+    theDistrict: null,
+    theAddress: {
+      name: {value: null, valid: true},
+      district_id: {id: null, value: null, valid: true},
+      lat: null,
+      long: null,
+      address: {value: null, valid: true}
+    },
+    markerPosition: null,
+    marker: true,
+    theCenter: null,
+    setAddress: false,
     workDays: [],
     changedPPTime: null,
     workTimes: [
@@ -1335,6 +1532,27 @@ export default {
   created() {
     this.activateModel('workTime');
     this.activateModel('sendCost');
+  },
+  mounted() {
+
+    // this.districts.map((dd) => {
+    //   this.theDistrict = {}
+    //   this.theDistrict.text = dd.name
+    //   this.theDistrict.value = dd.id
+    //   this.theDistrict.name = dd.name
+    //   this.theDistrict.id = dd.id
+    //
+    // })
+
+
+    // this.theAddress.name.value = this.initial.name
+    // this.theAddress.lat = this.initial.lat
+    // this.theAddress.long = this.initial.long
+    // this.theAddress.address.value = this.initial.address
+    setTimeout(() => {
+      if (this.$refs.map)
+        this.$refs.map.mapObject.invalidateSize()
+    }, 4000)
   }
 
 
@@ -1348,8 +1566,9 @@ export default {
   position: relative;
   min-width: 80px;
   font-weight: lighter;
-  background-color:rgba(0, 0, 0, 0.06)!important;
+  background-color: rgba(0, 0, 0, 0.06) !important;
 }
+
 .general-settings {
   width: 100%;
 }
@@ -1502,5 +1721,59 @@ td {
 th {
   background-color: #C8C8C8;
   cursor: pointer;
+}
+
+.leaflet-container {
+  overflow: auto !important;
+  height: 450px;
+  width: 100%;
+}
+
+#addressMap {
+  width: 90%;
+  height: 300px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  z-index: 50;
+}
+
+#addressMap .map-marker {
+  position: absolute;
+  z-index: 1111 !important;
+  top: 125px;
+  right: 275px;
+}
+
+.address-modal-header {
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  border-bottom: 1px solid rgba(179, 179, 179, 0.3);
+}
+
+.map-control {
+  position: absolute;
+  z-index: 1111 !important;
+  bottom: 5%;
+  left: 5%;
+}
+
+.modal-dialog {
+  max-width: 700px !important;
+}
+
+.purple-btn {
+  /* padding: 0px !important; */
+}
+
+.invalid {
+  color: red;
+  margin-top: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.gray{
+  background-color: rgba(0,0,0,.06)!important;
 }
 </style>
