@@ -7,7 +7,7 @@
 
 <!--    <image-icon v-if="!deactive" address="/assets/site/images/seller-icons/expand.svg"-->
 <!--                style="width: 15px;height: 15px;margin-top: 20px;margin-right: 15px;cursor: pointer"></image-icon>-->
-    <div style="height: 35px" class="select-facade mt-2" :class="classes + (!myModel.valid ? ' invalid ' : '')"
+    <div style="height: 35px" class="select-facade " :class="classes + (!myModel.valid ? ' invalid ' : '')"
          @click="(e)=>selectToggle(e)" >
 
       <image-icon v-if="!deactive" address="/assets/site/images/seller-icons/expand.svg"

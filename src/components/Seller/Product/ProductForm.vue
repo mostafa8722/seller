@@ -52,29 +52,29 @@
         <form action="">
           <div class="row">
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" placeholder="نام محصول" :initialEdit="editProduct.name" container="full-width"
-                            v-bind:theModel.sync="product.name" classes="block full-width"></custom-input>
+              <custom-input style="background-color: white!important;" kind="text" placeholder="نام محصول" :initialEdit="editProduct.name" container="full-width"
+                            v-bind:theModel.sync="product.name" classes="block full-width white"></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" placeholder="موجودی(*)" container="full-width"
+              <custom-input style="background-color: white!important;" kind="text" placeholder="موجودی(*)" container="full-width"
                             v-bind:theModel.sync="product.remaining"
                             classes="block full-width"></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" placeholder="قیمت(تومان)(*)" container="full-width"
+              <custom-input style="background-color: white!important;" kind="text" placeholder="قیمت(تومان)(*)" container="full-width"
                             v-bind:theModel.sync="product.price"
                             classes="block full-width"></custom-input>
             </div>
 
             <!--                    <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="dropDown" :selectItems="subCategories" label="زیر دسته" container="full-width" v-bind:theModel.sync="product.subCat" classes="block full-width" placeholder="دسته بندی را انتخاب کنید"></custom-input></div>-->
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="text" placeholder="درصد تخفیف(*)" container="full-width"
+              <custom-input style="background-color: white!important;" kind="text" placeholder="درصد تخفیف(*)" container="full-width"
                             v-bind:theModel.sync="product.discount" classes="block full-width"></custom-input>
             </div>
 
             <!-- <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="text" placeholder="کد تخفیف را وارد کنید" label="کد تخفیف" container="full-width" v-bind:theModel.sync="model" classes="block full-width"></custom-input></div> -->
             <div class="col-lg-6 col-md-12 mt-3">
-              <custom-input kind="dropDown" :selectItems="categories" placeholder="دسته بندی(*)" container="full-width"
+              <custom-input style="background-color: white!important;" kind="dropDown" :selectItems="categories" placeholder="دسته بندی(*)" container="full-width"
                             v-bind:theModel.sync="product.category_id" classes="block full-width"
               ></custom-input>
             </div>
@@ -103,16 +103,19 @@
               <div v-if="product.category_id.value">
                 <v-row v-for="a in product.category_id.value.at" :key="a.id">
                   <v-col style="text-align: -webkit-center;" class="col-2">
-                    <input type="checkbox" :id="a.name">
-                    {{ a.name }}:
+                    <span>  <input type="checkbox" :id="a.name"></span>
+
+                    <span style="margin-right: 4px">{{ a.name }}:</span>
                   </v-col>
                   <v-col>
                     <v-row>
-                      <custom-input :the-model="selectedAttribute" kind="dropDown" :select-items="a.options"/>
-                      <!--                      <v-col v-for="b in a.options" :key="b.id">-->
-                      <!--                        <input type="radio" :name="a.name" :value="b.name" :id="b.id">-->
-                      <!--                        {{ b.name }}-->
-                      <!--                      </v-col>-->
+                      <v-col v-for="b in a.options" :key="b.id">
+                       <div class="options" @click="check(b.id)" style="background: #682AD5;color: white;border-radius: 10px;text-align: -webkit-center;cursor: pointer;
+">
+                         <span><input type="radio" :name="a.name" :value="b.name" :id="b.id"></span>
+                         <span> {{ b.name }}</span>
+                       </div>
+                      </v-col>
                     </v-row>
                   </v-col>
 
@@ -135,7 +138,7 @@
 
             </div>
             <div class="col-12 mt-3">
-              <custom-input kind="area" label="توضیحات" placeholder="توضیحات مربوط به محصول را وارد کنید"
+              <custom-input style="background-color: white!important;" kind="area"  placeholder="توضیحات مربوط به محصول را وارد کنید"
                             container="full-width" v-bind:theModel.sync="product.desc"
                             classes="block full-width"></custom-input>
             </div>
@@ -287,10 +290,6 @@ export default {
                                   c.options = [...c.options, d]
                                 })
 
-                                c.options.map((o) => {
-                                  c.value = c.id
-                                  c.text = c.name
-                                })
 
 
                               }).catch(err => {
@@ -306,7 +305,7 @@ export default {
                 }
             )
 
-            console.log(attrs.value)
+            console.log(product.category_id.at)
 
           })
           .catch(err => {
@@ -966,6 +965,12 @@ export default {
     return {
       selectedAttribute: null
     }
+  },
+  methods:{
+    check(id){
+      document.getElementById(id).checked =true
+      console.log(document.getElementById(id).checked)
+    }
   }
 }
 </script>
@@ -975,7 +980,7 @@ export default {
 }
 
 .product-form {
-  background-color: #fff;
+  background-color: #F5F5F5;
 }
 
 .purple-btn {
@@ -1076,6 +1081,24 @@ export default {
 .attrs button {
   width: auto !important;
   padding: 1rem;
+}
+
+
+@media only screen and (min-width: 700px){
+  .options{
+    font-size: 16px;
+    width: 150px;
+  }
+}
+
+@media only screen and (max-width: 700px){
+  .options{
+    font-size: 10px;
+    width: 70px;
+  }
+}
+.white{
+  background-color: white!important;
 }
 
 </style>

@@ -53,32 +53,32 @@ export default {
     }
   },
   beforeCreate(){
-      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        if(window.location.href.includes('online-payment')){
-          // let s1 = window.location.hash;
-          // let s2 = s1.substring(1);
-        
-          // // window.location.href = 'https://app.golpino.com/payment/success?id=' + this.$route.params.id + '&follow_number=' + this.$route.params.follow
-          // window.location.href = 'https://app.golpino.com' + s2
-
-          let url = window.location.href
-          let reg  = RegExp("([0-9]+)\/([0-9]+)")
-          let [full,id,follow] =  reg.exec(url)
-          // alert(id)
-          // alert(follow)
-          window.location.href = "https://app.golpino.com/payment/success?id=" + id + "&follow=" + follow
-        }
-        if(window.location.href.includes('shop')){
-          let url = window.location.href
-          
-          let res = url.split("/shop/")
-
-          window.location.href = "https://app.golpino.com/shop/" + res[1]
-        }
-        else{
-           window.location.href = 'https://app.golpino.com'
-        }
-      }
+      // if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      //   if(window.location.href.includes('online-payment')){
+      //     // let s1 = window.location.hash;
+      //     // let s2 = s1.substring(1);
+      //
+      //     // // window.location.href = 'https://app.golpino.com/payment/success?id=' + this.$route.params.id + '&follow_number=' + this.$route.params.follow
+      //     // window.location.href = 'https://app.golpino.com' + s2
+      //
+      //     let url = window.location.href
+      //     let reg  = RegExp("([0-9]+)\/([0-9]+)")
+      //     let [full,id,follow] =  reg.exec(url)
+      //     // alert(id)
+      //     // alert(follow)
+      //     window.location.href = "https://app.golpino.com/payment/success?id=" + id + "&follow=" + follow
+      //   }
+      //   if(window.location.href.includes('shop')){
+      //     let url = window.location.href
+      //
+      //     let res = url.split("/shop/")
+      //
+      //     window.location.href = "https://app.golpino.com/shop/" + res[1]
+      //   }
+      //   else{
+      //      window.location.href = 'https://app.golpino.com'
+      //   }
+      // }
   },
   methods:{
     dropper:function(t){
