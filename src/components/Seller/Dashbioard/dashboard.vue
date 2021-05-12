@@ -75,60 +75,70 @@
         <v-card style="height: 200px">
 
           <v-card-title>وضعیت سفارشات</v-card-title>
-
-          <table>
-
-            <tr>
-              <th>امروز</th>
-              <th>یک هفته اخیر</th>
-              <th>یک ماه اخیر</th>
-            </tr>
-            <tr>
-              <td>{{ todayOrders }}</td>
-              <td>{{lastWeekOrders.length}}</td>
-              <td> {{ lastMonthOrders }}</td>
-            </tr>
-
-          </table>
-
+          <v-simple-table>
+            <template v-slot:default>
+              <thead>
+              <tr >
+                <th>امروز</th>
+                <th>یک هفته اخیر</th>
+                <th>یک ماه اخیر</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{{ todayOrders }}</td>
+                <td>{{lastWeekOrders.length}}</td>
+                <td> {{ lastMonthOrders }}</td>
+              </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
         </v-card>
       </v-col>
+
       <v-col :cols="12" :md="4" :lg="4" :sm="12">
         <v-card style="height: 200px">
 
           <v-card-title>وضعیت محصولات</v-card-title>
-
-          <table>
-
-            <tr>
-              <th>موجود</th>
-              <th>ناموجود</th>
-            </tr>
-            <tr>
-              <td>{{ products.length }}</td>
-              <td>{{ products.filter(item => item.remain === 0).length }}</td>
-            </tr>
-
-          </table>
-
+          <v-simple-table>
+            <template v-slot:default>
+              <thead>
+              <tr >
+                <th>موجود</th>
+                <th>ناموجود</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{{ products.length }}</td>
+                <td>{{ products.filter(item => item.remain === 0).length }}</td>
+              </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
         </v-card>
       </v-col>
       <v-col :cols="12" :md="4" :lg="4" :sm="12">
         <v-card style="height: 200px">
 
           <v-card-title>وضعیت مالی</v-card-title>
-          <table>
 
-            <tr>
-              <th>کل فروش</th>
-              <th>پرداخت شده</th>
-            </tr>
-            <tr>
-              <td>...</td>
-              <td>...</td>
-            </tr>
-
-          </table>
+          <v-simple-table>
+            <template v-slot:default>
+              <thead>
+              <tr >
+                <th>کل فروش</th>
+                <th>پرداخت شده</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>...</td>
+                <td>...</td>
+              </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
 
 
         </v-card>
@@ -490,19 +500,19 @@ export default {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
-table {
-  border-collapse: collapse;
-  width: 80%;
-  margin: auto;
-}
+/*table {*/
+/*  border-collapse: collapse;*/
+/*  width: 80%;*/
+/*  margin: auto;*/
+/*}*/
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
+/*td, th {*/
+/*  border: 1px solid #dddddd;*/
+/*  text-align: left;*/
+/*  padding: 8px;*/
+/*}*/
 
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
+/*tr:nth-child(even) {*/
+/*  background-color: #dddddd;*/
+/*}*/
 </style>

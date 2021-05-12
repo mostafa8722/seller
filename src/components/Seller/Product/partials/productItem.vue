@@ -15,23 +15,20 @@
     <td>{{ theProduct.remain }}</td>
     <td>{{ theProduct.created_at  }}</td>
     <td>
-      <v-row>
-        <v-col>
+
           <image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true" @iconClicked="editMe"
                       classes="mid mr-3">
           </image-icon>
-        </v-col>
-        <v-col>
-          <span v-if="enabled" style="color: limegreen">موجود</span>
-          <span v-else style="color: red">ناموجود</span>
-        </v-col>
-        <v-col @click="changeRemain" cols="2">
-          <switches theme="bulma" color="default" v-model="enabled"></switches>
-        </v-col>
-      </v-row>
-
-
     </td>
+    <td>
+      <v-col @click="changeRemain" >
+        <span class="status" v-if="enabled" style="color: limegreen">موجود</span>
+        <span class="status" v-else style="color: red">ناموجود</span>
+        <switches theme="bulma" color="default" v-model="enabled"></switches>
+      </v-col>
+    </td>
+
+
   </tr>
 
 
@@ -172,4 +169,16 @@ td {
   height: 35px !important;
 
 }
+
+/*@media only screen and (min-width: 1100px){*/
+/*  .status{*/
+/*    font-size: 12px;*/
+/*  }*/
+/*}*/
+/*@media only screen and (max-width: 1100px){*/
+/*  .status{*/
+/*    font-size: 8px;*/
+/*  }*/
+/*}*/
+
 </style>

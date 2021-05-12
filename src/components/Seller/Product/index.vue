@@ -1,5 +1,5 @@
 <template>
-  <div class="container products-page pt-4" @resize="console.log('test')">
+  <div class=" products-page pt-4" @resize="console.log('test')">
     <p class="mt-3" style="font-weight: bold">محصولات</p>
     <div class="d-flex justify-content-between">
 
@@ -238,7 +238,15 @@ th {
   cursor: pointer;
 }
 
-td, th {
+td {
+  border: none!important;
+  font-family: inherit!important;
+  font-size: 12px!important;
+  text-align: center!important;
+  background-color: white!important;
+}
+
+th {
   border: none!important;
   font-family: inherit!important;
   font-size: 12px!important;

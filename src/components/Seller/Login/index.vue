@@ -247,9 +247,9 @@ export default {
 </script>
 <style scoped>
 .seller-page{
-    width: 100%;
-    height: 100%;
-    padding:4rem 5rem 2rem 5rem;
+  width: 100%;
+  height: 100%;
+  padding: 4rem 0rem 2rem 0rem;
 }
 
 .tt{
