@@ -27,7 +27,7 @@
       <!--          </div>-->
       <!--        </v-card>-->
       <!--      </v-col>-->
-      <v-col cols="4">
+      <v-col >
 
 
         <v-btn width="130px" depressed color="#772CE8">
@@ -41,7 +41,7 @@
         </v-btn>
 
       </v-col>
-      <v-col cols="4">
+      <v-col >
         <v-btn width="130px" depressed color="#772CE8">
           <svg style="width:20px;height:20px;color: white" viewBox="0 0 24 24">
             <path fill="currentColor"
@@ -52,7 +52,7 @@
           </a>
         </v-btn>
       </v-col>
-      <v-col cols="4">
+      <v-col >
         <v-btn width="130px" depressed color="#772CE8">
           <svg style="width:20px;height:20px;color: white" viewBox="0 0 24 24">
             <path fill="currentColor"
@@ -337,6 +337,8 @@ export default {
     const lastWeekOrders = ref(null)
     const lastMonthOrders = ref(null)
     const orders = ref(null)
+    const transactions = ref(null)
+    const accounting = ref(null)
     const global = inject('global')
 
 
@@ -398,13 +400,26 @@ export default {
         }
       }, (s, e) => {
       })
-      // getOrders()
+      authService.value.receive('seller/accounting/transactions', {}, (s, d) => {
+        if (s == 200) {
+          transactions.value = d.data
+
+        }
+      }, (s, e) => {
+      })
+      authService.value.receive('seller/accounting', {}, (s, d) => {
+        if (s == 200) {
+          accounting.value = d.data
+
+        }
+      }, (s, e) => {
+      })
       getProducts()
       // unseenProducts.value = orders.length - global.state.value.seenOrders
 
 
     })
-    return {products, orders, global,lastWeekOrders ,lastMonthOrders,todayOrders}
+    return {products, orders, global,lastWeekOrders ,lastMonthOrders,todayOrders,transactions,accounting}
   },
   data() {
     return {

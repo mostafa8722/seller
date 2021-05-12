@@ -7,9 +7,9 @@
           آدرس:
           {{theOrder.address}}
         </v-col>
-        <v-col cols="6">
-          <router-link style="float: left" :to="{name:'Golpino Seller Order Page' , params:{id:theOrder.id}}"><button class="purple-btn ml-2">مشاهده سفارش</button></router-link>
-        </v-col>
+<!--        <v-col cols="6">-->
+<!--          <router-link style="float: left" :to="{name:'Golpino Seller Order Page' , params:{id:theOrder.id}}"><button class="purple-btn ml-2">مشاهده سفارش</button></router-link>-->
+<!--        </v-col>-->
 
 
       </v-row>

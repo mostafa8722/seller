@@ -78,6 +78,7 @@ export default {
       authService.value.receive('seller/order', {}, (s, d) => {
         if (s == 200) {
           orders.value = d.data
+          modifyOrders()
 
 
 
@@ -184,6 +185,21 @@ td{
 
 tr{
   width: 100%;
+}
+td {
+  /*border: none!important;*/
+  font-family: inherit!important;
+  font-size: 12px!important;
+  text-align: center!important;
+  background-color: white!important;
+}
+
+th {
+  border: none!important;
+  font-family: inherit!important;
+  font-size: 12px!important;
+  text-align: right!important;
+  background-color: white!important;
 }
 
 .big-cell{

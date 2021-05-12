@@ -239,7 +239,7 @@ th {
 }
 
 td {
-  border: none!important;
+  /*border: none!important;*/
   font-family: inherit!important;
   font-size: 12px!important;
   text-align: center!important;
@@ -250,7 +250,7 @@ th {
   border: none!important;
   font-family: inherit!important;
   font-size: 12px!important;
-  text-align: center!important;
+  text-align: right!important;
   background-color: white!important;
 }
 </style>

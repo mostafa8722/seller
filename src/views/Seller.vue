@@ -31,13 +31,13 @@
           <!--            {{ (global.user.value.name != "") ? global.user.value.name : 'نام فروشگاه' }}-->
           <!--          </span>-->
           <v-row >
-            <v-col :cols="2" :md="1" :sm="1">
+            <v-col :cols="3" :md="1" :sm="1">
               <div class="user-locker mini-title mr-2 ml-2" @click="openNav">
                 <img style="width: 25px;height: 25px;cursor: pointer" v-if="theImage.logo != null" :src="theImage.logo"
                      alt="image">
               </div>
             </v-col>
-            <v-col cols="7" style="align-self: center;font-weight: bold;font-size: 20px;}">
+            <v-col cols="8" style="align-self: center;font-weight: bold;font-size: 12px;}">
               {{ (global.user.value.name != "") ? global.user.value.name : 'نام فروشگاه' }}
             </v-col>
           </v-row>
@@ -47,7 +47,6 @@
       <router-view></router-view>
     </div>
     <div class="navbar" v-if="global.user.value.isLoggedIn">
-      <a href="#news"></a>
       <a href="/seller/dashboard">
         <svg style="width:24px;height:24px" viewBox="0 0 24 24">
           <path fill="currentColor" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
