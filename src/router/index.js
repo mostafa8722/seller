@@ -363,28 +363,33 @@ const sellerCookieFinder = () =>{
 }
 
 router.beforeEach((to, from, next) => {
-  let cookie = cookieFinder()
-  const authenticatedUser = ((cookie == 'no-auth' || cookie == '') ? false : true)
-  let adminCookie = adminCookieFinder()
-  const authenticatedAdmin = ((adminCookie == 'no-auth' || adminCookie == '') ? false : true)
+  console.log(to)
+  if (to.fullPath.includes('dashboard') && to.query!=={}) {
+    document.cookie = "Golpino_seller=" + window.location.href.toString().split('?token=')[1]
+    global.toggleLogin(true)
+  }
+  // let cookie = sellerCookieFinder()
+  // const authenticatedUser = ((cookie == 'no-auth' || cookie == '') ? false : true)
+  // let adminCookie = adminCookieFinder()
+  // const authenticatedAdmin = ((adminCookie == 'no-auth' || adminCookie == '') ? false : true)
   let sellerCookie = sellerCookieFinder()
   const authenticatedSeller = ((sellerCookie == 'no-auth' || sellerCookie == '') ? false : true)
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin)
   const requiresSeller = to.matched.some(record => record.meta.requiresSeller)
   // Check for protected route
-  if (requiresAuth && !authenticatedUser) {
+  // if (requiresAuth && !authenticatedUser) {
+  //   global.alertToggle('لطفا ابتدا وارد حساب کاربری شوید')
+  //   next('/')
+  // }
+  // else if (requiresAdmin && !authenticatedAdmin) {
+  //   global.alertToggle('لطفا ابتدا وارد حساب کاربری شوید')
+  //   next('/qwertyzxcvb/login')
+  // }
+
+  if (requiresSeller && !authenticatedSeller) {
     global.alertToggle('لطفا ابتدا وارد حساب کاربری شوید')
     next('/')
-  }
-  else if (requiresAdmin && !authenticatedAdmin) {
-    global.alertToggle('لطفا ابتدا وارد حساب کاربری شوید')
-    next('/qwertyzxcvb/login')
-  }
-
-  else if (requiresSeller && !authenticatedSeller) {
-    global.alertToggle('لطفا ابتدا وارد حساب کاربری شوید')
-    next('/golpino-for-vendor')
   }
 
   else next();

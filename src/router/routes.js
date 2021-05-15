@@ -81,13 +81,21 @@ const routes = [
       requiresSeller:true
     }
   },
+  // {
+  //   path: '/seller/dashboard',
+  //   name: 'Golpino Seller Dashboard',
+  //   component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Dashbioard/dashboard.vue'),
+  //   meta:{
+  //     requiresSeller:true
+  //   },
+  //   query:{name:'token'}
+  //
+  // },
   {
-    path: '/seller/dashboard',
+    path:'/seller/dashboard',
     name: 'Golpino Seller Dashboard',
-    component: () => import(/* webpackChunkName: "about" */ '../components/Seller/Dashbioard/dashboard.vue'),
-    meta:{
-      requiresSeller:true
-    }
+    component:() => import('../components/Seller/Dashbioard/dashboard.vue'),
+    props:route => ({token:(route.query.token ? route.query.token : null)})
   },
   {
     path: '/seller/settings',

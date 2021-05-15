@@ -47,6 +47,7 @@ export default {
     stateValues
   },
   created(){
+
     global.setUserType(this.tokenType)
     if(this.tokenType != 'wanderer'){
       global.toggleLogin(true)

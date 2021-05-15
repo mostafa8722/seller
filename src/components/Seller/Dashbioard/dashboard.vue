@@ -134,7 +134,7 @@
               <tbody>
               <tr>
                 <td>...</td>
-                <td>...</td>
+                <td v-if="accounting">{{ accounting.account_remain }}</td>
               </tr>
               </tbody>
             </template>
@@ -272,7 +272,7 @@ export default {
     IconImage,
     LineChart
   },
-  setup() {
+  setup(props,context) {
     function callSupport() {
       // CALL SUPPORT HERE
       console.log("call support")
@@ -350,6 +350,11 @@ export default {
       })
     }
     onMounted(() => {
+      var token = window.location.href.toString().split('?token=')
+      // $cookies.set("Golpino_seller",222222,2147483647)
+      document.cookie = 'cck=1'
+      context.root.$router.push('/seller/dashboard')
+
       var date1 = new Date("06/30/2019");
       var today = new Date();
       var Difference_In_Time = today.getTime() - date1.getTime();

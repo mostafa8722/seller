@@ -49,10 +49,12 @@ export default {
     setup(props,context){
 
       onMounted(() => {
+
+
         // if (global.user.value.isLoggedIn) {
         //   context.root.$router.push('/seller/dashboard')
         // }
-        global.user.value.isLoggedIn = false
+        // global.user.value.isLoggedIn = false
       })
 
         // component
@@ -103,7 +105,7 @@ export default {
                         $cookies.set("Golpino_seller",d.data.token,2147483647)
                         global.toggleLogin(true)
                         global.setUserType('seller')
-                        context.root.$router.push('/seller/dashboard')
+                        context.root.$router.push('/seller/dashboard?token=' + d.data.token)
                     }
                 },(s,e)=>{
                     if(!s){
