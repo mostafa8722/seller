@@ -17,7 +17,6 @@
     <div style="height: 3000px" id="main" class="main">
 
 
-
       <!--      <seller-header v-if="global.user.value.isLoggedIn" :the-image="theImage"></seller-header>-->
 
       <div class="panel-header" v-if="global.user.value.isLoggedIn">
@@ -30,7 +29,7 @@
           <!--          <span v-if="global.user.value.isLoggedIn" class="mini-title user-title p-0 m-0">-->
           <!--            {{ (global.user.value.name != "") ? global.user.value.name : 'نام فروشگاه' }}-->
           <!--          </span>-->
-          <v-row >
+          <v-row>
             <v-col :cols="3" :md="1" :sm="1">
               <div class="user-locker mini-title mr-2 ml-2" @click="openNav">
                 <img style="width: 25px;height: 25px;cursor: pointer" v-if="theImage.logo != null" :src="theImage.logo"
@@ -40,18 +39,21 @@
             <v-col :cols="7" :md="10" :sm="10" style="align-self: center;font-weight: bold;font-size: 12px;}">
               {{ (global.user.value.name != "") ? global.user.value.name : 'نام فروشگاه' }}
             </v-col>
-            <v-col cols="1">
-              <v-btn icon  depressed style="color: rgb(119, 44, 232);
+            <div style="    position: absolute;
+    left: 25px;
+    top: 30px;
+}">
+              <v-btn icon depressed style="color: rgb(119, 44, 232);
     background: rgb(119, 44, 232);
     float: left;">
                 <svg style="width:20px;height:20px;color: white" viewBox="0 0 24 24">
                   <path fill="currentColor"
                         d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/>
                 </svg>
-                <a style="color: white;font-size: 10px" href="tel:+900300400">
+                <a style="color: white;font-size: 10px" href="tel://+02126403285">
                 </a>
               </v-btn>
-            </v-col>
+            </div>
           </v-row>
 
         </div>
@@ -156,7 +158,7 @@ export default {
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
   },
-  setup(props,context) {
+  setup(props, context) {
     const global = inject('global')
     const authService = computed(() => {
       return Service(true)
@@ -184,7 +186,7 @@ export default {
       }
     }
     onMounted(() => {
-      if (!global.user.value.isLoggedIn){
+      if (!global.user.value.isLoggedIn) {
         context.root.$router.push('/')
       }
       authService.value.receive('seller/base', {}, (s, d) => {
@@ -443,9 +445,9 @@ button:hover {
 
 .main {
   padding: 16px;
-  margin-bottom: 200px!important;
+  margin-bottom: 200px !important;
   margin-top: 30px;
-  height: fit-content!important;
+  height: fit-content !important;
 }
 
 .main {

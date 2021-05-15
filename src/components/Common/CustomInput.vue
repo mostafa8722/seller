@@ -54,7 +54,7 @@
                   style="width: 15px;height: 15px;margin-top: 10px;margin-right: 10px;cursor: pointer"></image-icon>
       <input :placeholder="placeholder" autocomplete="off" :id="id" type="text"
              style="cursor:pointer;"
-             :class="'hidden-text col-3 ' " @focus="(e)=>suggestAll(e)"
+             :class="'hidden-text col-md-3  col-8' " @focus="(e)=>suggestAll(e)"
              @input="(e)=>suggest(e)" v-model="myModel.id" >
 
       <div class="tags col-8" style="padding: 0">

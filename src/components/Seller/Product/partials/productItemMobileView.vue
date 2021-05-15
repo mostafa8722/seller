@@ -11,24 +11,12 @@
           <v-col cols="7">
             <span style="font-weight: initial">{{ theProduct.name }}</span><br>
           </v-col>
+
           <v-col cols="2">
             <span v-if="enabled" style="color: limegreen">موجود</span>
             <span v-else style="color: red">ناموجود</span>
-          </v-col>
-          <v-col cols="2">
-            <!--           text-enabled="موجود" text-disabled="ناموجود"-->
             <div @click="changeRemain">
-
-
-
-
               <switches  theme="bulma" color="default" v-model="enabled"></switches>
-
-
-
-
-
-
             </div>
           </v-col>
         </v-row>

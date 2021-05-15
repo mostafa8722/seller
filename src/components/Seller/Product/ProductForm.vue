@@ -9,7 +9,7 @@
             <h4 class="tLighter">افزودن تصویر مضاعف</h4>
             <div class="row mt-4">
               <div class="col-md-2 col-lg-2 col-sm-6 col-6">
-                <div class="purple-btn full-width" @click="()=>openInput(2)">انتخاب تصویر جدید</div>
+                <div class="purple-btn full-width pr-5 pl-5" @click="()=>openInput(2)">انتخاب تصویر جدید</div>
               </div>
               <div class="col-2 extra-image-locker" v-if="extraImageToBeAdded != null">
                 <img :src="extraImageToBeAdded.url" class="extra-image-to-add" alt="image">
@@ -39,12 +39,12 @@
                 </div>
                 <img class="showcase-image" :src="image.url" alt="image">
               </div>
-              <!--            <div class="col-3 mt-3">-->
-              <!--              <div @click="()=>openInput(1)"-->
-              <!--                   class="add-image d-flex justify-content-center align-items-center pt-4 pb-4">-->
-              <!--                <icon-image address="/assets/site/images/seller-icons/plus.svg" classes="big"></icon-image>-->
-              <!--              </div>-->
-              <!--            </div>-->
+              <div class="col-12 col-md-6 col-lg-6 mt-3 " >
+                <div @click="()=>openInput(1)"
+                     class="add-image d-flex justify-content-center align-items-center pt-4 pb-4">
+                  <span>تغییر عکس اصلی</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -128,7 +128,7 @@
                 <!--                </p>-->
                 <!--              </div>-->
               </div>
-              <div class="col-12 mt-3 attrs">
+              <div class="col-12 mt-3 attrs" >
                 <div class="d-flex justify-content-between">
 
                   <p class="tNormal mini-title">خصوصیت ها</p>
@@ -1270,10 +1270,31 @@ export default {
   cursor: pointer;
 }
 
-.attrs {
-  padding: 1rem 0px 2rem 0px;
-  border-top: 1px solid rgba(127, 127, 127, 0.3);
-  border-bottom: 1px solid rgba(127, 127, 127, 0.3);
+@media only screen and (min-width: 840px){
+  .attrs {
+    padding: 1rem 0px 2rem 0px;
+    border-top: 1px solid rgba(127, 127, 127, 0.3);
+    border-bottom: 1px solid rgba(127, 127, 127, 0.3);
+  }
+
+}
+@media only screen and (max-width: 500px){
+  .attrs {
+    padding: 1rem 0px 2rem 0px;
+    border-top: 1px solid rgba(127, 127, 127, 0.3);
+    border-bottom: 1px solid rgba(127, 127, 127, 0.3);
+    margin-top: 120px!important;
+  }
+
+}
+@media only screen and (min-width: 500px) and (max-width: 840px){
+  .attrs {
+    padding: 1rem 0px 2rem 0px;
+    border-top: 1px solid rgba(127, 127, 127, 0.3);
+    border-bottom: 1px solid rgba(127, 127, 127, 0.3);
+    margin-top: 70px!important;
+  }
+
 }
 
 .attrs button {
