@@ -364,10 +364,10 @@ const sellerCookieFinder = () =>{
 
 router.beforeEach((to, from, next) => {
   console.log(to)
-  if (to.fullPath.includes('dashboard') && to.query!=={}) {
-    document.cookie = "Golpino_seller=" + window.location.href.toString().split('?token=')[1]
-    global.toggleLogin(true)
-  }
+  // if (to.fullPath.includes('dashboard') && to.query!=={}) {
+  //   document.cookie = "Golpino_seller=" + window.location.href.toString().split('?token=')[1]
+  //   global.toggleLogin(true)
+  // }
   // let cookie = sellerCookieFinder()
   // const authenticatedUser = ((cookie == 'no-auth' || cookie == '') ? false : true)
   // let adminCookie = adminCookieFinder()

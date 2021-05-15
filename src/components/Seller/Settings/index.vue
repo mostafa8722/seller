@@ -58,7 +58,27 @@
                 <!--                </custom-field>-->
               </v-col>
             </v-row>
+            <v-row>
+              <v-col>
+                محله های خدمت رسانی :
+              </v-col>
+              <v-col>
+                <v-text-field filled :value="serviceDistrict" id="serviceDistrict"/>
+              </v-col>
+              <v-col>
+                <v-btn @click="addServiceDistrict" icon>
+                  <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
+                  </svg>
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-row v-for="d in sellerServiceDistricts" :key="d.id">
+                  {{ d.name }}
 
+                </v-row>
+              </v-col>
+            </v-row>
             <v-row>
               <v-col>
                 <custom-input key="z6" placeholder="محدوده خدمت رسانی"
@@ -730,6 +750,8 @@ export default {
     })
     const sendCosts = ref({value: [null, null, null, null, null, null, null, null, null, null, null], valid: true})
     const sellerAddress = ref(null)
+    const serviceDistrict = ref(null)
+    const sellerServiceDistricts = ref(null)
 
 
     const activateMenu = (id) => {
@@ -763,6 +785,16 @@ export default {
 
     const getSellerInfos = () => {
       // GET LOGO PICS
+
+
+      authService.value.receive('seller/base/district', {}, (s, d) => {
+        if (s == 200) {
+
+          sellerServiceDistricts.value = d.data
+        }
+      }, (s, e) => {
+      })
+
 
       authService.value.receive('seller/base/sendcost', {}, (s, d) => {
         if (s == 200) {
@@ -1345,6 +1377,33 @@ export default {
       }
 
     }
+    const addServiceDistrict = () => {
+      let f = new FormData()
+
+      var selectedDistrict
+      districts.map((d) => {
+        if (serviceDistrict===d.name) {
+           selectedDistrict = d.id
+        }
+      })
+
+
+      f.append('district_id[0]', selectedDistrict)
+      authService.value.transmit('seller/base/district', f, (s, d) => {
+        if (s == 200)
+          global.alertToggle('اطلاعات با موفقیت افزوده شد!')
+          authService.value.receive('seller/base/district', {}, (s, d) => {
+          if (s == 200) {
+
+            sellerServiceDistricts.value = d.data
+          }
+        }, (s, e) => {
+        })
+      }, (s, e) => {
+        if (!s)
+          global.alertToggle('عملیات ناموفق')
+      })
+    }
 
 
     const props = {initial: null}
@@ -1370,6 +1429,9 @@ export default {
 
 
     return {
+      sellerServiceDistricts,
+      addServiceDistrict,
+      serviceDistrict,
       address,
       zoomUpdate,
       mapOptions,
@@ -1773,7 +1835,7 @@ th {
   width: 100%;
 }
 
-.gray{
-  background-color: rgba(0,0,0,.06)!important;
+.gray {
+  background-color: rgba(0, 0, 0, .06) !important;
 }
 </style>
