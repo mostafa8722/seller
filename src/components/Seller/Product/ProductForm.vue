@@ -38,12 +38,12 @@
               </div>
               <img class="showcase-image" :src="image.url" alt="image">
             </div>
-            <div class="col-3 mt-3">
-              <div @click="()=>openInput(1)"
-                   class="add-image d-flex justify-content-center align-items-center pt-4 pb-4">
-                <icon-image address="/assets/site/images/seller-icons/plus.svg" classes="big"></icon-image>
-              </div>
-            </div>
+<!--            <div class="col-3 mt-3">-->
+<!--              <div @click="()=>openInput(1)"-->
+<!--                   class="add-image d-flex justify-content-center align-items-center pt-4 pb-4">-->
+<!--                <icon-image address="/assets/site/images/seller-icons/plus.svg" classes="big"></icon-image>-->
+<!--              </div>-->
+<!--            </div>-->
           </div>
         </div>
       </div>
@@ -52,15 +52,18 @@
         <form action="">
           <div class="row">
             <div class="col-lg-6 col-md-12 mt-3">
+              <p v-if="edit && product.name" style="font-size: 12px;">نام محصول</p>
               <custom-input style="background-color: white!important;" kind="text" placeholder="نام محصول" :initialEdit="editProduct.name" container="full-width"
                             v-bind:theModel.sync="product.name" classes="block full-width white"></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
+              <p v-if="edit && product.remaining" style="font-size: 12px;">موجودی</p>
               <custom-input style="background-color: white!important;" kind="text" placeholder="موجودی(*)" container="full-width"
                             v-bind:theModel.sync="product.remaining"
                             classes="block full-width"></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
+              <p v-if="edit && product.price" style="font-size: 12px;">قیمت(تومان)</p>
               <custom-input style="background-color: white!important;" kind="text" placeholder="قیمت(تومان)(*)" container="full-width"
                             v-bind:theModel.sync="product.price"
                             classes="block full-width"></custom-input>
@@ -68,18 +71,20 @@
 
             <!--                    <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="dropDown" :selectItems="subCategories" label="زیر دسته" container="full-width" v-bind:theModel.sync="product.subCat" classes="block full-width" placeholder="دسته بندی را انتخاب کنید"></custom-input></div>-->
             <div class="col-lg-6 col-md-12 mt-3">
+              <p v-if="edit && product.discount" style="font-size: 12px;">درصد تخفیف</p>
               <custom-input style="background-color: white!important;" kind="text" placeholder="درصد تخفیف(*)" container="full-width"
                             v-bind:theModel.sync="product.discount" classes="block full-width"></custom-input>
             </div>
 
             <!-- <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="text" placeholder="کد تخفیف را وارد کنید" label="کد تخفیف" container="full-width" v-bind:theModel.sync="model" classes="block full-width"></custom-input></div> -->
             <div class="col-lg-6 col-md-12 mt-3">
+              <p v-if="edit && product.category_id" style="font-size: 12px;">دسته بندی</p>
               <custom-input style="background-color: white!important;" kind="dropDown" :selectItems="categories" placeholder="دسته بندی(*)" container="full-width"
                             v-bind:theModel.sync="product.category_id" classes="block full-width"
               ></custom-input>
             </div>
             <div class="col-lg-6 col-md-12 mt-3">
-
+              <p v-if="edit && product.tag_id" style="font-size: 12px;">برچسب ها</p>
               <custom-input kind="tag" :suggestions="tags" @addTag="addTag" placeholder="برچسب ها"
                             container="full-width" label=""
                             v-bind:theModel.sync="product.tag_id" classes="block full-width">
@@ -138,6 +143,7 @@
 
             </div>
             <div class="col-12 mt-3">
+              <p class="tNormal mini-title">توضیحات</p>
               <custom-input style="background-color: white!important;" kind="area"  placeholder="توضیحات مربوط به محصول را وارد کنید"
                             container="full-width" v-bind:theModel.sync="product.desc"
                             classes="block full-width"></custom-input>

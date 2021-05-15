@@ -27,42 +27,18 @@
       <!--          </div>-->
       <!--        </v-card>-->
       <!--      </v-col>-->
-      <v-col >
 
-
-        <v-btn width="130px" depressed color="#772CE8">
-          <svg style="width:20px;height:20px;color: white" viewBox="0 0 24 24">
-            <path fill="currentColor"
-                  d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/>
-          </svg>
-          <a style="color: white;font-size: 10px" href="tel:+900300400">
-            تماس با پشتیبانی
-          </a>
-        </v-btn>
-
-      </v-col>
-      <v-col >
-        <v-btn width="130px" depressed color="#772CE8">
-          <svg style="width:20px;height:20px;color: white" viewBox="0 0 24 24">
-            <path fill="currentColor"
-                  d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"/>
-          </svg>
-          <a style="color: white;font-size: 10px" :href="`/shop/` +global.user.value.sellerId">
-            مشاهده فروشگاه
-          </a>
-        </v-btn>
-      </v-col>
-      <v-col >
-        <v-btn width="130px" depressed color="#772CE8">
-          <svg style="width:20px;height:20px;color: white" viewBox="0 0 24 24">
-            <path fill="currentColor"
-                  d="M17,13H13V17H11V13H7V11H11V7H13V11H17M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z"/>
-          </svg>
-          <a style="color: white;font-size: 10px" :href="`/seller/product`">
-            محصول اضافه کنید
-          </a>
-        </v-btn>
-      </v-col>
+<!--      <v-col >-->
+<!--        <v-btn width="130px" depressed color="#772CE8">-->
+<!--          <svg style="width:20px;height:20px;color: white" viewBox="0 0 24 24">-->
+<!--            <path fill="currentColor"-->
+<!--                  d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"/>-->
+<!--          </svg>-->
+<!--          <a style="color: white;font-size: 10px" :href="`/shop/` +global.user.value.sellerId">-->
+<!--            مشاهده فروشگاه-->
+<!--          </a>-->
+<!--        </v-btn>-->
+<!--      </v-col>-->
     </v-row>
 
 

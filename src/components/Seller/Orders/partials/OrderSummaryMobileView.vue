@@ -1,11 +1,14 @@
 <template>
   <div class="productCard container"  v-if="browserSize===`mobile`" style="background-color: #F5F5F5">
-    <v-card elevation="2"  style="height: 100%; margin: 5px;padding: 25px">
+    <v-card elevation="2"  style="height: 100%; margin: 5px;padding: 25px;font-size: 12px">
 
       <v-row>
         <v-col cols="6">
           آدرس:
           {{theOrder.address}}
+        </v-col>
+        <v-col cols="6">
+          <Etiquette :status="parseInt(theOrder.status)"></Etiquette>
         </v-col>
 <!--        <v-col cols="6">-->
 <!--          <router-link style="float: left" :to="{name:'Golpino Seller Order Page' , params:{id:theOrder.id}}"><button class="purple-btn ml-2">مشاهده سفارش</button></router-link>-->
@@ -39,10 +42,9 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col style="align-self: flex-end;" :cols="3">
-          <Etiquette :status="parseInt(theOrder.status)"></Etiquette>
-        </v-col>
-        <v-col>
+
+        <v-col style="display: flex;
+    place-content: space-between;">
           <custom-input placeholder="انتخاب وضعیت" inputClass="tNormal" labelClass="tLighter" kind="dropDown" container="half-width" v-bind:theModel.sync="status" :selectItems="stati" classes="no-border light-facade"></custom-input>
           <v-btn outlined  @click="reviseOrder" >ثبت وضعیت</v-btn>
 

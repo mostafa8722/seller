@@ -22,9 +22,9 @@
         </v-row>
         <span style="font-weight: initial;" >
           {{
-            (theProduct.price - theProduct.price * theProduct.discount / 100).toFixed(2)
+            (theProduct.price - theProduct.price * theProduct.discount / 100)
           }}تومان</span>
-        <span style="text-decoration: line-through;" >{{ theProduct.price }}تومان</span>
+        <span v-if="theProduct.discount && theProduct.discount!== 0" style="text-decoration: line-through;" >{{ theProduct.price }}تومان</span>
 <v-row><image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true"
                    @iconClicked="editMe"
                    classes="mid mr-3 actionIcon">

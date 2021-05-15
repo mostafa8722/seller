@@ -13,10 +13,10 @@
     </div>
     <v-row style="margin-top: 20px;">
 
-      <v-col>
+      <v-col v-if="products">
         تعداد محصولات موجود: {{ products.length }}
       </v-col>
-      <v-col>
+      <v-col v-if="products">
         تعداد محصولات ناموجود: {{ products.filter(item => item.remain === 0).length }}
       </v-col>
     </v-row>
@@ -47,7 +47,7 @@
       </div>
       <div class="products-table mt-2 desktopPro">
 
-        <v-simple-table>
+        <v-simple-table v-if="products">
           <template v-slot:default>
             <thead>
             <tr>
@@ -110,7 +110,7 @@
         <!--      })" :key="i" :theProduct="p"></product-item>-->
         <!--        </table>-->
       </div>
-      <div class="mobilePro">
+      <div class="mobilePro" v-if="products">
         <product-item-mobile-view browser-size="mobile" v-for="(p,i) in products.filter(product => {
         return product.name.toLowerCase().includes(this.searchTerm);
       })" :key="i"
@@ -229,6 +229,8 @@ export default {
 .products-page {
   font-weight: lighter;
   font-size: 0.8rem;
+  padding-bottom: 200px;
+
 }
 
 h2 {
