@@ -4,7 +4,8 @@
     <div class="d-flex justify-content-between">
 
     </div>
-    <div style="overflow: hidden!important;position: fixed!important;bottom: 100px!important;width: fit-content!important;z-index: 200!important;left: 20px!important;border-radius: 30px!important;">
+    <div
+        style="overflow: hidden!important;position: fixed!important;bottom: 100px!important;width: fit-content!important;z-index: 200!important;left: 20px!important;border-radius: 30px!important;">
       <router-link :to="{name:'Golpino Seller Product Form'}">
         <custom-button classes="add-button" icon="/assets/site/images/seller-icons/white-plus.svg"
                        label="افزودن محصول"></custom-button>
@@ -32,59 +33,85 @@
 
           <!--                <custom-input placeholder="جستجوی محصول" icon="/assets/site/images/seller-icons/search.svg" kind="text" v-bind:theModel.sync="model"></custom-input>                -->
         </div>
-<!--        <div class="mini-title">-->
-<!--          <p class="mini-title">-->
-<!--            نمایش 1 تا 10 از 100 محصول-->
-<!--          </p>-->
-<!--          <custom-button classes="list-nav-button" icon="/assets/site/images/seller-icons/right-arrow.svg"-->
-<!--                         iconSize="mid"></custom-button>-->
-<!--          <custom-button classes="list-nav-button" icon="/assets/site/images/seller-icons/left-arrow.svg"-->
-<!--                         iconSize="mid"></custom-button>-->
-<!--        </div>-->
+        <!--        <div class="mini-title">-->
+        <!--          <p class="mini-title">-->
+        <!--            نمایش 1 تا 10 از 100 محصول-->
+        <!--          </p>-->
+        <!--          <custom-button classes="list-nav-button" icon="/assets/site/images/seller-icons/right-arrow.svg"-->
+        <!--                         iconSize="mid"></custom-button>-->
+        <!--          <custom-button classes="list-nav-button" icon="/assets/site/images/seller-icons/left-arrow.svg"-->
+        <!--                         iconSize="mid"></custom-button>-->
+        <!--        </div>-->
+
+
       </div>
       <div class="products-table mt-2 desktopPro">
-        <table>
-          <tr>
-            <th>تصویر
-              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>
-              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>
-            </th>
-            <th>نام محصول
-              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>
-              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>
-            </th>
-            <th>دسته بندی
-              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>
-              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>
-            </th>
-            <th>قیمت
-              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>
-              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>
-            </th>
-            <th>قیمت با تخفیف
-              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>
-              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>
-            </th>
-            <th>تعداد
-              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>
-              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>
-            </th>
-            <th>تاریخ
-              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>
-              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>
-            </th>
-            <th>اقدامات
-              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>
-              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>
-            </th>
-          </tr>
-          <product-item browser-size="desktop"  v-for="(p,i) in products.filter(product => {
-        return product.name.toLowerCase().includes(this.searchTerm);
+
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+            <tr>
+              <th>تصویر</th>
+              <th>نام محصول</th>
+              <th>دسته بندی</th>
+              <th>قیمت</th>
+              <th> قیمت با تخفیف</th>
+              <th>تعداد</th>
+              <th>تاریخ</th>
+              <th>اقدامات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <product-item browser-size="desktop" v-for="(p,i) in products.filter(product => {
+        return product.name.toLowerCase().includes(searchTerm);
       })" :key="i" :theProduct="p"></product-item>
-        </table>
+            </tbody>
+          </template>
+        </v-simple-table>
+
+
+        <!--        <table>-->
+        <!--          <tr>-->
+        <!--            <th>تصویر-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>-->
+        <!--            </th>-->
+        <!--            <th>نام محصول-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>-->
+        <!--            </th>-->
+        <!--            <th>دسته بندی-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>-->
+        <!--            </th>-->
+        <!--            <th>قیمت-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>-->
+        <!--            </th>-->
+        <!--            <th>قیمت با تخفیف-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>-->
+        <!--            </th>-->
+        <!--            <th>تعداد-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>-->
+        <!--            </th>-->
+        <!--            <th>تاریخ-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>-->
+        <!--            </th>-->
+        <!--            <th>اقدامات-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-up.svg" classes="mid"></icon-image>-->
+        <!--              <icon-image address="/assets/site/images/seller-icons/arrow-down.svg" classes="mid"></icon-image>-->
+        <!--            </th>-->
+        <!--          </tr>-->
+        <!--          <product-item browser-size="desktop" v-for="(p,i) in products.filter(product => {-->
+        <!--        return product.name.toLowerCase().includes(this.searchTerm);-->
+        <!--      })" :key="i" :theProduct="p"></product-item>-->
+        <!--        </table>-->
       </div>
       <div class="mobilePro">
-        <product-item-mobile-view browser-size="mobile"  v-for="(p,i) in products.filter(product => {
+        <product-item-mobile-view browser-size="mobile" v-for="(p,i) in products.filter(product => {
         return product.name.toLowerCase().includes(this.searchTerm);
       })" :key="i"
                                   :theProduct="p"/>
@@ -136,12 +163,10 @@ export default {
       authService.value.receive('seller/product', {}, (s, d) => {
         if (s == 200)
           products.value = d.data
-          var moment = require('jalali-moment');
-          products.value.map((p) => {
-            p.created_at = moment(p.created_at.toString().substr(0, 10), 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD')
-          })
-
-
+        var moment = require('jalali-moment');
+        products.value.map((p) => {
+          p.created_at = moment(p.created_at.toString().substr(0, 10), 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD')
+        })
 
 
       }, (s, e) => {
@@ -240,17 +265,17 @@ th {
 
 td {
   /*border: none!important;*/
-  font-family: inherit!important;
-  font-size: 12px!important;
-  text-align: center!important;
-  background-color: white!important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  text-align: center !important;
+  background-color: white !important;
 }
 
 th {
-  border: none!important;
-  font-family: inherit!important;
-  font-size: 12px!important;
-  text-align: right!important;
-  background-color: white!important;
+  border: none !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  text-align: right !important;
+  background-color: white !important;
 }
 </style>
