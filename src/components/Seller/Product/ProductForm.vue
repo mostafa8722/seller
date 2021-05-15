@@ -155,7 +155,7 @@
 
                 <!--                  </v-row>-->
                 <!--                </div>-->
-                <v-row v-for="a in neededAttributes" :key="a.id">
+                <v-row v-if="!edit" v-for="a in neededAttributes" :key="a.id">
                   <v-col>
                     <!--    <input type="checkbox" :id="a.name">-->
                     {{ a.name }}
@@ -172,7 +172,7 @@
                 <div v-if="edit && productToEdit">
                   <v-row>
                     <v-col v-for="a in productToEdit.attributes" :key="a.id">
-                      <div style="width: 50%;
+                      <div style="
     margin: auto;
     text-align: center;
     border: 2px solid #682AD5;"> {{ a.name }}
@@ -833,6 +833,7 @@ export default {
         })
       } else {
 
+
         var z = []
         if (this.product.category_id.value) {
           this.neededAttributes.map((y) => {
@@ -873,8 +874,7 @@ export default {
         myTags.map((v, i) => {
           f.append('tag_id[' + i + ']', v)
         })
-        console.log(f.get('category_id'))
-        console.log(f.get('attribute_id'))
+
 
         this.authService.transmit('seller/product', f, () => {
           alert("با موفقیت ثبت شد!")
@@ -908,6 +908,8 @@ export default {
               } else if (err.field == 'category_id') {
                 this.product.category_id.valid = false
                 this.product.category_id.message = err.message
+              } else if (err.field == 'image') {
+                alert('عکس را آپلود کنید.')
               }
             })
           }
@@ -1042,6 +1044,8 @@ export default {
               } else if (err.field == 'category_id') {
                 this.product.category_id.valid = false
                 this.product.category_id.message = err.message
+              } else if (err.field == 'image') {
+                alert('عکس را آپلود کنید.')
               }
             })
           }
@@ -1089,6 +1093,7 @@ export default {
               this.product.price = {value: d.data.product.price, valid: true}
               this.product.remaining = {value: d.data.product.remain, valid: true}
               this.product.discount = {value: d.data.product.discount, valid: true}
+              this.product.desc = {value: d.data.product.desc, valid: true}
               this.mainImage = d.data.product.image
               this.product.image = {value: d.data.product.image, valid: true}
               // for (let z = 0; z < productToEdit.value.attributes.length; z++) {
@@ -1123,7 +1128,7 @@ export default {
 
               this.mainImage.value = d.data.product.image
               this.product.discount = {value: d.data.product.discount, valid: true}
-              this.product.desc = {value: d.data.product.desc, valid: true}
+
 
               if (d.data.tag) {
                 this.product.tag_id = [...d.data.tag]
