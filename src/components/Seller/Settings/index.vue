@@ -351,106 +351,106 @@
               </div>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row >
             <v-col cols="1"><input id="workTimesCheckBox0" type="checkbox"></v-col>
             <v-col cols="2">
               <div>شنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="workTimes[0].open_at" filled/>
+              <v-text-field v-if="workTimes[0]" v-model="workTimes[0].open_at" filled/>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="workTimes[0].close_at" filled/>
+              <v-text-field v-if="workTimes[0]" v-model="workTimes[0].close_at" filled/>
             </v-col>
             <v-col>
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(0)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row >
             <v-col cols="1"><input id="workTimesCheckBox1" type="checkbox"></v-col>
             <v-col cols="2">
               <div>یکشنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[1].open_at"/>
+              <v-text-field v-if="workTimes[1]" filled v-model="workTimes[1].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[1].close_at"/>
+              <v-text-field v-if="workTimes[1]" filled v-model="workTimes[1].close_at"/>
             </v-col>
             <v-col>
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(1)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row >
             <v-col cols="1"><input id="workTimesCheckBox2" type="checkbox"></v-col>
             <v-col cols="2">
               <div>دوشنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[2].open_at"/>
+              <v-text-field v-if="workTimes[2]" filled v-model="workTimes[2].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[2].close_at"/>
+              <v-text-field v-if="workTimes[2]" filled v-model="workTimes[2].close_at"/>
             </v-col>
             <v-col>
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(2)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row >
             <v-col cols="1"><input id="workTimesCheckBox3" type="checkbox"></v-col>
             <v-col cols="2">
               <div>سه شنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[3].open_at"/>
+              <v-text-field  v-if="workTimes[3]" filled v-model="workTimes[3].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[3].close_at"/>
+              <v-text-field v-if="workTimes[3]"  filled v-model="workTimes[3].close_at"/>
             </v-col>
             <v-col>
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(3)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row >
             <v-col cols="1"><input id="workTimesCheckBox4" type="checkbox"></v-col>
             <v-col cols="2">
               <div>چهارشنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[4].open_at"/>
+              <v-text-field v-if="workTimes[4]" filled v-model="workTimes[4].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[4].close_at"/>
+              <v-text-field v-if="workTimes[4]" filled v-model="workTimes[4].close_at"/>
             </v-col>
             <v-col>
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(4)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row >
             <v-col cols="1"><input id="workTimesCheckBox5" type="checkbox"></v-col>
             <v-col cols="2">
               <div>پنج شنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[5].open_at"/>
+              <v-text-field v-if="workTimes[5]" filled v-model="workTimes[5].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[5].close_at"/>
+              <v-text-field v-if="workTimes[5]" filled v-model="workTimes[5].close_at"/>
             </v-col>
             <v-col>
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(5)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row >
             <v-col cols="1"><input id="workTimesCheckBox6" type="checkbox"></v-col>
             <v-col cols="2">
               <div>جمعه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[6].open_at"/>
+              <v-text-field v-if="workTimes[6]" filled v-model="workTimes[6].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field filled v-model="workTimes[6].close_at"/>
+              <v-text-field v-if="workTimes[6]" filled v-model="workTimes[6].close_at"/>
             </v-col>
             <v-col>
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(6)">ثبت</v-btn>
@@ -854,7 +854,9 @@ export default {
           })
           workTimesIds.value = wId
           for (let s = 0; s < d.data.length; s++) {
+            console.log('d',document.getElementById('workTimesCheckBox' + s))
             if (workTimes.value[s].open_at !== '00::00') {
+
               document.getElementById('workTimesCheckBox' + s).checked = true
             }
           }
@@ -952,31 +954,11 @@ export default {
       })
       // DISTRICTS
 
-      authService.value.receive('search/district', {}, (s, d) => {
-        if (s == 200) {
-          districts.value = d.data
-          districts.value.map((di) => {
-            di.text = di.name
-          })
 
-
-          districts.value.map((dd) => {
-            this.theDistrict = {}
-            this.theDistrict.text = dd.name
-            this.theDistrict.value = dd.id
-            this.theDistrict.name = dd.name
-            this.theDistrict.id = dd.id
-
-          })
-
-
-        }
-      }, (s, e) => {
-      })
     }
 
     const distances = ref(null)
-    const serviceRanges = ref(null)
+    const serviceRanges = ref([])
 
     const activateModel = (i) => {
       if (i == 'workTime') {
@@ -1429,6 +1411,8 @@ export default {
 
 
     return {
+      districts,
+      authService,
       sellerServiceDistricts,
       addServiceDistrict,
       serviceDistrict,
@@ -1446,7 +1430,6 @@ export default {
       descs,
       hasAddress,
       sellerSendCosts,
-      districts,
       theWorkDay,
       days,
       getImage,
@@ -1596,7 +1579,27 @@ export default {
     this.activateModel('sendCost');
   },
   mounted() {
+    this.authService.receive('search/district', {}, (s, d) => {
+      if (s == 200) {
+        this.districts = d.data
+        this.districts.map((di) => {
+          di.text = di.name
+        })
 
+
+        this.districts.map((dd) => {
+          this.theDistrict = {}
+          this.theDistrict.text = dd.name
+          this.theDistrict.value = dd.id
+          this.theDistrict.name = dd.name
+          this.theDistrict.id = dd.id
+
+        })
+
+
+      }
+    }, (s, e) => {
+    })
     // this.districts.map((dd) => {
     //   this.theDistrict = {}
     //   this.theDistrict.text = dd.name

@@ -70,7 +70,10 @@ export default {
     const modifyOrders = () => {
       var moment = require('jalali-moment');
       orders.value.map((p) => {
-        p.time = moment(p.time.toString().substr(0, 10), 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD')
+        if (p.time) {
+          p.time = moment(p.time.toString().substr(0, 10), 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD')
+
+        }
       })
 
       global.state.value.seenOrders = orders.value.length

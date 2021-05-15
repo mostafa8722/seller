@@ -62,9 +62,9 @@
               </thead>
               <tbody>
               <tr>
-                <td>{{ todayOrders }}</td>
-                <td>{{lastWeekOrders.length}}</td>
-                <td> {{ lastMonthOrders }}</td>
+                <td v-if="todayOrders">{{ todayOrders.length }}</td>
+                <td v-if="lastWeekOrders">{{lastWeekOrders.length}}</td>
+                <td v-if="lastMonthOrders"> {{ lastMonthOrders.length }}</td>
               </tr>
               </tbody>
             </template>
@@ -86,8 +86,8 @@
               </thead>
               <tbody>
               <tr>
-                <td>{{ products.length }}</td>
-                <td>{{ products.filter(item => item.remain === 0).length }}</td>
+                <td v-if="products">{{ products.length }}</td>
+                <td v-if="products">{{ products.filter(item => item.remain === 0).length }}</td>
               </tr>
               </tbody>
             </template>
@@ -309,9 +309,9 @@ export default {
       return Service(true)
     })
     const products = ref(null)
-    const todayOrders = ref(null)
-    const lastWeekOrders = ref(null)
-    const lastMonthOrders = ref(null)
+    const todayOrders = ref([])
+    const lastWeekOrders = ref([])
+    const lastMonthOrders = ref([])
     const orders = ref(null)
     const transactions = ref(null)
     const accounting = ref(null)
@@ -329,7 +329,7 @@ export default {
       var token = window.location.href.toString().split('?token=')
       // $cookies.set("Golpino_seller",222222,2147483647)
       document.cookie = 'cck=1'
-      context.root.$router.push('/seller/dashboard')
+      context.root.$router.push('/seller/dashboard').catch(()=>{});
 
       var date1 = new Date("06/30/2019");
       var today = new Date();
@@ -343,25 +343,28 @@ export default {
 
           lastWeekOrders.value =[]
           var moment = require('jalali-moment');
+          console.log(orders.value.length)
           orders.value.map((p) => {
-            p.time2 = moment(p.time.toString().substr(0, 10), 'YYYY-MM-DD').format('MM/DD/YYYY')
-            var orderTime = new Date(p.time2)
-            var today = new Date();
-            var Difference_In_Time = today.getTime() - orderTime.getTime();
-            var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-            console.log(today)
-            console.log(orderTime)
-            console.log(Difference_In_Days)
 
-            if (1<Difference_In_Days < 7 ) {
-              lastWeekOrders.value.push(p)
+            if (p.time) {
+              p.time2 = moment(p.time.toString().substr(0, 10), 'YYYY-MM-DD').format('MM/DD/YYYY')
+              var orderTime = new Date(p.time2)
+              var today = new Date();
+              var Difference_In_Time = today.getTime() - orderTime.getTime();
+              var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+              if (1<Difference_In_Days < 7 ) {
+                lastWeekOrders.value.push(p)
+              }
+              if (Difference_In_Days > 7 && Difference_In_Days <30) {
+                lastMonthOrders.value.push(p)
+              }
+              if (Difference_In_Days < 1 ) {
+                todayOrders.value.push(p)
+              }
             }
-            if (Difference_In_Days > 7 && Difference_In_Days <30) {
-              lastMonthOrders.value.push(p)
-            }
-            if (Difference_In_Days < 1 ) {
-              todayOrders.value.push(p)
-            }
+
+
+
 
           })
 
