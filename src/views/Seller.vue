@@ -156,7 +156,7 @@ export default {
   destroyed() {
     window.removeEventListener("resize", this.myEventHandler);
   },
-  setup() {
+  setup(props,context) {
     const global = inject('global')
     const authService = computed(() => {
       return Service(true)
@@ -184,6 +184,9 @@ export default {
       }
     }
     onMounted(() => {
+      if (!global.user.value.isLoggedIn){
+        context.root.$router.push('/')
+      }
       authService.value.receive('seller/base', {}, (s, d) => {
         if (s == 200) {
 
@@ -195,7 +198,7 @@ export default {
           //   descs.value.fields[1].value.value = d.data.desc
           // }
           if (d.data.status != 4) {
-            this.verified = false
+            // this.verified = false
           }
         }
       }, (s, e) => {

@@ -360,7 +360,7 @@ export default {
               if (1<Difference_In_Days < 7 ) {
                 lastWeekOrders.value.push(p)
               }
-              if (Difference_In_Days > 7 && Difference_In_Days <30) {
+              if ( Difference_In_Days <30) {
                 lastMonthOrders.value.push(p)
               }
               if (Difference_In_Days < 1 ) {
@@ -384,7 +384,7 @@ export default {
             global.user.value.name = d.data.name
 
           if (d.data.status != 4) {
-            this.verified = false
+            // verified = false
           }
         }
       }, (s, e) => {

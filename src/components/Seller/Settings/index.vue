@@ -19,13 +19,13 @@
           </v-col>
         </v-row>
 
-        <div id="1" class="w3-container city" >
+        <div id="1" class="w3-container city">
           <div class="general-settings" v-if="activeMenu == 0">
 
             <p>{{ descs.fields[0].name }}</p>
             <v-row>
               <v-col>
-                <v-text-field v-if="baseInfoLoaded"  disabled dense filled :value="descs.fields[0].value.value"/>
+                <v-text-field v-if="baseInfoLoaded" disabled dense filled :value="descs.fields[0].value.value"/>
               </v-col>
             </v-row>
 
@@ -58,36 +58,36 @@
                 <!--                </custom-field>-->
               </v-col>
             </v-row>
-<!--            <v-row>-->
-<!--              <v-col>-->
-<!--                محله های خدمت رسانی :-->
-<!--              </v-col>-->
-<!--              <v-col>-->
-<!--                <v-text-field filled :value="serviceDistrict" id="serviceDistrict"/>-->
-<!--              </v-col>-->
-<!--              <v-col>-->
-<!--                <v-btn @click="addServiceDistrict" icon>-->
-<!--                  <svg style="width:24px;height:24px" viewBox="0 0 24 24">-->
-<!--                    <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>-->
-<!--                  </svg>-->
-<!--                </v-btn>-->
-<!--              </v-col>-->
-<!--              <v-col>-->
-<!--                <v-row v-for="d in sellerServiceDistricts" :key="d.id">-->
-<!--                  {{ d.name }}-->
+            <!--            <v-row>-->
+            <!--              <v-col>-->
+            <!--                محله های خدمت رسانی :-->
+            <!--              </v-col>-->
+            <!--              <v-col>-->
+            <!--                <v-text-field filled :value="serviceDistrict" id="serviceDistrict"/>-->
+            <!--              </v-col>-->
+            <!--              <v-col>-->
+            <!--                <v-btn @click="addServiceDistrict" icon>-->
+            <!--                  <svg style="width:24px;height:24px" viewBox="0 0 24 24">-->
+            <!--                    <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>-->
+            <!--                  </svg>-->
+            <!--                </v-btn>-->
+            <!--              </v-col>-->
+            <!--              <v-col>-->
+            <!--                <v-row v-for="d in sellerServiceDistricts" :key="d.id">-->
+            <!--                  {{ d.name }}-->
 
-<!--                </v-row>-->
-<!--              </v-col>-->
-<!--            </v-row>-->
-            <v-row>
-              <v-col>
-                <custom-input key="z6" placeholder="محدوده خدمت رسانی"
-                              kind="dropDown" container="full-width"
-                              :selectItems="serviceRanges"
-                              classes="select-facade2"
-                              v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>
-              </v-col>
-            </v-row>
+            <!--                </v-row>-->
+            <!--              </v-col>-->
+            <!--            </v-row>-->
+            <!--            <v-row>-->
+            <!--              <v-col>-->
+            <!--                <custom-input key="z6" placeholder="محدوده خدمت رسانی"-->
+            <!--                              kind="dropDown" container="full-width"-->
+            <!--                              :selectItems="serviceRanges"-->
+            <!--                              classes="select-facade2"-->
+            <!--                              v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>-->
+            <!--              </v-col>-->
+            <!--            </v-row>-->
 
 
             <div id="addressMap">
@@ -123,7 +123,8 @@
                                 placeholder="نام آدرس"></custom-input>
                 </div>
                 <div class="col-md-6 col-sm-12 col-12 col-lg-6 ">
-                  <custom-input v-if="!hasAddress" kind="searchInput" :suggestions="districts" @addTag="selectDistrict" placeholder="محله"
+                  <custom-input v-if="!hasAddress" kind="searchInput" :suggestions="districts" @addTag="selectDistrict"
+                                placeholder="محله"
                                 container="full-width" v-bind:theModel.sync="theAddress.district_id"
                                 classes="block full-width">
                     <p v-if="theDistrict != null">{{ theDistrict.name }}</p>
@@ -135,7 +136,7 @@
                                 placeholder="متن آدرس*"></custom-input>
                 </div>
                 <div class="col-12 ">
-                  <button  v-if="!hasAddress" class="purple-btn mt-3 full-width" @click="send">ذخیره و ثبت</button>
+                  <button v-if="!hasAddress" class="purple-btn mt-3 full-width" @click="send">ذخیره و ثبت</button>
                 </div>
               </div>
             </div>
@@ -501,53 +502,52 @@
         <!--        </div>-->
 
 
+        <!--                   <h3>اطلاعات فروشگاه</h3>-->
 
-          <!--                   <h3>اطلاعات فروشگاه</h3>-->
+        <!-- <div class="section-divider">
+            <p>اطلاعات شخصی</p>
+        </div>
+        <custom-field :deactive="model.deactive" @edit="()=>activateModel(i)" @activate="()=>activateModel(i)" v-for="(model,i) in basicModels.fields" :key="i" :theField="model.name">
+            <custom-input :classes="model.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="model.deactive" kind="text" container="full-width" v-bind:theModel.sync="model.value"></custom-input>
+        </custom-field> -->
 
-          <!-- <div class="section-divider">
-              <p>اطلاعات شخصی</p>
-          </div>
-          <custom-field :deactive="model.deactive" @edit="()=>activateModel(i)" @activate="()=>activateModel(i)" v-for="(model,i) in basicModels.fields" :key="i" :theField="model.name">
-              <custom-input :classes="model.deactive ? 'deactive block full-width' : 'block full-width'" :deactive="model.deactive" kind="text" container="full-width" v-bind:theModel.sync="model.value"></custom-input>
-          </custom-field> -->
-
-          <!--            <p>اطلاعات اولیه همچون آدرس و ساعات کاری را وارد کنید</p>-->
-
-
-          <!--            <custom-field :deactive="descs.deactive" @edit="()=>submitValue('descs')"-->
-          <!--                          @activate="()=>activateModel('descs')" theField="توضیحات فروشگاه">-->
-          <!--              <div class="row p-2">-->
-          <!--                <div class="col-4">-->
-          <!--                  <custom-input labelClass="tLighter mini-title" key='z12'-->
-          <!--                                :classes="descs.deactive ? 'deactive full-width' : ' full-width'"-->
-          <!--                                :deactive="descs.deactive" kind="text" container="full-width mt-1 ml-1"-->
-          <!--                                v-bind:theModel.sync="descs.fields[0].value"-->
-          <!--                                :label="descs.fields[0].name"></custom-input>-->
-          <!--                </div>-->
-          <!--                <div class="col-8">-->
-          <!--                  <custom-input labelClass="tLighter mini-title" key='z22'-->
-          <!--                                :classes="descs.deactive ? 'deactive full-width' : ' full-width'"-->
-          <!--                                :deactive="descs.deactive" kind="area" rows="2" container="full-width mt-1 ml-1"-->
-          <!--                                v-bind:theModel.sync="descs.fields[1].value"-->
-          <!--                                :label="descs.fields[1].name"></custom-input>-->
-          <!--                </div>-->
-          <!--              </div>-->
-          <!--            </custom-field>-->
+        <!--            <p>اطلاعات اولیه همچون آدرس و ساعات کاری را وارد کنید</p>-->
 
 
-          <!--          <div class="notif-settings" v-if="activeMenu == 1">-->
-          <!--            <h3>تنظیمات اعلان ها</h3>-->
-          <!--            <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>-->
-          <!--            <h4 class="mt-4">هشدارهای امنیتی</h4>-->
-          <!--            <custom-input container="mt-3 full-width" v-for="(model , i) in notifModels" :key="'n' + i"-->
-          <!--                          :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value"-->
-          <!--                          :label="model.label"></custom-input>-->
-          <!--            <h4 class="mt-4">اخبارها</h4>-->
-          <!--            <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>-->
-          <!--            <custom-input container="mt-3 full-width" v-for="(model , i) in newsModels" :key="'u' + i"-->
-          <!--                          :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value"-->
-          <!--                          :label="model.label"></custom-input>-->
-          <!--          </div>-->
+        <!--            <custom-field :deactive="descs.deactive" @edit="()=>submitValue('descs')"-->
+        <!--                          @activate="()=>activateModel('descs')" theField="توضیحات فروشگاه">-->
+        <!--              <div class="row p-2">-->
+        <!--                <div class="col-4">-->
+        <!--                  <custom-input labelClass="tLighter mini-title" key='z12'-->
+        <!--                                :classes="descs.deactive ? 'deactive full-width' : ' full-width'"-->
+        <!--                                :deactive="descs.deactive" kind="text" container="full-width mt-1 ml-1"-->
+        <!--                                v-bind:theModel.sync="descs.fields[0].value"-->
+        <!--                                :label="descs.fields[0].name"></custom-input>-->
+        <!--                </div>-->
+        <!--                <div class="col-8">-->
+        <!--                  <custom-input labelClass="tLighter mini-title" key='z22'-->
+        <!--                                :classes="descs.deactive ? 'deactive full-width' : ' full-width'"-->
+        <!--                                :deactive="descs.deactive" kind="area" rows="2" container="full-width mt-1 ml-1"-->
+        <!--                                v-bind:theModel.sync="descs.fields[1].value"-->
+        <!--                                :label="descs.fields[1].name"></custom-input>-->
+        <!--                </div>-->
+        <!--              </div>-->
+        <!--            </custom-field>-->
+
+
+        <!--          <div class="notif-settings" v-if="activeMenu == 1">-->
+        <!--            <h3>تنظیمات اعلان ها</h3>-->
+        <!--            <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>-->
+        <!--            <h4 class="mt-4">هشدارهای امنیتی</h4>-->
+        <!--            <custom-input container="mt-3 full-width" v-for="(model , i) in notifModels" :key="'n' + i"-->
+        <!--                          :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value"-->
+        <!--                          :label="model.label"></custom-input>-->
+        <!--            <h4 class="mt-4">اخبارها</h4>-->
+        <!--            <p>فقط اعلان هایی را که فعال کرده اید از طریق ایمیل دریافت خواهید نمود.</p>-->
+        <!--            <custom-input container="mt-3 full-width" v-for="(model , i) in newsModels" :key="'u' + i"-->
+        <!--                          :deactive="model.value" kind="toggle" v-bind:theModel.sync="model.value"-->
+        <!--                          :label="model.label"></custom-input>-->
+        <!--          </div>-->
 
 
       </div>
@@ -586,9 +586,10 @@ export default {
   },
   setup() {
     onMounted(() => {
+
       getBanks()
       getFinancials()
-      getSellerInfos().then(baseInfoLoaded.value =true)
+      getSellerInfos().then(baseInfoLoaded.value = true)
       document.getElementById('1btn').style.borderBottom = '3px solid #682AD5'
 
     })
@@ -786,7 +787,7 @@ export default {
       // }
     })
 
-    const getSellerInfos = async  () => {
+    const getSellerInfos = async () => {
 
       authService.value.receive('seller/address', {}, (s, d) => {
         if (s == 200) {
@@ -798,7 +799,14 @@ export default {
         }
       }, (s, e) => {
       })
-      // GET LOGO PICS
+
+      setTimeout(function () {
+            if (!hasAddress) {
+              global.alertToggle(' ابتدا آدرس را وارد کنید')
+
+            }
+          }
+          , 5000)
 
 
       authService.value.receive('seller/base/district', {}, (s, d) => {
@@ -838,7 +846,7 @@ export default {
             console.log(d.data)
           }
           if (d.data.status != 4) {
-            this.verified = false
+            // this.verified = false
           }
         }
       }, (s, e) => {
@@ -925,37 +933,7 @@ export default {
       // }, (s, e) => {
       // })
       // SERVICE RANGES
-      authService.value.receive('seller/base/servicerange', {}, (s, d) => {
-        if (s == 200) {
-          if (d.data != [] && d.data != null) {
-            serviceRanges.value = d.data
-            serviceRanges.value.map((se) => {
-              se.text = se.value
-              se.value = se.id
-            })
-          }
-        }
-      }, (s, e) => {
-      })
-      // get
-      authService.value.receive('seller/base/sellerservicerange', {}, (s, d) => {
-        if (s == 200) {
 
-          if (d.data != []) {
-            serviceRanges.value.map((ser) => {
-              if (d.data.service_range_id == ser.id) {
-                console.log(ser)
-                serviceRange.value = {
-                  deactive: true,
-                  edit: false,
-                  fields: [{value: {value: {value: ser.id, text: ser.text}, valid: true}}]
-                }
-              }
-            })
-          }
-        }
-      }, (s, e) => {
-      })
 
       // ADDRESS
 
@@ -1104,7 +1082,10 @@ export default {
         case 'serviceRange':
           // activateModel('serviceRange')
           currentForm.value = 'servicerange'
-          authService.value.transmit('seller/base/servicerange/' + serviceRange.value.fields[0].value.value.value, {}, successfulOp, failedOp)
+          if (serviceRange.value.fields[0].value.value) {
+            authService.value.transmit('seller/base/servicerange/' + serviceRange.value.fields[0].value.value.value, {}, successfulOp, failedOp)
+
+          }
           break;
         case 'shopAddress':
           activateModel('shopAddress')
@@ -1468,7 +1449,7 @@ export default {
       activateMenu,
       notifModels,
       newsModels,
-      financialModels
+      financialModels,
     }
   }
   ,
@@ -1543,7 +1524,7 @@ export default {
     submitPostingGroup() {
       this.submitPosting();
     },
-    submitPptTime(){
+    submitPptTime() {
       this.submitValue('ppTime');
     }
     ,
@@ -1611,6 +1592,41 @@ export default {
       }
     }, (s, e) => {
     })
+
+
+    // this.authService.receive('seller/base/servicerange', {}, (s, d) => {
+    //   if (s == 200) {
+    //     if (d.data != [] && d.data != null) {
+    //       this.serviceRanges.value = d.data
+    //       this.serviceRanges.value.map((se) => {
+    //         se.text = se.value
+    //         se.value = se.id
+    //       })
+    //     }
+    //   }
+    // }, (s, e) => {
+    // })
+    // this.authService.receive('seller/base/sellerservicerange', {}, (s, d) => {
+    //   if (s == 200) {
+    //
+    //     if (d.data != []) {
+    //       this.serviceRanges.value.map((ser) => {
+    //         if (d.data.service_range_id == ser.id) {
+    //           this.serviceRange.value = {
+    //             deactive: true,
+    //             edit: false,
+    //             fields: [{value: {value: {value: ser.id, text: ser.text}, valid: true}}]
+    //           }
+    //         }
+    //       })
+    //     }
+    //
+    //
+    //   }
+    // }, (s, e) => {
+    // })
+
+
     // this.districts.map((dd) => {
     //   this.theDistrict = {}
     //   this.theDistrict.text = dd.name

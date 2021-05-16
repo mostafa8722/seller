@@ -95,7 +95,6 @@ const routes = [
     path:'/seller/dashboard',
     name: 'Golpino Seller Dashboard',
     component:() => import('../components/Seller/Dashbioard/dashboard.vue'),
-    props:route => ({token:(route.query.token ? route.query.token : null)})
   },
   {
     path: '/seller/settings',

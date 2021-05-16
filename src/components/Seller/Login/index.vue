@@ -51,9 +51,9 @@ export default {
       onMounted(() => {
 
 
-        // if (global.user.value.isLoggedIn) {
-        //   context.root.$router.push('/seller/dashboard')
-        // }
+        if (global.user.value.isLoggedIn) {
+          context.root.$router.push('/seller/dashboard')
+        }
         // global.user.value.isLoggedIn = false
       })
 

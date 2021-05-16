@@ -144,7 +144,7 @@ export default {
   mounted() {
     this.getOrders();
     // this.modifyOrders();
-    this.getOrder()
+    // this.getOrder()
   }
 
 
