@@ -19,13 +19,13 @@
           </v-col>
         </v-row>
 
-        <div id="1" class="w3-container city">
+        <div id="1" class="w3-container city" >
           <div class="general-settings" v-if="activeMenu == 0">
 
             <p>{{ descs.fields[0].name }}</p>
             <v-row>
               <v-col>
-                <v-text-field disabled dense filled :value="descs.fields[0].value.value"/>
+                <v-text-field v-if="baseInfoLoaded"  disabled dense filled :value="descs.fields[0].value.value"/>
               </v-col>
             </v-row>
 
@@ -58,27 +58,27 @@
                 <!--                </custom-field>-->
               </v-col>
             </v-row>
-            <v-row>
-              <v-col>
-                محله های خدمت رسانی :
-              </v-col>
-              <v-col>
-                <v-text-field filled :value="serviceDistrict" id="serviceDistrict"/>
-              </v-col>
-              <v-col>
-                <v-btn @click="addServiceDistrict" icon>
-                  <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>
-                  </svg>
-                </v-btn>
-              </v-col>
-              <v-col>
-                <v-row v-for="d in sellerServiceDistricts" :key="d.id">
-                  {{ d.name }}
+<!--            <v-row>-->
+<!--              <v-col>-->
+<!--                محله های خدمت رسانی :-->
+<!--              </v-col>-->
+<!--              <v-col>-->
+<!--                <v-text-field filled :value="serviceDistrict" id="serviceDistrict"/>-->
+<!--              </v-col>-->
+<!--              <v-col>-->
+<!--                <v-btn @click="addServiceDistrict" icon>-->
+<!--                  <svg style="width:24px;height:24px" viewBox="0 0 24 24">-->
+<!--                    <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>-->
+<!--                  </svg>-->
+<!--                </v-btn>-->
+<!--              </v-col>-->
+<!--              <v-col>-->
+<!--                <v-row v-for="d in sellerServiceDistricts" :key="d.id">-->
+<!--                  {{ d.name }}-->
 
-                </v-row>
-              </v-col>
-            </v-row>
+<!--                </v-row>-->
+<!--              </v-col>-->
+<!--            </v-row>-->
             <v-row>
               <v-col>
                 <custom-input key="z6" placeholder="محدوده خدمت رسانی"
@@ -113,29 +113,29 @@
               </l-map>
               <icon-image address="/assets/site/images/seller-icons/loc.svg" v-if="marker"
                           classes="map-marker huge"></icon-image>
-              <button class="map-control purple-btn" ref="bt" @click="change">انتخاب موقعیت*</button>
+              <button v-if="!hasAddress" class="map-control purple-btn" ref="bt" @click="change">انتخاب موقعیت*</button>
             </div>
             <div style="margin-top: 20px;">
               <div class="row full-width">
                 <div class="col-md-6 col-sm-12 col-12 col-lg-6 ">
-                  <custom-input kind="text" container="full-width" classes="full-width gray"
+                  <custom-input v-if="!hasAddress" kind="text" container="full-width" classes="full-width gray"
                                 v-bind:theModel.sync="theAddress.name"
                                 placeholder="نام آدرس"></custom-input>
                 </div>
                 <div class="col-md-6 col-sm-12 col-12 col-lg-6 ">
-                  <custom-input kind="searchInput" :suggestions="districts" @addTag="selectDistrict" placeholder="محله"
+                  <custom-input v-if="!hasAddress" kind="searchInput" :suggestions="districts" @addTag="selectDistrict" placeholder="محله"
                                 container="full-width" v-bind:theModel.sync="theAddress.district_id"
                                 classes="block full-width">
                     <p v-if="theDistrict != null">{{ theDistrict.name }}</p>
                   </custom-input>
                 </div>
                 <div class="col-12 ">
-                  <custom-input kind="text" container="full-width" classes="full-width  gray"
+                  <custom-input v-if="!hasAddress" kind="text" container="full-width" classes="full-width  gray"
                                 v-bind:theModel.sync="theAddress.address"
                                 placeholder="متن آدرس*"></custom-input>
                 </div>
                 <div class="col-12 ">
-                  <button class="purple-btn mt-3 full-width" @click="send">ذخیره و ثبت</button>
+                  <button  v-if="!hasAddress" class="purple-btn mt-3 full-width" @click="send">ذخیره و ثبت</button>
                 </div>
               </div>
             </div>
@@ -188,7 +188,7 @@
             <!--            </custom-field>-->
 
 
-            <v-btn color="#772CE8" outlined style="margin-top: 20px;float: left;background: #682AD5;color: white;"
+            <v-btn color="#772CE8" outlined style="float: left;background: #682AD5;color: white;"
                    @click="submitGeneral">ذخیره
 
             </v-btn>
@@ -230,6 +230,9 @@
           <v-row>
             <v-col cols="6">
               <v-text-field dense filled v-model="preparationTime.fields[0].value.value"/>
+            </v-col>
+            <v-col cols="6">
+              <v-btn style="background: #682AD5;color: white;" @click="submitPptTime">ثبت</v-btn>
             </v-col>
           </v-row>
           <br><br>
@@ -351,7 +354,7 @@
               </div>
             </v-col>
           </v-row>
-          <v-row >
+          <v-row>
             <v-col cols="1"><input id="workTimesCheckBox0" type="checkbox"></v-col>
             <v-col cols="2">
               <div>شنبه</div>
@@ -366,7 +369,7 @@
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(0)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row >
+          <v-row>
             <v-col cols="1"><input id="workTimesCheckBox1" type="checkbox"></v-col>
             <v-col cols="2">
               <div>یکشنبه</div>
@@ -381,7 +384,7 @@
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(1)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row >
+          <v-row>
             <v-col cols="1"><input id="workTimesCheckBox2" type="checkbox"></v-col>
             <v-col cols="2">
               <div>دوشنبه</div>
@@ -396,22 +399,22 @@
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(2)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row >
+          <v-row>
             <v-col cols="1"><input id="workTimesCheckBox3" type="checkbox"></v-col>
             <v-col cols="2">
               <div>سه شنبه</div>
             </v-col>
             <v-col cols="3">
-              <v-text-field  v-if="workTimes[3]" filled v-model="workTimes[3].open_at"/>
+              <v-text-field v-if="workTimes[3]" filled v-model="workTimes[3].open_at"/>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-if="workTimes[3]"  filled v-model="workTimes[3].close_at"/>
+              <v-text-field v-if="workTimes[3]" filled v-model="workTimes[3].close_at"/>
             </v-col>
             <v-col>
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(3)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row >
+          <v-row>
             <v-col cols="1"><input id="workTimesCheckBox4" type="checkbox"></v-col>
             <v-col cols="2">
               <div>چهارشنبه</div>
@@ -426,7 +429,7 @@
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(4)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row >
+          <v-row>
             <v-col cols="1"><input id="workTimesCheckBox5" type="checkbox"></v-col>
             <v-col cols="2">
               <div>پنج شنبه</div>
@@ -441,7 +444,7 @@
               <v-btn style="background: #682AD5;color: white;" @click="submitWorkDaysAndHours(5)">ثبت</v-btn>
             </v-col>
           </v-row>
-          <v-row >
+          <v-row>
             <v-col cols="1"><input id="workTimesCheckBox6" type="checkbox"></v-col>
             <v-col cols="2">
               <div>جمعه</div>
@@ -496,7 +499,7 @@
         <!--                       :theItem="item"></menu-item>-->
         <!--          </div>-->
         <!--        </div>-->
-        <div class=" main-section pt-3">
+
 
 
           <!--                   <h3>اطلاعات فروشگاه</h3>-->
@@ -547,7 +550,6 @@
           <!--          </div>-->
 
 
-        </div>
       </div>
     </div>
 
@@ -586,7 +588,7 @@ export default {
     onMounted(() => {
       getBanks()
       getFinancials()
-      getSellerInfos()
+      getSellerInfos().then(baseInfoLoaded.value =true)
       document.getElementById('1btn').style.borderBottom = '3px solid #682AD5'
 
     })
@@ -752,6 +754,7 @@ export default {
     const sellerAddress = ref(null)
     const serviceDistrict = ref(null)
     const sellerServiceDistricts = ref(null)
+    const baseInfoLoaded = ref(false)
 
 
     const activateMenu = (id) => {
@@ -783,7 +786,18 @@ export default {
       // }
     })
 
-    const getSellerInfos = () => {
+    const getSellerInfos = async  () => {
+
+      authService.value.receive('seller/address', {}, (s, d) => {
+        if (s == 200) {
+          if (d.data != [] && d.data != null) {
+            console.log('ad', d.data)
+            shopAddress.value.fields[0].value.value = d.data.address
+            hasAddress.value = true
+          }
+        }
+      }, (s, e) => {
+      })
       // GET LOGO PICS
 
 
@@ -817,9 +831,10 @@ export default {
 
       authService.value.receive('seller/base', {}, (s, d) => {
         if (s == 200) {
+          descs.value.fields[0].value.value = d.data.name
           if (d.data.specification != null && d.data.desc != null) {
             descs.value.fields[1].value.value = d.data.specification
-            descs.value.fields[0].value.value = d.data.name
+
             console.log(d.data)
           }
           if (d.data.status != 4) {
@@ -854,7 +869,7 @@ export default {
           })
           workTimesIds.value = wId
           for (let s = 0; s < d.data.length; s++) {
-            console.log('d',document.getElementById('workTimesCheckBox' + s))
+            console.log('d', document.getElementById('workTimesCheckBox' + s))
             if (workTimes.value[s].open_at !== '00::00') {
 
               document.getElementById('workTimesCheckBox' + s).checked = true
@@ -943,15 +958,7 @@ export default {
       })
 
       // ADDRESS
-      authService.value.receive('seller/address', {}, (s, d) => {
-        if (s == 200) {
-          if (d.data != [] && d.data != null) {
-            shopAddress.value.fields[0].value.value = d.data.address
-            hasAddress.value = true
-          }
-        }
-      }, (s, e) => {
-      })
+
       // DISTRICTS
 
 
@@ -1364,8 +1371,8 @@ export default {
 
       var selectedDistrict
       districts.map((d) => {
-        if (serviceDistrict===d.name) {
-           selectedDistrict = d.id
+        if (serviceDistrict === d.name) {
+          selectedDistrict = d.id
         }
       })
 
@@ -1374,7 +1381,7 @@ export default {
       authService.value.transmit('seller/base/district', f, (s, d) => {
         if (s == 200)
           global.alertToggle('اطلاعات با موفقیت افزوده شد!')
-          authService.value.receive('seller/base/district', {}, (s, d) => {
+        authService.value.receive('seller/base/district', {}, (s, d) => {
           if (s == 200) {
 
             sellerServiceDistricts.value = d.data
@@ -1411,6 +1418,8 @@ export default {
 
 
     return {
+      global,
+      baseInfoLoaded,
       districts,
       authService,
       sellerServiceDistricts,
@@ -1532,8 +1541,10 @@ export default {
       this.addAddress();
     },
     submitPostingGroup() {
-      this.submitValue('ppTime');
       this.submitPosting();
+    },
+    submitPptTime(){
+      this.submitValue('ppTime');
     }
     ,
     changeServiceRange() {

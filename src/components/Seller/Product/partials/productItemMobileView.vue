@@ -22,9 +22,9 @@
         </v-row>
         <span style="font-weight: initial;" >
           {{
-            (theProduct.price - theProduct.price * theProduct.discount / 100)
+            modifyNumber((theProduct.price - theProduct.price * theProduct.discount / 100).toFixed())
           }}تومان</span>
-        <span v-if="theProduct.discount && theProduct.discount!== 0" style="text-decoration: line-through;" >{{ theProduct.price }}تومان</span>
+        <span v-if="theProduct.discount && theProduct.discount!== 0" style="text-decoration: line-through;" >{{ modifyNumber(theProduct.price) }}تومان</span>
 <v-row><image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true"
                    @iconClicked="editMe"
                    classes="mid mr-3 actionIcon">
@@ -77,6 +77,10 @@ export default {
     Switches
   },
   methods: {
+    modifyNumber(n){
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    },
     deleteMe: function () {
       this.$emit('deleteMe', this.theProduct.id)
     },

@@ -7,8 +7,9 @@
     </td>
     <td>{{ theProduct.name }}</td>
     <td>{{ theProduct.category_name }}</td>
-    <td>{{ theProduct.price }}</td>
-    <td>{{ (theProduct.price - theProduct.price * theProduct.discount / 100).toFixed(3) }} تومان<span class="discount">{{
+    <td>{{ modifyNumber(theProduct.price) }}</td>
+    <td>{{ modifyNumber((theProduct.price - theProduct.price * theProduct.discount / 100).toFixed()) }} تومان
+      <span class="discount" v-if="theProduct.discount && theProduct.discount!== 0" >{{
         theProduct.discount
       }}</span>
     </td>
@@ -46,6 +47,12 @@ export default {
     Switches
   },
   methods: {
+
+    modifyNumber(n){
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    },
+
     changeRemain() {
 
 

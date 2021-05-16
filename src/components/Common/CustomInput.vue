@@ -577,7 +577,7 @@ label {
 .searchInputResult {
   position: absolute;
   top: 5px;
-  right: 10px;
+  left: 30px;
 }
 
 .hidden-text {
