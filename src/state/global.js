@@ -4,6 +4,7 @@ const state = ref({
   alert : false,
   message: "",
     seenOrders:0,
+    reload:0
 });
 
 const alertToggle = (m)=>{

@@ -1,193 +1,223 @@
 <template>
-  <div class="container addProduct">
-    <p class="mt-3" style="font-weight: bold">محصولات > اضافه کردن محصول</p>
-    <div class="product-form mt-2 p-4">
-      <div class="container">
-        <p>عکس محصول</p>
-        <div class="add-pics col-12 mt-3 upload-extra" v-if="edit">
-          <h4 class="tLighter">افزودن تصویر مضاعف</h4>
-          <div class="row mt-4">
-            <div class="col-md-2 col-lg-2 col-sm-6 col-6">
-              <div class="purple-btn full-width" @click="()=>openInput(2)">انتخاب تصویر جدید</div>
-            </div>
-            <div class="col-2 extra-image-locker" v-if="extraImageToBeAdded != null">
-              <img :src="extraImageToBeAdded.url" class="extra-image-to-add" alt="image">
-            </div>
-            <div class="col-2 extra-image-locker" v-if="extraImageToBeAdded != null">
-              <div class="purple-btn full-width" @click="submitExtraImage">ثبت تصویر</div>
+  <v-app style="background: inherit">
+    <div class="container addProduct">
+      <p class="mt-3" style="font-weight: bold">محصولات > اضافه کردن محصول</p>
+      <div class="product-form mt-2 p-4">
+        <div class="container">
+          <p>عکس محصول</p>
+          <div class="add-pics col-12 mt-3 upload-extra" v-if="edit">
+            <h4 class="tLighter">افزودن تصویر مضاعف</h4>
+            <div class="row mt-4">
+              <div class="col-md-2 col-lg-2 col-sm-6 col-6">
+                <div class="purple-btn full-width" @click="()=>openInput(2)">انتخاب تصویر جدید</div>
+              </div>
+              <div class="col-2 extra-image-locker" v-if="extraImageToBeAdded != null">
+                <img :src="extraImageToBeAdded.url" class="extra-image-to-add" alt="image">
+              </div>
+              <div class="col-2 extra-image-locker" v-if="extraImageToBeAdded != null">
+                <div class="purple-btn full-width" @click="submitExtraImage">ثبت تصویر</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="big-upload mt-1 pb-4 " v-if="mainImage == ''">
-          <div class="upload-locker">
-            <img src="/assets/site/images/seller-icons/upload.svg" alt="image">
+          <div class="big-upload mt-1 pb-4 " v-if="mainImage == '' || mainImage=== null ">
+            <div class="upload-locker">
+              <img src="/assets/site/images/seller-icons/upload.svg" alt="image">
+            </div>
+            <p>برای گذاشتن عکس محصول برروی دکمه ی بارگزاری کلیک کنید</p>
+            <p>(حداقل اندازه ی تصویر 1600 1400 x و حداقل سایز 10mb)</p>
+            <button class="white-btn" @click="()=>openInput(1)">بارگزاری</button>
           </div>
-          <p>برای گذاشتن عکس محصول برروی دکمه ی بارگزاری کلیک کنید</p>
-          <p>(حداقل اندازه ی تصویر 1600 x 1400 و حداقل سایز 10mb)</p>
-          <button class="white-btn" @click="()=>openInput(1)">بارگزاری</button>
-        </div>
-        <div class="image-showcase mt-1 pb-4" v-else>
-          <div class="row">
-            <div class="col-12 showcase-locker">
-              <img :src="mainImage" class="showcase-image" alt="image">
-            </div>
-            <div v-for="(image , i) in extraImages" class="col-3 mt-3 showcase-locker" @click="()=>selectImage(i)"
-                 :class="image.isSelected ? 'selectedImage' : ''" :key="i">
-              <div class="selectedLocker" v-if="image.isSelected">
-                <icon-image address="/assets/site/images/seller-icons/selected.svg" classes="mid"></icon-image>
+          <div class="image-showcase mt-1 pb-4" v-else>
+            <div class="row">
+              <div class="col-12 showcase-locker">
+                <img :src="mainImage" class="showcase-image" alt="image">
               </div>
-              <img class="showcase-image" :src="image.url" alt="image">
-            </div>
-<!--            <div class="col-3 mt-3">-->
-<!--              <div @click="()=>openInput(1)"-->
-<!--                   class="add-image d-flex justify-content-center align-items-center pt-4 pb-4">-->
-<!--                <icon-image address="/assets/site/images/seller-icons/plus.svg" classes="big"></icon-image>-->
-<!--              </div>-->
-<!--            </div>-->
-          </div>
-        </div>
-      </div>
-      <input type="file" id="getImage" class="hiddenInput" @change="(e)=>addImage(e)" name="img" accept="image/*">
-      <div>
-        <form action="">
-          <div class="row">
-            <div class="col-lg-6 col-md-12 mt-3">
-              <div style="height: 40px">
-                <p v-if="edit && productToEdit.name" style="font-size: 12px;">نام محصول</p>
+              <div v-for="(image , i) in extraImages" class="col-3 mt-3 showcase-locker" @click="()=>selectImage(i)"
+                   :class="image.isSelected ? 'selectedImage' : ''" :key="i">
+                <div class="selectedLocker" v-if="image.isSelected">
+                  <icon-image address="/assets/site/images/seller-icons/selected.svg" classes="mid"></icon-image>
+                </div>
+                <img class="showcase-image" :src="image.url" alt="image">
               </div>
-              <custom-input style="background-color: white!important;" kind="text" placeholder="نام محصول" :initialEdit="editProduct.name" container="full-width"
-                            v-bind:theModel.sync="product.name" classes="block full-width white"></custom-input>
-            </div>
-            <div class="col-lg-6 col-md-12 mt-3">
-              <div style="height: 40px">
-                <p v-if="edit && (productToEdit.remaining || productToEdit.remaining===0)" style="font-size: 12px;">موجودی</p>
-              </div>
-              <custom-input style="background-color: white!important;" kind="text" placeholder="موجودی(*)" container="full-width"
-                            v-bind:theModel.sync="product.remaining"
-                            classes="block full-width"></custom-input>
-            </div>
-            <div class="col-lg-6 col-md-12 mt-3">
-             <div style="height: 40px">
-                <p v-if="edit && productToEdit.price" style="font-size: 12px;">قیمت(تومان)</p>
-             </div>
-              <custom-input style="background-color: white!important;" kind="text" placeholder="قیمت(تومان)(*)" container="full-width"
-                            v-bind:theModel.sync="product.price"
-                            classes="block full-width"></custom-input>
-            </div>
-
-            <!--                    <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="dropDown" :selectItems="subCategories" label="زیر دسته" container="full-width" v-bind:theModel.sync="product.subCat" classes="block full-width" placeholder="دسته بندی را انتخاب کنید"></custom-input></div>-->
-            <div class="col-lg-6 col-md-12 mt-3">
-              <div style="height: 40px">
-                <p v-if="edit && (productToEdit.discount || productToEdit.discount===0)" style="font-size: 12px;">درصد تخفیف</p>
-              </div>
-              <custom-input style="background-color: white!important;" kind="text" placeholder="درصد تخفیف(*)" container="full-width"
-                            v-bind:theModel.sync="product.discount" classes="block full-width"></custom-input>
-            </div>
-
-            <!-- <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="text" placeholder="کد تخفیف را وارد کنید" label="کد تخفیف" container="full-width" v-bind:theModel.sync="model" classes="block full-width"></custom-input></div> -->
-            <div class="col-lg-6 col-md-12 mt-3">
-              <div style="height: 40px">
-                <p v-if="edit && productToEdit.category_id" style="font-size: 12px;">دسته بندی</p>
-              </div>
-              <custom-input style="background-color: white!important;" kind="dropDown" :selectItems="categories" placeholder="دسته بندی(*)" container="full-width"
-                            v-bind:theModel.sync="product.category_id" classes="block full-width"
-              ></custom-input>
-            </div>
-            <div class="col-lg-6 col-md-12 mt-3">
-              <div style="height: 40px">
-                <p v-show="edit && productToEdit.tag_id" style="font-size: 12px;">برچسب ها</p>
-              </div>
-              <p v-show="edit && productToEdit.tag_id" style="font-size: 12px;"></p>
-              <custom-input kind="tag" :suggestions="tags" @addTag="addTag" placeholder="برچسب ها"
-                            container="full-width" label=""
-                            v-bind:theModel.sync="product.tag_id" classes="block full-width">
-                <my-tag v-for="(tag,i) in product.tag_id" :theTag="tag" @closeTag="()=>removeTag(tag.id)"
-                        classes="productTag" :key="i"></my-tag>
-              </custom-input>
-              <!--              <div class="suggestions">-->
-              <!--                <p class="mini-title">برچسب های پیشنهادی :</p>-->
-              <!--                <p class="mini-title suggestion" v-for="(t,i) in suggestedTags" @click="()=>addTag(t)" :key="i">-->
-              <!--                  {{ t.text }}-->
-              <!--                  {{ i >= suggestedTags.length - 1 ? "" : " - " }}-->
-              <!--                </p>-->
+              <!--            <div class="col-3 mt-3">-->
+              <!--              <div @click="()=>openInput(1)"-->
+              <!--                   class="add-image d-flex justify-content-center align-items-center pt-4 pb-4">-->
+              <!--                <icon-image address="/assets/site/images/seller-icons/plus.svg" classes="big"></icon-image>-->
               <!--              </div>-->
+              <!--            </div>-->
             </div>
-            <div class="col-12 mt-3 attrs">
-              <div class="d-flex justify-content-between">
-
-                <p class="tNormal mini-title">خصوصیت ها</p>
+          </div>
+        </div>
+        <input type="file" id="getImage" class="hiddenInput" @change="(e)=>addImage(e)" name="img" accept="image/*">
+        <div>
+          <form action="">
+            <div class="row">
+              <div class="col-lg-6 col-md-12 mt-3">
+                <div style="height: 40px">
+                  <p v-if="edit && productToEdit && productToEdit.name" style="font-size: 12px;">نام محصول</p>
+                </div>
+                <custom-input style="background-color: white!important;" kind="text" placeholder="نام محصول"
+                              :initialEdit="editProduct.name" container="full-width"
+                              v-bind:theModel.sync="product.name" classes="block full-width white"></custom-input>
+              </div>
+              <div class="col-lg-6 col-md-12 mt-3">
+                <div style="height: 40px">
+                  <p v-if="edit && productToEdit && (productToEdit.remaining || productToEdit.remaining===0)"
+                     style="font-size: 12px;">
+                    موجودی</p>
+                </div>
+                <custom-input style="background-color: white!important;" kind="text" placeholder="موجودی(*)"
+                              container="full-width"
+                              v-bind:theModel.sync="product.remaining"
+                              classes="block full-width"></custom-input>
+              </div>
+              <div class="col-lg-6 col-md-12 mt-3">
+                <div style="height: 40px">
+                  <p v-if="edit &&  productToEdit && productToEdit.price" style="font-size: 12px;">قیمت(تومان)</p>
+                </div>
+                <custom-input style="background-color: white!important;" kind="text" placeholder="قیمت(تومان)(*)"
+                              container="full-width"
+                              v-bind:theModel.sync="product.price"
+                              classes="block full-width"></custom-input>
               </div>
 
-              <div v-if="product.category_id.value">
-                <v-row v-for="a in product.category_id.value.at" :key="a.id">
-                  <v-col style="text-align: -webkit-center;" class="col-2">
-                    <span>  <input type="checkbox" :id="a.name"></span>
+              <!--                    <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="dropDown" :selectItems="subCategories" label="زیر دسته" container="full-width" v-bind:theModel.sync="product.subCat" classes="block full-width" placeholder="دسته بندی را انتخاب کنید"></custom-input></div>-->
+              <div class="col-lg-6 col-md-12 mt-3">
+                <div style="height: 40px">
+                  <p v-if="edit &&  productToEdit && (productToEdit.discount || productToEdit.discount===0)"
+                     style="font-size: 12px;">درصد
+                    تخفیف</p>
+                </div>
+                <custom-input style="background-color: white!important;" kind="text" placeholder="درصد تخفیف(*)"
+                              container="full-width"
+                              v-bind:theModel.sync="product.discount" classes="block full-width"></custom-input>
+              </div>
 
-                    <span style="margin-right: 4px">{{ a.name }}:</span>
-                  </v-col>
+              <!-- <div class="col-lg-6 col-md-12 mt-3"><custom-input kind="text" placeholder="کد تخفیف را وارد کنید" label="کد تخفیف" container="full-width" v-bind:theModel.sync="model" classes="block full-width"></custom-input></div> -->
+              <div class="col-lg-6 col-md-12 mt-3">
+                <div style="height: 40px">
+                  <p v-if="edit &&  productToEdit && productToEdit.category_id" style="font-size: 12px;">دسته بندی</p>
+                </div>
+                <custom-input id="select" @newSelect="changed" style="background-color: white!important;"
+                              kind="dropDown"
+                              :selectItems="categories1"
+                              placeholder="دسته بندی(*)" container="full-width"
+                              v-bind:theModel.sync="product.category_id" classes="block full-width"
+                ></custom-input>
+
+                <!--                               <v-select @change="changed" :items="categories1" v-model="product.category_id.value" id="select"/>-->
+
+
+              </div>
+              <div class="col-lg-6 col-md-12 mt-3">
+                <div style="height: 40px">
+                  <p v-show="edit &&   productToEdit && productToEdit.tag_id" style="font-size: 12px;">برچسب ها</p>
+                </div>
+                <p v-show="edit &&  productToEdit && productToEdit.tag_id" style="font-size: 12px;"></p>
+                <custom-input kind="tag" :suggestions="tags" @addTag="addTag" placeholder="برچسب ها"
+                              container="full-width" label=""
+                              v-bind:theModel.sync="product.tag_id" classes="block full-width">
+                  <my-tag v-for="(tag,i) in product.tag_id" :theTag="tag" @closeTag="()=>removeTag(tag.id)"
+                          classes="productTag" :key="i"></my-tag>
+                </custom-input>
+                <!--              <div class="suggestions">-->
+                <!--                <p class="mini-title">برچسب های پیشنهادی :</p>-->
+                <!--                <p class="mini-title suggestion" v-for="(t,i) in suggestedTags" @click="()=>addTag(t)" :key="i">-->
+                <!--                  {{ t.text }}-->
+                <!--                  {{ i >= suggestedTags.length - 1 ? "" : " - " }}-->
+                <!--                </p>-->
+                <!--              </div>-->
+              </div>
+              <div class="col-12 mt-3 attrs">
+                <div class="d-flex justify-content-between">
+
+                  <p class="tNormal mini-title">خصوصیت ها</p>
+                </div>
+
+                <!--                <div v-if="product.category_id.at">-->
+                <!--                  <v-row v-for="a in product.category_id.at" :key="a.id">-->
+                <!--                    <v-col style="text-align: -webkit-center;" class="col-2">-->
+                <!--                      <span>  <input type="checkbox" :id="a.name"></span>-->
+
+                <!--                      <span style="margin-right: 4px">{{ a.name }}:</span>-->
+                <!--                    </v-col>-->
+                <!--                    <v-col>-->
+                <!--                      <v-row>-->
+                <!--                        <v-col v-for="b in a.options" :key="b.id">-->
+                <!--                          <div class="options" @click="check(b.id)" style="background: #682AD5;color: white;border-radius: 10px;text-align: -webkit-center;cursor: pointer;-->
+                <!--">-->
+                <!--                            <span><input type="radio" :name="a.name" :value="b.name" :id="b.id"></span>-->
+                <!--                            <span> {{ b.name }}</span>-->
+                <!--                          </div>-->
+                <!--                        </v-col>-->
+                <!--                      </v-row>-->
+                <!--                    </v-col>-->
+
+                <!--                  </v-row>-->
+                <!--                </div>-->
+                <v-row v-for="a in neededAttributes" :key="a.id">
                   <v-col>
-                    <v-row>
-                      <v-col v-for="b in a.options" :key="b.id">
-                       <div class="options" @click="check(b.id)" style="background: #682AD5;color: white;border-radius: 10px;text-align: -webkit-center;cursor: pointer;
-">
-                         <span><input type="radio" :name="a.name" :value="b.name" :id="b.id"></span>
-                         <span> {{ b.name }}</span>
-                       </div>
-                      </v-col>
-                    </v-row>
+                    <!--    <input type="checkbox" :id="a.name">-->
+                    {{ a.name }}
                   </v-col>
-
-                </v-row>
-              </div>
-
-
-              <div v-if="edit">
-                <v-row>
-                  <v-col v-for="a in productToEdit.attributes" :key="a.id">
-                    <div style="width: 50%;
-    margin: auto;
-    text-align: center;
-    border: 2px solid #682AD5;"> {{ a.name }}
+                  <v-col v-for="o in neededOptions.filter((x)=> x.parent===a.id)" :key="o.id">
+                    <div v-for="op in o.option" :key="op.id">
+                      <input type="radio" :name="a.name" :value="op.name" :id="op.id">
+                      {{ op.name }}
                     </div>
                   </v-col>
                 </v-row>
+
+
+                <div v-if="edit && productToEdit">
+                  <v-row>
+                    <v-col v-for="a in productToEdit.attributes" :key="a.id">
+                      <div style="width: 50%;
+    margin: auto;
+    text-align: center;
+    border: 2px solid #682AD5;"> {{ a.name }}
+                      </div>
+                    </v-col>
+                  </v-row>
+                </div>
+
+
+              </div>
+              <div class="col-12 mt-3">
+                <p class="tNormal mini-title">توضیحات</p>
+                <custom-input style="background-color: white!important;" kind="area"
+                              placeholder="توضیحات مربوط به محصول را وارد کنید"
+                              container="full-width" v-bind:theModel.sync="product.desc"
+                              classes="block full-width"></custom-input>
+              </div>
+              <!-- <div class="col-12 mt-3"><custom-input kind="tick" label="افزودن به گل های زیر قیمت بازار" value="under" v-bind:theModel.sync="tick"></custom-input><icon-image address="/assets/site/images/seller-icons/question.svg" classes="big ml-1"></icon-image></div> -->
+              <input type="file" id="getExtraImage" class="hiddenInput" @change="(e)=>addExtraImage(e)" name="extraImg"
+                     accept="image/*">
+              <div>
+                <v-row>
+                  <v-col>
+                    <button class="purple-btn " @click="(e)=>submitProductSingle(e)">ثبت محصول</button>
+
+                  </v-col>
+                  <v-col>
+                    <button v-if="!edit" class="purple-btn " @click="(e)=>submitProduct(e)" style="width: 200px">ثبت و
+                      افزودن محصول جدید
+                    </button>
+
+                  </v-col>
+                  <v-col>
+                    <button class="white-btn ">انصراف</button>
+
+                  </v-col>
+                </v-row>
               </div>
 
-
             </div>
-            <div class="col-12 mt-3">
-              <p class="tNormal mini-title">توضیحات</p>
-              <custom-input style="background-color: white!important;" kind="area"  placeholder="توضیحات مربوط به محصول را وارد کنید"
-                            container="full-width" v-bind:theModel.sync="product.desc"
-                            classes="block full-width"></custom-input>
-            </div>
-            <!-- <div class="col-12 mt-3"><custom-input kind="tick" label="افزودن به گل های زیر قیمت بازار" value="under" v-bind:theModel.sync="tick"></custom-input><icon-image address="/assets/site/images/seller-icons/question.svg" classes="big ml-1"></icon-image></div> -->
-            <input type="file" id="getExtraImage" class="hiddenInput" @change="(e)=>addExtraImage(e)" name="extraImg"
-                   accept="image/*">
-            <div>
-              <v-row>
-                <v-col >
-                  <button class="purple-btn " @click="(e)=>submitProductSingle(e)">ثبت محصول</button>
-
-                </v-col>
-                <v-col >
-                  <button v-if="!edit" class="purple-btn " @click="(e)=>submitProduct(e)" style="width: 200px">ثبت و
-                    افزودن محصول جدید
-                  </button>
-
-                </v-col>
-                <v-col >
-                  <button class="white-btn ">انصراف</button>
-
-                </v-col>
-              </v-row>
-            </div>
-
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 <script>
 import {ref, onMounted, watch, computed, reactive, inject} from "@vue/composition-api";
@@ -227,13 +257,14 @@ export default {
       name: {value: null, valid: true},
       price: {value: null, valid: true},
       remaining: {value: null, valid: true},
-      category_id: {value: null, valid: true},
+      category_id: {value: {}, valid: true},
       discount: {value: null, valid: true},
       desc: {value: null, valid: true},
       image: {},
       tag_id: [],
       attr_id: {value: [], valid: true},
       subCat: {value: 'none', valid: true},
+
 
     })
     const editProduct = ref({
@@ -276,60 +307,9 @@ export default {
     // })
     const productToEdit = ref(null)
 
+
     onMounted(() => {
-      axios.get('https://api.golpino.com/api/seller/categories')
-          .then(resp1 => {
-            categories.value = resp1.data.data
 
-
-            categories.value.map((p) => {
-              p.text = p.name
-              p.value = p.id
-            })
-
-
-            categories.value.map((a) => {
-              a.at = []
-            })
-
-            categories.value.map((a) => {
-                  axios.get('https://api.golpino.com/api/seller/attributes?category_id=' + a.id)
-                      .then(resp2 => {
-                        resp2.data.data.map((b) => {
-                          a.at = [...a.at, b]
-                        })
-
-                        a.at.map((c) => {
-                          c.options = []
-                        })
-                        a.at.map((c) => {
-                          axios.get('https://api.golpino.com/api/seller/attributechild/' + c.id)
-                              .then(resp3 => {
-                                resp3.data.data.map((d) => {
-                                  c.options = [...c.options, d]
-                                })
-
-
-
-                              }).catch(err => {
-                            console.error(err);
-                          });
-                        })
-
-                      })
-                      .catch(err => {
-                        // Handle Error Here
-                        console.error(err);
-                      });
-                }
-            )
-
-            console.log(product.category_id.at)
-
-          })
-          .catch(err => {
-            console.error(err);
-          });
 
       getTags()
       if (context.root.$route.params.id) {
@@ -346,108 +326,6 @@ export default {
         })
 
 
-        authService.value.receive('seller/product/' + context.root.$route.params.id, {}, (s, d) => {
-              if (s == 200) {
-                productToEdit.value = {}
-                productToEdit.value.name = d.data.product.name
-                productToEdit.value.price = d.data.product.price
-                productToEdit.value.remaining = d.data.product.remain
-                productToEdit.value.discount = d.data.product.discount
-                productToEdit.value.desc = d.data.product.desc
-                productToEdit.value.attributes = d.data.attribute
-                productToEdit.value.category_id = d.data.category.id
-                categories.value.map((c) => {
-                  if (c.value == d.data.category.id) {
-                    productToEdit.value.attrs = c
-                    console.log('m', productToEdit.value.attrs.at)
-                  }
-                })
-                product.name = {value: d.data.product.name, valid: true}
-                product.category_id = {
-                  value: {
-                    id: d.data.category.id,
-                    value: d.data.category.id,
-                    name: d.data.category.name,
-                    text: d.data.category.name
-                  }, valid: true
-                }
-                product.attributes = {value: d.data.attribute, valid: true}
-                product.price = {value: d.data.product.price, valid: true}
-                product.remaining = {value: d.data.product.remain, valid: true}
-                // for (let z = 0; z < productToEdit.value.attributes.length; z++) {
-                //   console.log('m',productToEdit.value.attrs.at)
-                //   productToEdit.value.attrs.at.map((a) => {
-                //     if (a.id === productToEdit.value.attributes[z].parent_id) {
-                //       productToEdit.value.attributes[z].parentText = a.name
-                //
-                //     }
-                //   })
-                // }
-
-
-              }
-
-                  // alert("x")
-                  // if (d.data.category.parent_id == null)
-                  //   product.category_id = {
-                  //     value: {value: d.data.product.category_id, text: d.data.category.name},
-                  //     valid: true
-              //   }
-
-
-              else {
-                categories.value.map((c) => {
-                  if (c.id) {
-                    if (c.id = d.data.category.parent_id)
-                      product.category_id.value = {text: c.name, value: c.id}
-                  }
-                })
-                product.subCat.value = {text: d.data.category.name, value: 1}
-              }
-              mainImage.value = d.data.product.image
-              product.discount = {value: d.data.product.discount, valid: true}
-              product.desc = {value: d.data.product.desc, valid: true}
-              product.image = {value: d.data.product.image, valid: true}
-              if (d.data.tag) {
-                product.tag_id = [...d.data.tag]
-                product.tag_id.map((tt) => {
-                  tt.text = tt.name
-                  tt.value = tt.id
-                })
-              }
-
-              categories.value.map((c) => {
-                if (c.id = d.data.category.parent_id)
-                  product.category_id.value = {text: c.name, value: c.id}
-              })
-              product.subCat.value = {text: d.data.category.name, value: 1}
-              if (d.data.product.attr_id) {
-                product.attr_id = {value: [...d.data.product.attr_id], valid: true}
-              }
-
-              finalAttrs.value = []
-              if (d.data.attribute) {
-                d.data.attribute.map((ta) => {
-                  finalAttrs.value.push({
-                    theParentAttr: {value: ta.parent_id, valid: true},
-                    theChildAttr: {value: ta.id, valid: true}
-                  })
-                })
-                finalAttrs.value = d.data.attribute
-              }
-
-
-              // let childCategori = getParrentCat(product.category_id.value)
-
-              categories.value.map((c) => {
-                if (c.id == product.category_id.value) {
-                  product.category_id.value = c
-                }
-              })
-            }
-            , (s, e) => {
-              console.log("this is error", e)
-            })
       }
 
     })
@@ -562,7 +440,7 @@ export default {
 
     const model = ref(null)
     const tick = ref(false)
-    const mainImage = ref('')
+    const mainImage = ref(null)
     const extraImageToBeAdded = ref(null)
     const images = ref([])
     const extraImages = ref(null)
@@ -761,146 +639,6 @@ export default {
         })
       }
     }
-    const submitProductSingle = (e) => {
-      e.preventDefault()
-      let f = new FormData()
-      if (productToEdit.value != null) {
-
-        var z = []
-        product.category_id.value.at.map((y) => {
-          if (document.getElementById(y.name).checked) {
-            var x = document.getElementsByName(y.name)
-
-            console.log(x)
-            for (let i = 0; i < x.length; i++) {
-              if (document.getElementsByName(y.name)[i].checked) {
-                z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
-              }
-            }
-          }
-        })
-        console.log(z)
-        if (z.lenght === 1) {
-
-          f.append('attribute_id', z[0].amount)
-
-          // z.map((v, i) => {
-          //   f.append('attribute_id[' + i + ']', v.amount)
-          // })
-        }
-        if (productToEdit.value.name != product.name.value)
-          f.append('name', product.name.value)
-        if (productToEdit.value.price != product.price.value)
-          f.append('price', parseInt(product.price.value))
-        if (productToEdit.value.remaining != product.remaining.value)
-          f.append('remain', parseInt(product.remaining.value))
-        if (productToEdit.value.discount != product.discount.value)
-          f.append('discount', parseInt(product.discount.value))
-        if (productToEdit.value.desc != product.desc.value)
-          f.append('desc', product.desc.value)
-        if (productToEdit.value.category_id != product.category_id.value) {
-          delete product.category_id.value.at
-          f.append('category_id', product.category_id.value.value)
-        }
-        if (!product.image.value)
-          f.append('image', product.image)
-
-
-        console.log(f.get('attribute_id'))
-        authService.value.transmit('seller/product/' + context.root.$route.params.id, f, () => {
-          alert("تغییرات ثبت شد")
-          location.reload();
-        }, (s, er) => {
-          console.log({er})
-        })
-      } else {
-
-        var z = []
-        if (product.category_id.value) {
-          product.category_id.value.at.map((y) => {
-            if (document.getElementById(y.name).checked) {
-              var x = document.getElementsByName(y.name)
-
-              console.log(x)
-              for (let i = 0; i < x.length; i++) {
-                if (document.getElementsByName(y.name)[i].checked) {
-                  z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
-                }
-              }
-            }
-          })
-        }
-
-        if (z !== null) {
-          z.map((v, i) => {
-            f.append('attribute_id[' + i + ']', v.amount)
-          })
-        }
-
-
-        f.append('name', product.name.value)
-        f.append('price', parseInt(product.price.value))
-        f.append('remain', parseInt(product.remaining.value))
-
-
-        if (product.category_id.value != null) {
-          f.append('category_id', parseInt(product.category_id.value.value))
-        }
-
-
-        f.append('discount', parseInt(product.discount.value))
-        f.append('desc', product.desc.value)
-        f.append('image', product.image)
-        let myTags = []
-        product.tag_id.map((t) => {
-          myTags.push(t.id)
-        })
-        // f.append('tag_id',myTags)
-        myTags.map((v, i) => {
-          f.append('tag_id[' + i + ']', v)
-        })
-        console.log(f.get('category_id'))
-        console.log(f.get('attribute_id'))
-        // console.log(f.get('category_id'))
-
-        authService.value.transmit('seller/product', f, () => {
-          alert("با موفقیت ثبت شد!")
-          context.root.$router.push('/seller/products')
-
-
-        }, (s, er) => {
-          if (product.image === {}) {
-            alert("لطفا عکس را آپلود کنید")
-          }
-
-
-          console.log({er})
-          if (!s) {
-            er.response.data.error.invalid_params.map((err) => {
-              if (err.field == 'name') {
-                product.name.valid = false
-                product.name.message = err.message
-              } else if (err.field == 'remain') {
-                product.remaining.valid = false
-                product.remaining.message = err.message
-              } else if (err.field == 'price') {
-                product.price.valid = false
-                product.price.message = err.message
-              } else if (err.field == 'discount') {
-                product.discount.valid = false
-                product.discount.message = err.message
-              } else if (err.field == 'desc') {
-                product.desc.valid = false
-                product.desc.message = err.message
-              } else if (err.field == 'category_id') {
-                product.category_id.valid = false
-                product.category_id.message = err.message
-              }
-            })
-          }
-        })
-      }
-    }
 
     const addNewAttr = (e) => {
       e.preventDefault()
@@ -957,8 +695,6 @@ export default {
       childAttrs,
       theChildAttr,
       theParentAttr,
-      submitProduct,
-      submitProductSingle,
       subCategories,
       items,
       tags,
@@ -978,17 +714,460 @@ export default {
   computed: {
     authService() {
       return Service(true)
-    }
+    },
+
+
   },
   data() {
     return {
-      selectedAttribute: null
+      selectedAttribute: null,
+      categories1: [],
+      neededAttributes: [],
+      neededOptions: [],
     }
   },
-  methods:{
-    check(id){
-      document.getElementById(id).checked =true
+  methods: {
+    check(id) {
+      document.getElementById(id).checked = true
       console.log(document.getElementById(id).checked)
+    },
+    getCateGories1() {
+      axios.get('https://api.golpino.com/api/seller/categories')
+          .then(resp1 => {
+            this.categories1 = resp1.data.data
+
+
+            this.categories1.map((p) => {
+              p.text = p.name
+              p.value = p.id
+            })
+
+
+          }).catch((err) => {
+        console.log(err)
+      })
+    },
+    getAttributes1(a) {
+      axios.get('https://api.golpino.com/api/seller/attributes?category_id=' + a.id)
+          .then(resp2 => {
+            this.neededAttributes = resp2.data.data
+
+          }).catch((err) => {
+        console.log(err)
+      })
+
+    },
+    getOptions1() {
+
+      this.neededAttributes.map((c) => {
+        axios.get('https://api.golpino.com/api/seller/attributechild/' + c.id)
+            .then(resp3 => {
+              this.neededOptions.push({parent: c.id, option: resp3.data.data})
+
+
+            }).catch(err => {
+          console.error(err);
+        });
+      })
+
+
+    },
+
+    changed(e) {
+      this.product.category_id.value = e
+      console.log(e)
+      this.getAttributes1(e)
+      setTimeout(this.getOptions1, 2000);
+      console.log('e1')
+    },
+    submitProductSingle(e) {
+      e.preventDefault()
+      let f = new FormData()
+      if (this.productToEdit != null) {
+
+        // var z = []
+        // if (product.category_id.value.at) {
+        //   product.category_id.value.at.map((y) => {
+        //     if (document.getElementById(y.name).checked) {
+        //       var x = document.getElementsByName(y.name)
+        //
+        //       console.log(x)
+        //       for (let i = 0; i < x.length; i++) {
+        //         if (document.getElementsByName(y.name)[i].checked) {
+        //           z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
+        //         }
+        //       }
+        //     }
+        //   })
+        // }
+        // console.log(z)
+        // if (z.lenght === 1) {
+        //
+        //   f.append('attribute_id', z[0].amount)
+        //
+        //   // z.map((v, i) => {
+        //   //   f.append('attribute_id[' + i + ']', v.amount)
+        //   // })
+        // }
+        if (this.productToEdit.name != this.product.name.value)
+          f.append('name', this.product.name.value)
+        if (this.productToEdit.price != this.product.price.value)
+          f.append('price', parseInt(this.product.price.value))
+        if (this.productToEdit.remaining != this.product.remaining.value)
+          f.append('remain', parseInt(this.product.remaining.value))
+        if (this.productToEdit.discount != this.product.discount.value)
+          f.append('discount', parseInt(this.product.discount.value))
+        if (this.productToEdit.desc != this.product.desc.value)
+          f.append('desc', this.product.desc.value)
+        if (this.productToEdit.category_id != this.product.category_id.value) {
+          f.append('category_id', this.product.category_id.value.value)
+        }
+        if (!this.product.image.value)
+          f.append('image', this.product.image)
+
+        this.authService.transmit('seller/product/' + this.$route.params.id, f, () => {
+          alert("تغییرات ثبت شد")
+          location.reload();
+        }, (s, er) => {
+          console.log({er})
+        })
+      } else {
+
+        var z = []
+        if (this.product.category_id.value) {
+          this.neededAttributes.map((y) => {
+            var x = document.getElementsByName(y.name)
+            for (let i = 0; i < x.length; i++) {
+              if (document.getElementsByName(y.name)[i].checked) {
+                z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
+              }
+            }
+
+          })
+        }
+
+        if (z !== null) {
+          z.map((v, i) => {
+            f.append('attribute_id[' + i + ']', v.amount)
+          })
+        }
+
+        f.append('name', this.product.name.value)
+        f.append('price', parseInt(this.product.price.value))
+        f.append('remain', parseInt(this.product.remaining.value))
+
+
+        if (this.product.category_id.value != null) {
+          f.append('category_id', parseInt(this.product.category_id.value.value))
+        }
+
+
+        f.append('discount', parseInt(this.product.discount.value))
+        f.append('desc', this.product.desc.value)
+        f.append('image', this.product.image)
+        let myTags = []
+        this.product.tag_id.map((t) => {
+          myTags.push(t.id)
+        })
+        // f.append('tag_id',myTags)
+        myTags.map((v, i) => {
+          f.append('tag_id[' + i + ']', v)
+        })
+        console.log(f.get('category_id'))
+        console.log(f.get('attribute_id'))
+
+        this.authService.transmit('seller/product', f, () => {
+          alert("با موفقیت ثبت شد!")
+          this.$router.push('/seller/products')
+
+
+        }, (s, er) => {
+          if (this.product.image === {}) {
+            alert("لطفا عکس را آپلود کنید")
+          }
+
+
+          console.log({er})
+          if (!s) {
+            er.response.data.error.invalid_params.map((err) => {
+              if (err.field == 'name') {
+                this.product.name.valid = false
+                this.product.name.message = err.message
+              } else if (err.field == 'remain') {
+                this.product.remaining.valid = false
+                this.product.remaining.message = err.message
+              } else if (err.field == 'price') {
+                this.product.price.valid = false
+                this.product.price.message = err.message
+              } else if (err.field == 'discount') {
+                this.product.discount.valid = false
+                this.product.discount.message = err.message
+              } else if (err.field == 'desc') {
+                this.product.desc.valid = false
+                this.product.desc.message = err.message
+              } else if (err.field == 'category_id') {
+                this.product.category_id.valid = false
+                this.product.category_id.message = err.message
+              }
+            })
+          }
+        })
+      }
+    },
+    submitProduct(e) {
+      e.preventDefault()
+      let f = new FormData()
+      if (this.productToEdit != null) {
+
+        // var z = []
+        // if (product.category_id.value.at) {
+        //   product.category_id.value.at.map((y) => {
+        //     if (document.getElementById(y.name).checked) {
+        //       var x = document.getElementsByName(y.name)
+        //
+        //       console.log(x)
+        //       for (let i = 0; i < x.length; i++) {
+        //         if (document.getElementsByName(y.name)[i].checked) {
+        //           z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
+        //         }
+        //       }
+        //     }
+        //   })
+        // }
+        // console.log(z)
+        // if (z.lenght === 1) {
+        //
+        //   f.append('attribute_id', z[0].amount)
+        //
+        //   // z.map((v, i) => {
+        //   //   f.append('attribute_id[' + i + ']', v.amount)
+        //   // })
+        // }
+        if (this.productToEdit.name != this.product.name.value)
+          f.append('name', this.product.name.value)
+        if (this.productToEdit.price != this.product.price.value)
+          f.append('price', parseInt(this.product.price.value))
+        if (this.productToEdit.remaining != this.product.remaining.value)
+          f.append('remain', parseInt(this.product.remaining.value))
+        if (this.productToEdit.discount != this.product.discount.value)
+          f.append('discount', parseInt(this.product.discount.value))
+        if (this.productToEdit.desc != this.product.desc.value)
+          f.append('desc', this.product.desc.value)
+        if (this.productToEdit.category_id != this.product.category_id.value) {
+          f.append('category_id', this.product.category_id.value.value)
+        }
+        if (!this.product.image.value)
+          f.append('image', this.product.image)
+
+        this.authService.transmit('seller/product/' + this.$route.params.id, f, () => {
+          alert("تغییرات ثبت شد")
+          location.reload();
+        }, (s, er) => {
+          console.log({er})
+        })
+      } else {
+
+        var z = []
+        if (this.product.category_id.value) {
+          this.neededAttributes.map((y) => {
+            var x = document.getElementsByName(y.name)
+            for (let i = 0; i < x.length; i++) {
+              if (document.getElementsByName(y.name)[i].checked) {
+                z.push({amount: document.getElementsByName(y.name)[i].id, categoryId: y.id})
+              }
+            }
+
+          })
+        }
+
+        if (z !== null) {
+          z.map((v, i) => {
+            f.append('attribute_id[' + i + ']', v.amount)
+          })
+        }
+
+        f.append('name', this.product.name.value)
+        f.append('price', parseInt(this.product.price.value))
+        f.append('remain', parseInt(this.product.remaining.value))
+
+
+        if (this.product.category_id.value != null) {
+          f.append('category_id', parseInt(this.product.category_id.value.value))
+        }
+
+
+        f.append('discount', parseInt(this.product.discount.value))
+        f.append('desc', this.product.desc.value)
+        f.append('image', this.product.image)
+        let myTags = []
+        this.product.tag_id.map((t) => {
+          myTags.push(t.id)
+        })
+        // f.append('tag_id',myTags)
+        myTags.map((v, i) => {
+          f.append('tag_id[' + i + ']', v)
+        })
+        console.log(f.get('category_id'))
+        console.log(f.get('attribute_id'))
+
+        this.authService.transmit('seller/product', f, () => {
+          alert("با موفقیت ثبت شد!")
+          location.reload();
+
+
+        }, (s, er) => {
+          if (this.product.image === {}) {
+            alert("لطفا عکس را آپلود کنید")
+          }
+
+
+          console.log({er})
+          if (!s) {
+            er.response.data.error.invalid_params.map((err) => {
+              if (err.field == 'name') {
+                this.product.name.valid = false
+                this.product.name.message = err.message
+              } else if (err.field == 'remain') {
+                this.product.remaining.valid = false
+                this.product.remaining.message = err.message
+              } else if (err.field == 'price') {
+                this.product.price.valid = false
+                this.product.price.message = err.message
+              } else if (err.field == 'discount') {
+                this.product.discount.valid = false
+                this.product.discount.message = err.message
+              } else if (err.field == 'desc') {
+                this.product.desc.valid = false
+                this.product.desc.message = err.message
+              } else if (err.field == 'category_id') {
+                this.product.category_id.valid = false
+                this.product.category_id.message = err.message
+              }
+            })
+          }
+        })
+      }
+    },
+  },
+
+
+  mounted() {
+
+    this.getCateGories1()
+    // this.getAttributes1()
+    // this.getOptions1()
+
+
+    if (this.$route.params.id) {
+      this.authService.receive('seller/product/' + this.$route.params.id, {}, (s, d) => {
+            if (s == 200) {
+              this.productToEdit = {}
+              this.productToEdit.name = d.data.product.name
+              this.productToEdit.price = d.data.product.price
+              this.productToEdit.remaining = d.data.product.remain
+              this.productToEdit.discount = d.data.product.discount
+              this.productToEdit.desc = d.data.product.desc
+              this.productToEdit.attributes = d.data.attribute
+              this.productToEdit.category_id = d.data.category.id
+              // this.categories1.map((c) => {
+              //   if (c.value == d.data.category.id) {
+              //     this.productToEdit.attrs = c
+              //     console.log('m', this.productToEdit.attrs.at)
+              //   }
+              // })
+              this.product.name = {value: d.data.product.name, valid: true}
+              this.product.category_id = {
+                value: {
+                  id: d.data.category.id,
+                  value: d.data.category.id,
+                  name: d.data.category.name,
+                  text: d.data.category.name,
+                  at: []
+                }, valid: true
+              }
+              this.product.attributes = {value: d.data.attribute, valid: true}
+              this.product.price = {value: d.data.product.price, valid: true}
+              this.product.remaining = {value: d.data.product.remain, valid: true}
+              this.product.discount = {value: d.data.product.discount, valid: true}
+              this.mainImage = d.data.product.image
+              this.product.image = {value: d.data.product.image, valid: true}
+              // for (let z = 0; z < productToEdit.value.attributes.length; z++) {
+              //   console.log('m',productToEdit.value.attrs.at)
+              //   productToEdit.value.attrs.at.map((a) => {
+              //     if (a.id === productToEdit.value.attributes[z].parent_id) {
+              //       productToEdit.value.attributes[z].parentText = a.name
+              //
+              //     }
+              //   })
+              // }
+
+
+            }
+
+                // alert("x")
+                // if (d.data.category.parent_id == null)
+                //   product.category_id = {
+                //     value: {value: d.data.product.category_id, text: d.data.category.name},
+                //     valid: true
+            //   }
+
+
+            else {
+              this.categories1.value.map((c) => {
+                if (c.id) {
+                  if (c.id = d.data.category.parent_id)
+                    this.product.category_id.value = {text: c.name, value: c.id}
+                }
+              })
+              this.product.subCat.value = {text: d.data.category.name, value: 1}
+
+              this.mainImage.value = d.data.product.image
+              this.product.discount = {value: d.data.product.discount, valid: true}
+              this.product.desc = {value: d.data.product.desc, valid: true}
+
+              if (d.data.tag) {
+                this.product.tag_id = [...d.data.tag]
+                this.product.tag_id.map((tt) => {
+                  tt.text = tt.name
+                  tt.value = tt.id
+                })
+              }
+
+              this.categories1.value.map((c) => {
+                if (c.id = d.data.category.parent_id)
+                  this.product.category_id.value = {text: c.name, value: c.id}
+              })
+              this.product.subCat.value = {text: d.data.category.name, value: 1}
+              if (d.data.product.attr_id) {
+                this.product.attr_id = {value: [...d.data.product.attr_id], valid: true}
+              }
+
+              this.finalAttrs.value = []
+              if (d.data.attribute) {
+                d.data.attribute.map((ta) => {
+                  this.finalAttrs.value.push({
+                    theParentAttr: {value: ta.parent_id, valid: true},
+                    theChildAttr: {value: ta.id, valid: true}
+                  })
+                })
+                this.finalAttrs.value = d.data.attribute
+              }
+
+
+              // let childCategori = getParrentCat(product.category_id.value)
+
+              this.categories1.value.map((c) => {
+                if (c.id == product.category_id.value) {
+                  this.product.category_id.value = c
+                }
+              })
+            }
+          }
+          , (s, e) => {
+            console.log("this is error", e)
+          })
+
+
     }
   }
 }
@@ -1103,21 +1282,22 @@ export default {
 }
 
 
-@media only screen and (min-width: 700px){
-  .options{
+@media only screen and (min-width: 700px) {
+  .options {
     font-size: 16px;
     width: 150px;
   }
 }
 
-@media only screen and (max-width: 700px){
-  .options{
+@media only screen and (max-width: 700px) {
+  .options {
     font-size: 10px;
     width: 70px;
   }
 }
-.white{
-  background-color: white!important;
+
+.white {
+  background-color: white !important;
 }
 
 </style>

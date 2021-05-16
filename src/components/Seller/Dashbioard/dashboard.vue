@@ -326,6 +326,11 @@ export default {
       })
     }
     onMounted(() => {
+
+      if (global.state.reload===0){
+        location.reload()
+        global.state.reload =1
+      }
       var token = window.location.href.toString().split('?token=')
       // $cookies.set("Golpino_seller",222222,2147483647)
       document.cookie = 'cck=1'

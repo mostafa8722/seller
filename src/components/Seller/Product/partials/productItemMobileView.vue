@@ -15,46 +15,61 @@
             <span v-if="enabled" style="color: limegreen">موجود</span>
             <span v-else style="color: red">ناموجود</span>
           </v-col>
-          <v-col @click="changeRemain" cols="2">
+          <v-col cols="2">
             <!--           text-enabled="موجود" text-disabled="ناموجود"-->
-            <switches theme="bulma" color="default" v-model="enabled"></switches>
+            <div @click="changeRemain">
+
+
+
+
+              <switches  theme="bulma" color="default" v-model="enabled"></switches>
+
+
+
+
+
+
+            </div>
           </v-col>
         </v-row>
-        <span style="font-weight: initial;" >
+        <span style="font-weight: initial;">
           {{
             modifyNumber((theProduct.price - theProduct.price * theProduct.discount / 100).toFixed())
           }}تومان</span>
-        <span v-if="theProduct.discount && theProduct.discount!== 0" style="text-decoration: line-through;" >{{ modifyNumber(theProduct.price) }}تومان</span>
-<v-row><image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true"
-                   @iconClicked="editMe"
-                   classes="mid mr-3 actionIcon">
-</image-icon></v-row>
+        <span v-if="theProduct.discount && theProduct.discount!== 0"
+              style="text-decoration: line-through;">{{ modifyNumber(theProduct.price) }}تومان</span>
+        <v-row>
+          <image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true"
+                      @iconClicked="editMe"
+                      classes="mid mr-3 actionIcon">
+          </image-icon>
+        </v-row>
 
-<br>
-<!--        <v-row>-->
-<!--          <v-col>-->
-<!--            <span>توضیحات</span>-->
-<!--          </v-col>-->
-<!--        </v-row>-->
-<!--        <v-row >-->
-<!--          <v-col v-if="theProduct.desc !== null">-->
-<!--            {{theProduct.desc}}-->
-<!--          </v-col>-->
-<!--        </v-row>-->
+        <br>
+        <!--        <v-row>-->
+        <!--          <v-col>-->
+        <!--            <span>توضیحات</span>-->
+        <!--          </v-col>-->
+        <!--        </v-row>-->
+        <!--        <v-row >-->
+        <!--          <v-col v-if="theProduct.desc !== null">-->
+        <!--            {{theProduct.desc}}-->
+        <!--          </v-col>-->
+        <!--        </v-row>-->
 
-<!--          <v-col>-->
-<!--            <image-icon address="/assets/site/images/seller-icons/red-trash.svg" :clickable="true"-->
-<!--                        @iconClicked="deleteMe"-->
-<!--                        classes="mid mr-3 actionIcon"></image-icon>-->
-<!--          </v-col>-->
-<!--          <v-col>-->
-<!--            <image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true"-->
-<!--                        @iconClicked="editMe"-->
-<!--                        classes="mid mr-3 actionIcon">-->
-<!--            </image-icon>-->
-<!--          </v-col>-->
+        <!--          <v-col>-->
+        <!--            <image-icon address="/assets/site/images/seller-icons/red-trash.svg" :clickable="true"-->
+        <!--                        @iconClicked="deleteMe"-->
+        <!--                        classes="mid mr-3 actionIcon"></image-icon>-->
+        <!--          </v-col>-->
+        <!--          <v-col>-->
+        <!--            <image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true"-->
+        <!--                        @iconClicked="editMe"-->
+        <!--                        classes="mid mr-3 actionIcon">-->
+        <!--            </image-icon>-->
+        <!--          </v-col>-->
 
-<!--        </v-row>-->
+        <!--        </v-row>-->
       </div>
     </div>
     <hr>
@@ -77,7 +92,7 @@ export default {
     Switches
   },
   methods: {
-    modifyNumber(n){
+    modifyNumber(n) {
       return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     },
@@ -92,8 +107,11 @@ export default {
 
       let f = new FormData()
       if (this.enabled) {
-        f.append('remain', 0)
+        f.append('status', 0)
+      } else {
+        f.append('status', 1)
       }
+      console.log(f.get('status'))
       this.authService.transmit('seller/product/' + this.theProduct.id, f, () => {
         alert("تغییرات ثبت شد")
       }, (s, er) => {
@@ -116,7 +134,7 @@ export default {
   mounted() {
 
 
-    if (this.theProduct.remain > 0) {
+    if (this.theProduct.status === 1) {
       this.enabled = true
     } else {
       this.enabled = false
@@ -162,6 +180,7 @@ export default {
 .vue-switcher-theme--bulma.vue-switcher-color--default div {
   background-color: limegreen;
 }
+
 .vue-switcher-theme--bulma.vue-switcher-color--default.vue-switcher--unchecked div {
   background-color: #e8e8e8;
 }

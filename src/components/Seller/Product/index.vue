@@ -14,10 +14,10 @@
     <v-row style="margin-top: 20px;">
 
       <v-col v-if="products">
-        تعداد محصولات موجود: {{ products.length }}
+        تعداد محصولات موجود: {{ products.filter(item => item.status === 1).length }}
       </v-col>
       <v-col v-if="products">
-        تعداد محصولات ناموجود: {{ products.filter(item => item.remain === 0).length }}
+        تعداد محصولات ناموجود: {{ products.filter(item => item.status === 0).length }}
       </v-col>
     </v-row>
     <v-row>

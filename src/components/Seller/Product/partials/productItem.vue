@@ -22,10 +22,12 @@
           </image-icon>
     </td>
     <td>
-      <v-col @click="changeRemain" >
+      <v-col >
         <span class="status" v-if="enabled" style="color: limegreen">موجود</span>
         <span class="status" v-else style="color: red">ناموجود</span>
-        <switches theme="bulma" color="default" v-model="enabled"></switches>
+        <div @click="changeRemain">
+          <switches  theme="bulma" color="default" v-model="enabled"></switches>
+        </div>
       </v-col>
     </td>
 
@@ -58,8 +60,11 @@ export default {
 
       let f = new FormData()
       if (this.enabled) {
-        f.append('remain', 0)
+        f.append('status', 0)
+      } else {
+        f.append('status', 1)
       }
+      console.log(f.get('status'))
       this.authService.transmit('seller/product/' + this.theProduct.id, f, () => {
         alert("تغییرات ثبت شد")
       }, (s, er) => {
@@ -106,7 +111,7 @@ export default {
   mounted() {
     var moment = require('jalali-moment');
     console.log(moment('1989-01-24', 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD'))
-    if (this.theProduct.remain > 0) {
+    if (this.theProduct.status ===1 ) {
       this.enabled = true
     } else {
       this.enabled = false
