@@ -37,7 +37,7 @@
                      alt="image">
               </div>
             </v-col>
-            <v-col :cols="8" :md="10" :sm="10" style="align-self: center;font-weight: bold;font-size: 12px;}">
+            <v-col :cols="7" :md="10" :sm="10" style="align-self: center;font-weight: bold;font-size: 12px;}">
               {{ (global.user.value.name != "") ? global.user.value.name : 'نام فروشگاه' }}
             </v-col>
             <v-col cols="1">
