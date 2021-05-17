@@ -205,10 +205,10 @@
                     </button>
 
                   </v-col>
-                  <v-col>
-                    <button class="white-btn ">انصراف</button>
+<!--                  <v-col>-->
+<!--                    <button class="white-btn " @click="reload">انصراف</button>-->
 
-                  </v-col>
+<!--                  </v-col>-->
                 </v-row>
               </div>
 
@@ -343,6 +343,11 @@ export default {
       }, (s, e) => {
         console.log("this is error", e)
       })
+    }
+
+
+    const reload =() => {
+      window.location.reload();
     }
 
     const getSubCategories = (id) => {
@@ -709,6 +714,7 @@ export default {
       selectImage,
       categories,
       attrs,
+      reload
     }
   },
   computed: {
@@ -882,9 +888,7 @@ export default {
 
 
         }, (s, er) => {
-          if (this.product.image === {}) {
-            alert("لطفا عکس را آپلود کنید")
-          }
+
 
 
           console.log({er})
@@ -1018,9 +1022,6 @@ export default {
 
 
         }, (s, er) => {
-          if (this.product.image === {}) {
-            alert("لطفا عکس را آپلود کنید")
-          }
 
 
           console.log({er})

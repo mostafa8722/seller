@@ -40,8 +40,8 @@
               {{ (global.user.value.name != "") ? global.user.value.name : 'نام فروشگاه' }}
             </v-col>
             <div style="    position: absolute;
-    left: 25px;
-    top: 30px;
+    left: 40px;
+    top: 35px;
 }">
               <div style="float: left;">
 

@@ -7,8 +7,8 @@
     <div
         style="overflow: hidden!important;position: fixed!important;bottom: 100px!important;width: fit-content!important;z-index: 200!important;left: 20px!important;border-radius: 30px!important;">
       <router-link :to="{name:'Golpino Seller Product Form'}">
-        <custom-button classes="add-button" icon="/assets/site/images/seller-icons/white-plus.svg"
-                       label="افزودن محصول"></custom-button>
+        <custom-button classes="add-button"
+                       label="+ افزودن محصول "></custom-button>
       </router-link>
     </div>
     <v-row style="margin-top: 20px;">

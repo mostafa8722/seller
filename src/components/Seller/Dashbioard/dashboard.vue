@@ -249,6 +249,20 @@ export default {
     LineChart
   },
   setup(props,context) {
+    (function()
+    {
+      if( window.localStorage )
+      {
+        if( !localStorage.getItem('firstLoad') )
+        {
+          localStorage['firstLoad'] = true;
+          window.location.reload();
+        }
+        else
+          localStorage.removeItem('firstLoad');
+      }
+    })();
+
     function callSupport() {
       // CALL SUPPORT HERE
       console.log("call support")
@@ -325,12 +339,11 @@ export default {
       }, (s, e) => {
       })
     }
+
+
     onMounted(() => {
 
-      if (global.state.reload===0){
-        location.reload()
-        global.state.reload =1
-      }
+
       var token = window.location.href.toString().split('?token=')
       // $cookies.set("Golpino_seller",222222,2147483647)
       document.cookie = 'cck=1'
