@@ -41,7 +41,7 @@
                                    :theOrder="order"/>
       </div>
     </div>
-<!--    <v-btn @click="getLocalStorage">test</v-btn>-->
+    <!--    <v-btn @click="getLocalStorage">test</v-btn>-->
   </div>
 </template>
 <script>
@@ -124,6 +124,7 @@ export default {
       console.log(f.get('status'))
       authService.value.transmit('seller/order/' + order.id, f, (s, d) => {
             alert('تغییر وضعیت انجام شد')
+            window.location.reload();
           },
           (s, e) => {
 
@@ -134,7 +135,7 @@ export default {
     })
 
 
-    return {orders, reviseOrder, global, getOrders, modifyOrders, getOrder,getLocalStorage}
+    return {orders, reviseOrder, global, getOrders, modifyOrders, getOrder, getLocalStorage}
   },
   components: {
     OrderSummaryMobileView,
