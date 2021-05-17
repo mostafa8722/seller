@@ -4,19 +4,27 @@
       <div class="">
 
         <v-row style="margin-bottom: 20px">
-          <v-col :cols="3">
-            <v-btn elevation="0" style="background-color: #F5F5F5" @click="openTab('1')" id="1btn">عمومی</v-btn>
+          <div>
+            <v-btn elevation="0" style="background-color: #F5F5F5;font-size: 12px" @click="openTab('1')" id="1btn">
+              عمومی
+            </v-btn>
 
-          </v-col>
-          <v-col :cols="3">
-            <v-btn elevation="0" style="background-color: #F5F5F5" @click="openTab('2')" id="2btn">مالی</v-btn>
-          </v-col>
-          <v-col :cols="3">
-            <v-btn elevation="0" style="background-color: #F5F5F5" @click="openTab('3')" id="3btn">شرایط ارسال</v-btn>
-          </v-col>
-          <v-col :cols="3">
-            <v-btn elevation="0" style="background-color: #F5F5F5" @click="openTab('4')" id="4btn">ساعات کاری</v-btn>
-          </v-col>
+          </div>
+          <div>
+            <v-btn elevation="0" style="background-color: #F5F5F5;font-size: 12px" @click="openTab('2')" id="2btn">
+              مالی
+            </v-btn>
+          </div>
+          <div>
+            <v-btn elevation="0" style="background-color: #F5F5F5;font-size: 12px" @click="openTab('3')" id="3btn">شرایط
+              ارسال
+            </v-btn>
+          </div>
+          <div>
+            <v-btn elevation="0" style="background-color: #F5F5F5;font-size: 12px" @click="openTab('4')" id="4btn">ساعات
+              کاری
+            </v-btn>
+          </div>
         </v-row>
 
         <div id="1" class="w3-container city">
@@ -58,27 +66,28 @@
                 <!--                </custom-field>-->
               </v-col>
             </v-row>
-            <!--            <v-row>-->
-            <!--              <v-col>-->
-            <!--                محله های خدمت رسانی :-->
-            <!--              </v-col>-->
-            <!--              <v-col>-->
-            <!--                <v-text-field filled :value="serviceDistrict" id="serviceDistrict"/>-->
-            <!--              </v-col>-->
-            <!--              <v-col>-->
-            <!--                <v-btn @click="addServiceDistrict" icon>-->
-            <!--                  <svg style="width:24px;height:24px" viewBox="0 0 24 24">-->
-            <!--                    <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/>-->
-            <!--                  </svg>-->
-            <!--                </v-btn>-->
-            <!--              </v-col>-->
-            <!--              <v-col>-->
-            <!--                <v-row v-for="d in sellerServiceDistricts" :key="d.id">-->
-            <!--                  {{ d.name }}-->
 
-            <!--                </v-row>-->
-            <!--              </v-col>-->
-            <!--            </v-row>-->
+
+<!--            <v-row>-->
+<!--              <v-col>-->
+<!--                محله های خدمت رسانی :-->
+<!--              </v-col>-->
+<!--              <v-col>-->
+<!--                <v-text-field filled v-model="newServiceDistrict" id="serviceDistrict"/>-->
+<!--              </v-col>-->
+<!--              <v-col>-->
+<!--                <v-btn @click="addServiceDistrict" style="background: #682AD5;color: white;">ثبت</v-btn>-->
+<!--              </v-col>-->
+<!--              <v-col>-->
+<!--                <v-row v-if="serviceDistricts!==null" v-for="d in serviceDistricts" :key="d.id">-->
+<!--                  <v-btn v-if="serviceDistricts!==null" @click="deleteServiceDistrict(d.district_id)"> ><  </v-btn>-->
+<!--                  {{ d.name }}-->
+
+<!--                </v-row>-->
+<!--              </v-col>-->
+<!--            </v-row>-->
+
+
             <!--            <v-row>-->
             <!--              <v-col>-->
             <!--                <custom-input key="z6" placeholder="محدوده خدمت رسانی"-->
@@ -753,7 +762,6 @@ export default {
     })
     const sendCosts = ref({value: [null, null, null, null, null, null, null, null, null, null, null], valid: true})
     const sellerAddress = ref(null)
-    const serviceDistrict = ref(null)
     const sellerServiceDistricts = ref(null)
     const baseInfoLoaded = ref(false)
 
@@ -807,15 +815,6 @@ export default {
             }
           }
           , 5000)
-
-
-      authService.value.receive('seller/base/district', {}, (s, d) => {
-        if (s == 200) {
-
-          sellerServiceDistricts.value = d.data
-        }
-      }, (s, e) => {
-      })
 
 
       authService.value.receive('seller/base/sendcost', {}, (s, d) => {
@@ -1347,33 +1346,6 @@ export default {
       }
 
     }
-    const addServiceDistrict = () => {
-      let f = new FormData()
-
-      var selectedDistrict
-      districts.map((d) => {
-        if (serviceDistrict === d.name) {
-          selectedDistrict = d.id
-        }
-      })
-
-
-      f.append('district_id[0]', selectedDistrict)
-      authService.value.transmit('seller/base/district', f, (s, d) => {
-        if (s == 200)
-          global.alertToggle('اطلاعات با موفقیت افزوده شد!')
-        authService.value.receive('seller/base/district', {}, (s, d) => {
-          if (s == 200) {
-
-            sellerServiceDistricts.value = d.data
-          }
-        }, (s, e) => {
-        })
-      }, (s, e) => {
-        if (!s)
-          global.alertToggle('عملیات ناموفق')
-      })
-    }
 
 
     const props = {initial: null}
@@ -1404,8 +1376,6 @@ export default {
       districts,
       authService,
       sellerServiceDistricts,
-      addServiceDistrict,
-      serviceDistrict,
       address,
       zoomUpdate,
       mapOptions,
@@ -1536,11 +1506,53 @@ export default {
       // workTime.value.fields[0].value.value = sellerWorkTime.value[n.value.value - 1].open_at
       // workTime.value.fields[1].value.value = sellerWorkTime.value[n.value.value - 1].close_at
       // workTime.value.id = sellerWorkTime.value[n.value.value - 1].id
+    },
+    addServiceDistrict() {
+      let f = new FormData()
+
+      var selectedDistrict
+      this.districts.map((d) => {
+        if (this.newServiceDistrict === d.name) {
+          selectedDistrict = d.id
+        }
+      })
+
+
+      f.append('district_id[' + 0 + ']', selectedDistrict)
+      this.authService.transmit('seller/base/district', f, (s, d) => {
+        if (s == 200)
+          alert('اطلاعات با موفقیت افزوده شد!')
+        this.authService.receive('seller/base/district', {}, (s, d) => {
+          if (s == 200) {
+
+            this.serviceDistricts = d.data
+          }
+        }, (s, e) => {
+        })
+      }, (s, e) => {
+        if (!s)
+          alert('عملیات ناموفق')
+      })
+    },
+    deleteServiceDistrict(deleteId) {
+      this.authService.remove('seller/base/district/' + deleteId, {}, (s, d) => {
+        if (s == 200) {
+          this.serviceDistricts.map((s) => {
+            if (s.id === deleteId) {
+              this.serviceDistricts.remove(s)
+            }
+          })
+        }
+      }, (s, e) => {
+
+      })
     }
 
   }
   ,
   data: () => ({
+    newServiceDistrict: null,
+    serviceDistricts: null,
     message: null,
     theDistrict: null,
     theAddress: {
@@ -1589,6 +1601,15 @@ export default {
         })
 
 
+      }
+    }, (s, e) => {
+    })
+
+
+    this.authService.receive('seller/base/district', {}, (s, d) => {
+      if (s == 200) {
+        this.serviceDistricts = d.data
+        console.log(d.data)
       }
     }, (s, e) => {
     })
@@ -1835,7 +1856,7 @@ th {
   position: absolute;
   z-index: 1111 !important;
   top: 125px;
-  right: 275px;
+  right: 50%;
 }
 
 .address-modal-header {

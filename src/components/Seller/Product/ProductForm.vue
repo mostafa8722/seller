@@ -186,7 +186,7 @@
               <div class="col-12 mt-3">
                 <p class="tNormal mini-title">توضیحات</p>
                 <custom-input style="background-color: white!important;" kind="area"
-                              placeholder="توضیحات مربوط به محصول را وارد کنید"
+                              placeholder="توضیحات مربوط به محصول را وارد کنید(حداکثر 500 کاراکتر)"
                               container="full-width" v-bind:theModel.sync="product.desc"
                               classes="block full-width"></custom-input>
               </div>
@@ -896,22 +896,22 @@ export default {
             er.response.data.error.invalid_params.map((err) => {
               if (err.field == 'name') {
                 this.product.name.valid = false
-                this.product.name.message = err.message
+                this.product.name.message = 'نام محصول کمتر از 50 کاراکتر باشد'
               } else if (err.field == 'remain') {
                 this.product.remaining.valid = false
-                this.product.remaining.message = err.message
+                this.product.remaining.message = 'تعداد موجودی به انگلیسی و کمتر از 999999 باشد'
               } else if (err.field == 'price') {
                 this.product.price.valid = false
-                this.product.price.message = err.message
+                this.product.price.message = 'قیمت به انگلیسی و کمتر از 999999999 باشد'
               } else if (err.field == 'discount') {
                 this.product.discount.valid = false
-                this.product.discount.message = err.message
+                this.product.discount.message = 'درصو تخفیف به انگلیسی و کمتر از 100 باشد'
               } else if (err.field == 'desc') {
                 this.product.desc.valid = false
-                this.product.desc.message = err.message
+                this.product.desc.message = 'توضیحات کمتر از 500 کاراکتر باشد'
               } else if (err.field == 'category_id') {
                 this.product.category_id.valid = false
-                this.product.category_id.message = err.message
+                this.product.category_id.message = 'دسته بندی محصول را انتخاب کنید'
               } else if (err.field == 'image') {
                 alert('عکس را آپلود کنید.')
               }
@@ -1029,22 +1029,22 @@ export default {
             er.response.data.error.invalid_params.map((err) => {
               if (err.field == 'name') {
                 this.product.name.valid = false
-                this.product.name.message = err.message
+                this.product.name.message = 'نام محصول کمتر از 50 کاراکتر باشد'
               } else if (err.field == 'remain') {
                 this.product.remaining.valid = false
-                this.product.remaining.message = err.message
+                this.product.remaining.message = 'تعداد موجودی به انگلیسی و کمتر از 999999 باشد'
               } else if (err.field == 'price') {
                 this.product.price.valid = false
-                this.product.price.message = err.message
+                this.product.price.message = 'قیمت به انگلیسی و کمتر از 999999999 باشد'
               } else if (err.field == 'discount') {
                 this.product.discount.valid = false
-                this.product.discount.message = err.message
+                this.product.discount.message = 'درصو تخفیف به انگلیسی و کمتر از 100 باشد'
               } else if (err.field == 'desc') {
                 this.product.desc.valid = false
-                this.product.desc.message = err.message
+                this.product.desc.message = 'توضیحات کمتر از 500 کاراکتر باشد'
               } else if (err.field == 'category_id') {
                 this.product.category_id.valid = false
-                this.product.category_id.message = err.message
+                this.product.category_id.message = 'دسته بندی محصول را انتخاب کنید'
               } else if (err.field == 'image') {
                 alert('عکس را آپلود کنید.')
               }
