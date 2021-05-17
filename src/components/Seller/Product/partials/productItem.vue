@@ -9,24 +9,31 @@
     <td>{{ theProduct.category_name }}</td>
     <td>{{ modifyNumber(theProduct.price) }}</td>
     <td>{{ modifyNumber((theProduct.price - theProduct.price * theProduct.discount / 100).toFixed()) }} تومان
-      <span class="discount" v-if="theProduct.discount && theProduct.discount!== 0" >{{
-        theProduct.discount
-      }}</span>
+      <span class="discount" v-if="theProduct.discount && theProduct.discount!== 0">{{
+          theProduct.discount
+        }}</span>
     </td>
     <td>{{ theProduct.remain }}</td>
-    <td>{{ theProduct.created_at  }}</td>
+    <td>{{ theProduct.created_at }}</td>
     <td>
 
-          <image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true" @iconClicked="editMe"
-                      classes="mid mr-3">
-          </image-icon>
+      <image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true"
+                  @iconClicked="editMe"
+                  classes="mid mr-3">
+      </image-icon>
     </td>
     <td>
-      <v-col >
+      <image-icon address="/assets/site/images/seller-icons/red-trash.svg" :clickable="true"
+                  @iconClicked="deleteMe"
+                  classes="mid mr-3 ">
+      </image-icon>
+    </td>
+    <td>
+      <v-col>
         <span class="status" v-if="enabled" style="color: limegreen">موجود</span>
         <span class="status" v-else style="color: red">ناموجود</span>
         <div @click="changeRemain">
-          <switches  theme="bulma" color="default" v-model="enabled"></switches>
+          <switches theme="bulma" color="default" v-model="enabled"></switches>
         </div>
       </v-col>
     </td>
@@ -40,6 +47,7 @@
 import ImageIcon from '../../../Common/icon'
 import Switches from 'vue-switches';
 import Service from "../../../../utils/seller-service";
+
 var moment = require('jalali-moment');
 
 export default {
@@ -50,7 +58,7 @@ export default {
   },
   methods: {
 
-    modifyNumber(n){
+    modifyNumber(n) {
       return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     },
@@ -111,7 +119,7 @@ export default {
   mounted() {
     var moment = require('jalali-moment');
     console.log(moment('1989-01-24', 'YYYY-MM-DD').locale('fa').format('YYYY/MM/DD'))
-    if (this.theProduct.status ===1 ) {
+    if (this.theProduct.status === 1) {
       this.enabled = true
     } else {
       this.enabled = false

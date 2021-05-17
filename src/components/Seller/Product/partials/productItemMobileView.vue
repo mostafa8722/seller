@@ -16,7 +16,7 @@
             <span v-if="enabled" style="color: limegreen">موجود</span>
             <span v-else style="color: red">ناموجود</span>
             <div @click="changeRemain">
-              <switches  theme="bulma" color="default" v-model="enabled"></switches>
+              <switches theme="bulma" color="default" v-model="enabled"></switches>
             </div>
           </v-col>
         </v-row>
@@ -27,10 +27,18 @@
         <span v-if="theProduct.discount && theProduct.discount!== 0"
               style="text-decoration: line-through;">{{ modifyNumber(theProduct.price) }}تومان</span>
         <v-row>
-          <image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true"
-                      @iconClicked="editMe"
-                      classes="mid mr-3 actionIcon">
-          </image-icon>
+          <v-col>
+            <image-icon address="/assets/site/images/seller-icons/red-trash.svg" :clickable="true"
+                        @iconClicked="deleteMe"
+                        classes="mid mr-3 actionIcon">
+            </image-icon>
+          </v-col>
+          <v-col>
+            <image-icon address="/assets/site/images/seller-icons/purple-pen.svg" :clickable="true"
+                        @iconClicked="editMe"
+                        classes="mid mr-3 actionIcon">
+            </image-icon>
+          </v-col>
         </v-row>
 
         <br>

@@ -62,7 +62,7 @@
             </tr>
             </thead>
             <tbody>
-            <product-item browser-size="desktop" v-for="(p,i) in products.filter(product => {
+            <product-item @deleteMe="deleteProduct" browser-size="desktop" v-for="(p,i) in products.filter(product => {
         return product.name.toLowerCase().includes(searchTerm);
       })" :key="i" :theProduct="p"></product-item>
             </tbody>
@@ -111,7 +111,7 @@
         <!--        </table>-->
       </div>
       <div class="mobilePro" v-if="products">
-        <product-item-mobile-view browser-size="mobile" v-for="(p,i) in products.filter(product => {
+        <product-item-mobile-view @deleteMe="deleteProduct" browser-size="mobile" v-for="(p,i) in products.filter(product => {
         return product.name.toLowerCase().includes(this.searchTerm);
       })" :key="i"
                                   :theProduct="p"/>
@@ -177,7 +177,8 @@ export default {
     const deleteProduct = (id) => {
       authService.value.remove('seller/product/' + id, {}, (s, d) => {
         if (s == 200)
-          getProducts()
+          alert('محصول پاک شد')
+        getProducts();
       }, (s, e) => {
 
       })
