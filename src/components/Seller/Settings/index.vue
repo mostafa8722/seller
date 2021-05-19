@@ -88,15 +88,15 @@
 <!--            </v-row>-->
 
 
-            <!--            <v-row>-->
-            <!--              <v-col>-->
-            <!--                <custom-input key="z6" placeholder="محدوده خدمت رسانی"-->
-            <!--                              kind="dropDown" container="full-width"-->
-            <!--                              :selectItems="serviceRanges"-->
-            <!--                              classes="select-facade2"-->
-            <!--                              v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>-->
-            <!--              </v-col>-->
-            <!--            </v-row>-->
+                        <v-row>
+                          <v-col>
+                            <custom-input key="z6" placeholder="محدوده خدمت رسانی"
+                                          kind="dropDown" container="full-width"
+                                          :selectItems="serviceRanges"
+                                          classes="select-facade2"
+                                          v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>
+                          </v-col>
+                        </v-row>
 
 
             <div id="addressMap">
