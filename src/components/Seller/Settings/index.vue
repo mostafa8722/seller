@@ -93,11 +93,10 @@
                             <custom-input key="z6" placeholder="محدوده خدمت رسانی"
                                           kind="dropDown" container="full-width"
                                           :selectItems="serviceRanges"
-                                          classes="select-facade2"
+                                          classes="select-facade2" 
                                           v-bind:theModel.sync="serviceRange.fields[0].value"></custom-input>
                           </v-col>
                         </v-row>
-
 
             <div id="addressMap">
               <l-map
@@ -149,8 +148,27 @@
                 </div>
               </div>
             </div>
-
-
+            <v-divider></v-divider>
+            <h4>محله ها</h4>
+            <v-row>
+              <v-col cols="6">
+                  <custom-input kind="searchInput" 
+                  :suggestions="districts" @addTag="selectExtraDistrict"
+                      :placeholder="(selectedExtraDistrict.value != null ? selectedExtraDistrict.value.text : 'محله')"
+                      container="full-width" 
+                      v-bind:theModel.sync="selectedExtraDistrict"
+                      classes="block full-width">
+                      </custom-input>
+              </v-col>
+              <v-col cols="6">
+                <button @click="addExtraDistrict" class="purple-btn">افزودن محله</button>
+                <button @click="deleteExtraDistrict" class="red-btn mr-1">حذف محله</button>
+              </v-col>
+              <v-col cols="12">
+                <p class="mini-title ml-2">محله های اضافه شده به این فروشگاه:</p><p class="mini-title" v-for="(item,i) in shopDistricts" :key="i">{{item.name + ","}}</p>
+              </v-col>
+            </v-row>
+            <v-divider></v-divider>
             <!--            <custom-field :deactive="logoImage.deactive" @edit="()=>submitValue('logoImage')"-->
             <!--                          @activate="()=>activateModel('logoImage')" theField="لوگو">-->
             <div class="row pt-3 pb-3 mt-1">
@@ -595,17 +613,32 @@ export default {
   },
   setup() {
     onMounted(() => {
-
+      getServiceRanges()
       getBanks()
       getFinancials()
       getSellerInfos().then(baseInfoLoaded.value = true)
       document.getElementById('1btn').style.borderBottom = '3px solid #682AD5'
 
     })
-
     const authService = computed(() => {
       return Service(true)
     })
+    
+    
+    const getServiceRanges = () => {
+      authService.value.receive('seller/base/servicerange', {}, (s, d) => {
+        if (s == 200) {
+          if (d.data != [] && d.data != null) {
+            serviceRanges.value = d.data
+            serviceRanges.value.map((se) => {
+              se.text = se.value
+              se.value = se.id
+            })
+          }
+        }
+      }, (s, e) => {
+      })
+    }
 
     const editBankAccount = ref(false)
     const bankToEdit = ref({value: null, valid: true})
@@ -1424,6 +1457,46 @@ export default {
   }
   ,
   methods: {
+    addExtraDistrict:function(){
+      let f = new FormData()
+      f.append('district_id[0]',this.selectedExtraDistrict.value.id)
+       this.authService.transmit('seller/base/district', f, (s, d) => {
+        if (s == 200){
+          alert('اطلاعات با موفقیت افزوده شد!')
+          this.getAllDistrictsOfShop()
+        }
+        },(s,e)=>{
+          alert('درخواست دچار خطا شد')
+        })
+    },
+    deleteExtraDistrict:function(){
+      let target = ""
+      this.shopDistricts.map((x)=>{
+        if(x.district_id == this.selectedExtraDistrict.value.id){
+          target = x.id
+        }
+      })
+      this.authService.remove('seller/base/district/'+target,{}, (s, d) => {
+        if (s == 200){
+          alert('اطلاعات با موفقیت افزوده شد!')
+          this.getAllDistrictsOfShop()
+        }
+        },(s,e)=>{
+          alert('درخواست دچار خطا شد')
+        })
+    }, 
+    selectExtraDistrict:function(d){
+      this.selectedExtraDistrict.text = d.name
+      this.selectedExtraDistrict.value = d
+    },
+    getAllDistrictsOfShop(){
+      this.authService.receive('seller/base/district', {}, (s, d) => {
+        if (s == 200)
+          this.shopDistricts = d.data
+        },(s,e)=>{
+          alert('درخواست دچار خطا شد')
+        })
+    },
     send: function () {
       this.message = null
       this.theAddress.address.valid = true
@@ -1457,7 +1530,6 @@ export default {
       }
     },
     selectDistrict: function (d) {
-      console.log({d})
       this.theDistrict = d
     },
     change: function () {
@@ -1516,8 +1588,6 @@ export default {
           selectedDistrict = d.id
         }
       })
-
-
       f.append('district_id[' + 0 + ']', selectedDistrict)
       this.authService.transmit('seller/base/district', f, (s, d) => {
         if (s == 200)
@@ -1551,6 +1621,8 @@ export default {
   }
   ,
   data: () => ({
+    shopDistricts:[],
+    selectedExtraDistrict:{value:null,valid:true},
     newServiceDistrict: null,
     serviceDistricts: null,
     message: null,
@@ -1589,7 +1661,7 @@ export default {
         this.districts.map((di) => {
           di.text = di.name
         })
-
+        this.getAllDistrictsOfShop()
 
         this.districts.map((dd) => {
           this.theDistrict = {}
@@ -1608,25 +1680,29 @@ export default {
 
     this.authService.receive('seller/base/district', {}, (s, d) => {
       if (s == 200) {
+        console.log("xxxxxxxxxxxxx")
         this.serviceDistricts = d.data
         console.log(d.data)
       }
     }, (s, e) => {
     })
 
-
-    // this.authService.receive('seller/base/servicerange', {}, (s, d) => {
-    //   if (s == 200) {
-    //     if (d.data != [] && d.data != null) {
-    //       this.serviceRanges.value = d.data
-    //       this.serviceRanges.value.map((se) => {
-    //         se.text = se.value
-    //         se.value = se.id
-    //       })
-    //     }
-    //   }
-    // }, (s, e) => {
-    // })
+// console.log("zzzzzzz")
+//     this.authService.receive('seller/base/servicerange', {}, (s, d) => {
+//       console.log("zzzzzzz22222222222222222222333333")
+//       if (s == 200) {
+//         if (d.data != [] && d.data != null) {
+//           this.serviceRanges.value = d.data
+//           console.log("zzzzzzz")
+//           console.log("zzzzzzz",this.serviceRanges)
+//           this.serviceRanges.value.map((se) => {
+//             se.text = se.value
+//             se.value = se.id
+//           })
+//         }
+//       }
+//     }, (s, e) => {
+//     })
     // this.authService.receive('seller/base/sellerservicerange', {}, (s, d) => {
     //   if (s == 200) {
     //
